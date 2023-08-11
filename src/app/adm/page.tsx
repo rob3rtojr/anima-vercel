@@ -45,6 +45,7 @@ export default function Adm() {
     const [municipioId, setMunicipioId] = useState<string>("0");
     const [escolaId, setEscolaId] = useState<string>("0");
     const [turmaId, setTurmaId] = useState<string>("0");
+    const [tipo, setTipo] = useState<string>("");
 
     const [resultado, setResultado] = useState<Resultado[]>();
     const [hideCampos, setHideCampos] = useState<boolean>(false)
@@ -77,6 +78,7 @@ export default function Adm() {
                 setHideCampos(true)
                 setEscolaId("0")
                 setTurmaId("0")
+                setTipo(formularios[index].tipo)
             }
         }
     }
@@ -151,7 +153,6 @@ export default function Adm() {
             }
 
 
-
             await api.get(rota)
                 .then((response) => {
 
@@ -160,7 +161,7 @@ export default function Adm() {
                     response.data.map((r: any) => {
                         let total = r[1] + r[2] + r[3] + r[4]
                         let d
-                        if (regionalId !== "0" && escolaId === "0") {
+                        if (regionalId !== "0" && escolaId === "0" && tipo === "aluno") {
                             d = {
                                 "inep": r.codigoMec,
                                 "nome": r.nome,
@@ -181,6 +182,7 @@ export default function Adm() {
                                 "total": total
                             }
                         }
+
                         _resultado.push(d)
 
                         //definição da meta por estado  formulário
@@ -237,9 +239,11 @@ export default function Adm() {
         fetchOptions()
 
 
-        if (regionalId !== "0" && escolaId === "0") {
+        if (regionalId !== "0" && escolaId === "0" && tipo === "aluno") {
 
             setColumns([
+
+
                 { label: "INEP", accessor: "inep", sortable: true, align: 'left', size: "5" },
                 { label: "NOME", accessor: "nome", sortable: true, align: 'left', size: "30" },
                 { label: "MUNICIPIO", accessor: "municipio", sortable: true, align: 'left', size: "15" },

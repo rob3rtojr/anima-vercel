@@ -74,11 +74,13 @@ export default function Adm() {
 
         const index = formularios?.findIndex((f) => f.id.toString() === selectedOption)
         if (formularios && index) {
-            if (formularios[index].tipo === "professor") {
-                setHideCampos(true)
-                setEscolaId("0")
-                setTurmaId("0")
-                setTipo(formularios[index].tipo)
+            if (formularios[index]) {
+                if (formularios[index].tipo === "professor") {
+                    setHideCampos(true)
+                    setEscolaId("0")
+                    setTurmaId("0")
+                    setTipo(formularios[index].tipo)
+                }
             }
         }
     }
@@ -161,11 +163,12 @@ export default function Adm() {
                     response.data.map((r: any) => {
                         let total = r[1] + r[2] + r[3] + r[4]
                         let d
-                        if (regionalId !== "0" && escolaId === "0" && tipo === "aluno") {
+                        if (regionalId !== "0" && escolaId === "0") {
                             d = {
                                 "inep": r.codigoMec,
                                 "nome": r.nome,
                                 "municipio": r.municipio,
+                                "regional": r.regional,
                                 "nao_iniciado": formataNumero(r[1]),
                                 "recusado": formataNumero(r[4]),
                                 "iniciado": formataNumero(r[2]),
@@ -239,14 +242,15 @@ export default function Adm() {
         fetchOptions()
 
 
-        if (regionalId !== "0" && escolaId === "0" && tipo === "aluno") {
+        if (regionalId !== "0" && escolaId === "0") {
 
             setColumns([
 
 
                 { label: "INEP", accessor: "inep", sortable: true, align: 'left', size: "5" },
-                { label: "NOME", accessor: "nome", sortable: true, align: 'left', size: "30" },
+                { label: "NOME", accessor: "nome", sortable: true, align: 'left', size: "20" },
                 { label: "MUNICIPIO", accessor: "municipio", sortable: true, align: 'left', size: "15" },
+                { label: "REGIONAL", accessor: "regional", sortable: true, align: 'left', size: "10" },
 
                 { label: "NÃO INICIADO", accessor: "nao_iniciado", sortable: true, align: 'rigth', size: "10" },
                 { label: "RECUSADO", accessor: "recusado", sortable: true, align: 'rigth', size: "10" },
@@ -274,7 +278,7 @@ export default function Adm() {
     return (
         <>
             <div className={"flex md:flex-col flex-col justify-start w-full h-screen bg-slate-800 gap-1"}>
-                <div className="bg-slate-900 text-white h-10 w-full text-center text-2xl">Acompanhamento.</div>
+                <div className="bg-slate-900 text-white h-10 w-full text-center text-2xl">Acompanhamento</div>
                 <div className="ml-8 mr-8 mb-8">
                     <div className="flex flex-row justify-between w-full gap-2 pt-4">
                         <div className="w-full"><Combo labelText='Formulario' idRota="tipoFormularios" idFiltro={filtroInicialEstado} onSelect={handleSelectFormulario} idSelecionado={formularioId} /></div>

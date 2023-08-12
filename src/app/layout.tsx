@@ -1,6 +1,6 @@
 import "./globals.css";
 import Providers from "../components/Providers";
-
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
   title: "Pesquisa Educação",
@@ -17,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
 
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

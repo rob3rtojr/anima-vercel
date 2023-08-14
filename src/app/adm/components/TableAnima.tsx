@@ -13,13 +13,13 @@ type Props = {
 
 
 const TableAnima = ({ data, columns, meta }: Props) => {
-    
-    const [tableData, handleSorting] = useSortableTable(data, columns);    
+
+    const [tableData, handleSorting] = useSortableTable(data, columns);
 
     return (
         <>
             <Table striped hoverable className="bg-gray-100 rounded-lg">
-                <TableHead columns={columns} handleSorting={handleSorting}/>
+                <TableHead columns={columns} handleSorting={handleSorting} />
                 <TableBody columns={columns} tableData={tableData} meta={meta} />
             </Table>
         </>

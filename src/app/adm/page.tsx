@@ -206,9 +206,9 @@ export default function Adm() {
 
                             case "2":
                                 if (formularioId === "4") {
-                                    setMeta(30)
-                                } else if (formularioId === "5") {
                                     setMeta(20)
+                                } else if (formularioId === "5") {
+                                    setMeta(30)
                                 } else if (formularioId === "6") {
                                     setMeta(75)
                                 } else if (formularioId === "7") {

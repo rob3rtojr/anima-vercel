@@ -14,23 +14,27 @@ type props = {
     meta: number
 }
 const TableAnimaBody = ({ tableData, columns, meta }: props) => {
+    let pct: number
+    let abs = 0    
     return (
         <Table.Body className='divide-y'>
             {tableData.map((data, index) => {
                 return (
                     <Table.Row key={index}>
                         {columns.map(({ accessor, align, size }: any) => {
-                            let pct = 0
                             let isValue = false
                             let campoTotal: any = 'total'
+                            let descCampo: any = ''
                             let corCampo: string = ''
                             switch (accessor) {
                                 case "nao_iniciado":
                                 case "recusado":
                                 case "iniciado":
                                 case "finalizado":
+                                    descCampo = `_${accessor}_abs`
                                     isValue = true
-                                    pct = (parseInt(data[accessor]) * 100) / parseInt(data[campoTotal])
+                                    pct =  parseFloat(data[accessor])
+                                    abs = parseInt(data[descCampo])
 
                                     if (pct === 0) {
                                         corCampo = 'bg-red-200'
@@ -49,15 +53,22 @@ const TableAnimaBody = ({ tableData, columns, meta }: props) => {
 
                             //(((r[1] * 100) / Total)).toFixed(2)
                             const tData = data[accessor] ? data[accessor] : "——";
+                            
                             return <Table.Cell
                                 key={accessor}
                                 className={`w-[${size}%] ${align === 'left' ? 'text-left' : 'text-right'}`}>
-                                <span className='pr-1 text-xs'>{tData} </span>
-                                {isValue && <>
-                                    <Divider />
-                                    <span className={`ml-1 font-bold ${accessor === 'finalizado' ? corCampo : ''} `}>{`${pct.toFixed(2)}%`}</span>
+                                {isValue && accessor!=="total" &&
+                                <>
+                                <span className={`pr-1 font-bold ${accessor === 'finalizado' ? corCampo : ''} `}>{`${pct}%`}</span>
+                                <Divider />
                                 </>
-
+                                }
+                                {isValue &&
+                                    
+                                    <span  className='ml-1 text-xs'>{abs}</span>
+                                }
+                                {!isValue &&
+                                    <span  className='ml-1 text-xs'>{tData}</span>
                                 }
                             </Table.Cell>;
                         })}

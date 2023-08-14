@@ -11,9 +11,13 @@ import TableAnima from "./components/TableAnima"
 
 type Resultado = {
     1: number,
+    _1_abs: number,
     2: number,
+    _2_abs: number,
     3: number,
+    _3_abs: number,
     4: number,
+    _4_abs: number,    
     codigoMec: string
     regional: string,
     municipio: string,
@@ -128,7 +132,7 @@ export default function Adm() {
     }
 
     const formataNumero = (valor: number) => {
-        return valor === null ? "0" : valor
+        return valor === null ? 0 : valor
     }
 
 
@@ -164,24 +168,34 @@ export default function Adm() {
                         let total = r[1] + r[2] + r[3] + r[4]
                         let d
                         if (regionalId !== "0" && escolaId === "0") {
+                            
                             d = {
                                 "inep": r.codigoMec,
                                 "nome": r.nome,
                                 "municipio": r.municipio,
                                 "regional": r.regional,
-                                "nao_iniciado": formataNumero(r[1]),
-                                "recusado": formataNumero(r[4]),
-                                "iniciado": formataNumero(r[2]),
-                                "finalizado": formataNumero(r[3]),
+                                "nao_iniciado": ((formataNumero(r[1]) * 100) / formataNumero(total)).toFixed(2),
+                                "_nao_iniciado_abs": formataNumero(r[1]),
+                                "recusado": ((formataNumero(r[4]) * 100) / formataNumero(total)).toFixed(2),
+                                "_recusado_abs": formataNumero(r[4]),
+                                "iniciado": ((formataNumero(r[2]) * 100) / formataNumero(total)).toFixed(2),
+                                "_iniciado_abs": formataNumero(r[2]),
+                                "finalizado": ((formataNumero(r[3]) * 100) / formataNumero(total)).toFixed(2),
+                                "_finalizado_abs": formataNumero(r[3]),
                                 "total": total
                             }
                         } else {
+                            console.log( `${((formataNumero(r[1]) * 100) / formataNumero(total)).toFixed(2)} %`)
                             d = {
                                 "nome": r.nome,
-                                "nao_iniciado": formataNumero(r[1]),
-                                "recusado": formataNumero(r[4]),
-                                "iniciado": formataNumero(r[2]),
-                                "finalizado": formataNumero(r[3]),
+                                "nao_iniciado": ((formataNumero(r[1]) * 100) / formataNumero(total)).toFixed(2),
+                                "_nao_iniciado_abs": formataNumero(r[1]),
+                                "recusado": (( formataNumero(r[4]) * 100) / formataNumero(total)).toFixed(2),
+                                "_recusado_abs": formataNumero(r[4]),
+                                "iniciado": ((formataNumero(r[2]) * 100) / formataNumero(total)).toFixed(2),
+                                "_iniciado_abs": formataNumero(r[2]),
+                                "finalizado": ((formataNumero(r[3]) * 100) / formataNumero(total)).toFixed(2),
+                                "_finalizado_abs": formataNumero(r[3]),
                                 "total": total
                             }
                         }

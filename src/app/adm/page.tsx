@@ -95,8 +95,6 @@ export default function Adm() {
         setMunicipioId("0")
         setEscolaId("0")
         setTurmaId("0")
-
-        console.log(selectedOption)
     }
 
     const handleSelectReginal = (selectedOption: string) => {
@@ -185,7 +183,7 @@ export default function Adm() {
                                 "total": total
                             }
                         } else {
-                            console.log( `${((formataNumero(r[1]) * 100) / formataNumero(total)).toFixed(2)} %`)
+                            //console.log( `${((formataNumero(r[1]) * 100) / formataNumero(total)).toFixed(2)} %`)
                             d = {
                                 "nome": r.nome,
                                 "nao_iniciado": ((formataNumero(r[1]) * 100) / formataNumero(total)).toFixed(2),
@@ -238,7 +236,7 @@ export default function Adm() {
 
                     setResultado(_resultado)
                     setIsLoading(false)
-                    console.log(meta)
+                    
                 })
 
             setIsLoading(false)

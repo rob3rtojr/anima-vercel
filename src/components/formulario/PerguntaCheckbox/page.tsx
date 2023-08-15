@@ -6,7 +6,8 @@ type PropsType = {
     isDisabled: boolean,
     handle: (idPergunta: string, idAlternativa: string, value: boolean) => void,
     alternativas: AlternativaType[],
-    resposta: string[]
+    resposta: string[],
+    isSaving: boolean
 }
 
 export default function PerguntaCheckbox(props: PropsType) {
@@ -27,7 +28,7 @@ export default function PerguntaCheckbox(props: PropsType) {
                             id={`custom-checkbox-${alternativa.id}`}
                             name={`chk-${props.props.id}-${alternativa.id}`}
                             value={alternativa.id}
-                            disabled={props.isDisabled}
+                            disabled={props.isDisabled || props.isSaving}
                             onChange={(e)=>props.handle(props.props.id,alternativa.id,checked)}
                             defaultChecked={checked}
                             ref={input => {

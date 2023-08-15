@@ -29,6 +29,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
     const [nomeFormulario, setNomeFormulario] = useState<string>("")
     const [contador, setContador] = useState(0)
     const [totalPergunta, setTotalPergunta] = useState(0)
+    const [isSaving, setIsSaving] = useState<boolean>(false)
     const [isLoading, setIsLoadng] = useState<boolean>(true)
     const [isLoadingButtonFinish, setIsLoadngButtonFinish] = useState<boolean>(false)
     const [respostas, setRespostas] = useState({})
@@ -103,6 +104,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
             ...respostas,
             [perguntaId]: valor
         })
+
         atualizaFaltaResponder(perguntaId)
     }
 
@@ -250,7 +252,9 @@ export default function Formulario({ params }: { params: { formularioId: string 
 
     }
 
-    function handleClickAlternativa(idPergunta: string, idAlternativa: string, value: boolean) {
+    function handleClickAlternativa(idPergunta: string, idAlternativa: string, value: boolean, campo: React.FormEvent<HTMLInputElement>) {
+
+        setIsSaving(true)
 
         const perguntaIndex = formulario ? formulario.findIndex((pergunta) => pergunta.id === idPergunta) : -1;
         let acao: string = ""
@@ -300,8 +304,14 @@ export default function Formulario({ params }: { params: { formularioId: string 
 
                 handleResposta(idPergunta, formularioAtualizado[perguntaIndex].resposta.join(','))
                 toast.success(`Resposta ${mensagem} com sucesso!`)
+                setIsSaving(false)
 
-            }).catch(error => toast.error(`Ocorreu um erro! ${error}`))
+            }).catch(
+                error => {
+                    toast.error(`Ocorreu um erro! ${error}`)
+                   setIsSaving(false)
+                }
+            )
 
 
         }
@@ -463,6 +473,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
                                             handle={handleClickAlternativa}
                                             alternativas={formulario[index].alternativa}
                                             resposta={formulario[index].resposta}
+                                            isSaving={isSaving}
                                         />
 
                                     </Card>

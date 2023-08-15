@@ -32,7 +32,7 @@ export default function PerguntaOption(props: PropsType) {
                             name={`opt-${props.props.id}`}
                             value={alternativa.id}
                             disabled={props.isDisabled}
-                            checked={props.resposta === alternativa.id.toString()}
+                            //checked={props.resposta === alternativa.id.toString()}
                             defaultChecked={props.resposta === alternativa.id.toString()}
                             onChange={(e)=>props.handle(props.props.id,alternativa.id,e.target.value)}
                             ref={input => {

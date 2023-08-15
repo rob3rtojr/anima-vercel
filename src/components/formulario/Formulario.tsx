@@ -252,7 +252,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
 
     }
 
-    function handleClickAlternativa(idPergunta: string, idAlternativa: string, value: boolean, campo: React.FormEvent<HTMLInputElement>) {
+    function handleClickAlternativa(idPergunta: string, idAlternativa: string, value: boolean) {
 
         setIsSaving(true)
 

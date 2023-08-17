@@ -324,7 +324,7 @@ export default function Adm() {
                             id="chkAgruparPorEscola" 
                             onClick={()=>handleAgruparEscola()} 
                             checked={agrupador==='escola'?true:false}
-                            /> Visualização detalhada por escola (<i>Regionais: ignorar essa opção</i>)
+                            /> Uso interno. (<i>Regionais: ignorar essa opção</i>)
                     </div>
                     }
                     <div className="flex flex-row items-center pt-8 gap-2">

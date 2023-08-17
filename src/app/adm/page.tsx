@@ -74,7 +74,7 @@ export default function Adm() {
     }, [])
 
     const handleAgruparEscola = () => {
-        console.log()
+        console.log(agrupador)
         agrupador === '' ? setAgrupador('escola') : setAgrupador('')
     }
 
@@ -101,6 +101,7 @@ export default function Adm() {
         setMunicipioId("0")
         setEscolaId("0")
         setTurmaId("0")
+        setAgrupador('')
     }
 
     const handleSelectReginal = (selectedOption: string) => {
@@ -108,6 +109,7 @@ export default function Adm() {
         setMunicipioId("0")
         setEscolaId("0")
         setTurmaId("0")
+        setAgrupador('')
     }
 
     const handleSelectMunicipio = (selectedOption: string) => {
@@ -119,6 +121,7 @@ export default function Adm() {
     const handleSelectEscola = (selectedOption: string) => {
         setEscolaId(selectedOption)
         setTurmaId("0")
+        setAgrupador('')
     }
 
     const handleSelectTurma = (selectedOption: string) => {
@@ -132,6 +135,7 @@ export default function Adm() {
         setMunicipioId("0")
         setEscolaId("0")
         setTurmaId("0")
+        setAgrupador('')
 
     }
 
@@ -313,8 +317,14 @@ export default function Adm() {
                         
                     </div>
                     {estadoId !== '0' && regionalId==='0' &&
-                    <div className="flex flex-row items-center pt-8 gap-2 text-gray-300">
-                        <input type="checkbox" name="chkAgruparPorEscola" id="chkAgruparPorEscola" onClick={()=>handleAgruparEscola()} /> Agrupar por Escola
+                    <div className="flex flex-row items-center pt-8 gap-2 text-gray-400">
+                        <input 
+                            type="checkbox" 
+                            name="chkAgruparPorEscola" 
+                            id="chkAgruparPorEscola" 
+                            onClick={()=>handleAgruparEscola()} 
+                            checked={agrupador==='escola'?true:false}
+                            /> Visualização detalhada por escola (<i>Regionais: ignorar essa opção</i>)
                     </div>
                     }
                     <div className="flex flex-row items-center pt-8 gap-2">

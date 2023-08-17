@@ -50,6 +50,7 @@ export default function Adm() {
     const [escolaId, setEscolaId] = useState<string>("0");
     const [turmaId, setTurmaId] = useState<string>("0");
     const [tipo, setTipo] = useState<string>("");
+    const [agrupador, setAgrupador] = useState<string>("");
 
     const [resultado, setResultado] = useState<Resultado[]>();
     const [hideCampos, setHideCampos] = useState<boolean>(false)
@@ -71,6 +72,11 @@ export default function Adm() {
 
 
     }, [])
+
+    const handleAgruparEscola = () => {
+        console.log()
+        agrupador === '' ? setAgrupador('escola') : setAgrupador('')
+    }
 
     const handleSelectFormulario = (selectedOption: string) => {
         setFormularioId(selectedOption)
@@ -153,10 +159,10 @@ export default function Adm() {
 
             } else {
                 rota += `estadoId=${estadoId}`
-
+                agrupador!=='' ? rota+=`&agrupador=${agrupador}` : rota+=''
             }
 
-
+            console.log(rota)
             await api.get(rota)
                 .then((response) => {
 
@@ -165,7 +171,7 @@ export default function Adm() {
                     response.data.map((r: any) => {
                         let total = r[1] + r[2] + r[3] + r[4]
                         let d
-                        if (regionalId !== "0" && escolaId === "0") {
+                        if (agrupador === 'escola' || (regionalId !== "0" && escolaId === "0")) {
                             
                             d = {
                                 "inep": r.codigoMec,
@@ -254,7 +260,7 @@ export default function Adm() {
         fetchOptions()
 
 
-        if (regionalId !== "0" && escolaId === "0") {
+        if (agrupador === 'escola' || (regionalId !== "0" && escolaId === "0")) {
 
             setColumns([
 
@@ -304,8 +310,13 @@ export default function Adm() {
                                 <div className="w-full"><Combo labelText='Escola' idRota="escolas-por-regional" idFiltro={regionalId} onSelect={handleSelectEscola} idSelecionado={escolaId} /></div>
                             </>
                         }
+                        
                     </div>
-
+                    {estadoId !== '0' && regionalId==='0' &&
+                    <div className="flex flex-row items-center pt-8 gap-2 text-gray-300">
+                        <input type="checkbox" name="chkAgruparPorEscola" id="chkAgruparPorEscola" onClick={()=>handleAgruparEscola()} /> Agrupar por Escola
+                    </div>
+                    }
                     <div className="flex flex-row items-center pt-8 gap-2">
                         <Button isLoading={isLoading} onClick={handleSubmit} >Filtrar</Button>
                         <Button isLoading={false} onClick={handleClear} >Limpar</Button>

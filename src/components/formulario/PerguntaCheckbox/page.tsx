@@ -30,7 +30,7 @@ export default function PerguntaCheckbox(props: PropsType) {
                             value={alternativa.id}
                             disabled={props.isDisabled || props.isSaving}
                             onChange={(e)=>props.handle(props.props.id,alternativa.id,checked)}
-                            defaultChecked={checked}
+                            checked={checked}
                             ref={input => {
                                 if (input) input.checked = checked;
                               }}                              

@@ -93,7 +93,6 @@ export default function Home() {
   }
 
   return <div className={"flex md:flex-row flex-col justify-center items-center w-full h-screen bg-slate-800 gap-1"}>
-
     {
       estados.map((e, index) => {
         return (

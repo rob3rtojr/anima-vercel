@@ -5,60 +5,89 @@ import { useSession } from "next-auth/react";
 import LoadImage from "../components/elements/LoadImage";
 
 import { useEffect, useState } from "react";
+import { api } from '@/lib/api';
 
-type DadosEstado = {
+// type DadosEstado = {
+//   sigla: string,
+//   descricao: string,
+//   secretaria: string,
+//   secretariaAbrebiado: string,
+//   isLoading: boolean
+// }
+
+type Estado = {
   sigla: string,
   descricao: string,
-  secretaria: string,
-  secretariaAbrebiado: string,
   isLoading: boolean
 }
 
 export default function Home() {
   const router = useRouter()
   const { data: session } = useSession();
-  const [estados, setEstados] = useState<DadosEstado[]>([])
+  const [estados, setEstados] = useState<Estado[]>([])
 
   if (session && session.user) {
     router.push(`/user/listaFormularios`)
   }
 
-  const dadosEstado: DadosEstado[] = [
-    {
-      "sigla": "GO",
-      "descricao": "Goiás",
-      "secretaria": "Secretaria de Estado da Educação de Goiás",
-      "secretariaAbrebiado": "SEDUC-GO",
-      "isLoading": false
-    },
-    {
-      "sigla": "MG",
-      "descricao": "Minas Gerais",
-      "secretaria": "Secretaria de Estado da Educação de Minas Gerais",
-      "secretariaAbrebiado": "SEE-MG",
-      "isLoading": false
-    },
-    {
-      "sigla": "PA",
-      "descricao": "Pará",
-      "secretaria": "Secretaria de Estado da Educação do Pará",
-      "secretariaAbrebiado": "SEDUC-PA",
-      "isLoading": false
-    },
-  ]
+  // const dadosEstado: DadosEstado[] = [
+  //   {
+  //     "sigla": "GO",
+  //     "descricao": "Goiás",
+  //     "secretaria": "Secretaria de Estado da Educação de Goiás",
+  //     "secretariaAbrebiado": "SEDUC-GO",
+  //     "isLoading": false
+  //   },
+  //   {
+  //     "sigla": "MG",
+  //     "descricao": "Minas Gerais",
+  //     "secretaria": "Secretaria de Estado da Educação de Minas Gerais",
+  //     "secretariaAbrebiado": "SEE-MG",
+  //     "isLoading": false
+  //   },
+  //   {
+  //     "sigla": "PA",
+  //     "descricao": "Pará",
+  //     "secretaria": "Secretaria de Estado da Educação do Pará",
+  //     "secretariaAbrebiado": "SEDUC-PA",
+  //     "isLoading": false
+  //   },
+  // ]
 
   useEffect(() => {
 
-    setEstados(dadosEstado)
+    const fetchOptions = async () => {
+      try {
+        
+        const result = await api.get(`${process.env.NEXT_PUBLIC_BASE_URL}/estados`)
+        const estadosRota: any[] = result.data
+
+        console.log(result)
+
+        const est: Estado[] = estadosRota.map(e=>({
+          sigla: e.sigla,
+          descricao: e.nome,
+          isLoading: false
+        }))
+        
+        setEstados(est)
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchOptions();
+
 
   }, [])
 
   function handleClick(sigla: string) {
 
-    const index = dadosEstado.findIndex((e) => e.sigla === sigla)
+    const index = estados.findIndex((e) => e.sigla === sigla)
     if (index >= 0) {
-      dadosEstado[index].isLoading = true
-      setEstados(dadosEstado)
+      const estadosCopia = [...estados];
+      estadosCopia[index].isLoading = true
+      setEstados(estadosCopia)
     }
     router.push(`/auth/signin?estado=${sigla}`)
   }

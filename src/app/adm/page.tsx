@@ -304,7 +304,7 @@ export default function Adm() {
                 <div className="ml-8 mr-8 mb-8">
                     <div className="flex flex-row justify-between w-full gap-2 pt-4">
                         <div className="w-full"><Combo labelText='Formulario' idRota="tipoFormularios" idFiltro={filtroInicialEstado} onSelect={handleSelectFormulario} idSelecionado={formularioId} /></div>
-                        <div className="w-full"><Combo labelText='Estado' idRota="estados" idFiltro={filtroInicialEstado} onSelect={handleSelectEstado} idSelecionado={estadoId} /></div>
+                        <div className="w-full"><Combo labelText='Estado' idRota="estadosgeral" idFiltro={filtroInicialEstado} onSelect={handleSelectEstado} idSelecionado={estadoId} /></div>
                         <div className="w-full"><Combo labelText='Regional' idRota="regionais" idFiltro={estadoId} onSelect={handleSelectReginal} idSelecionado={regionalId} /></div>
                     </div>
                     <div className="flex flex-row justify-between w-full gap-2">

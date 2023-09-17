@@ -76,7 +76,7 @@ export default function Home() {
         console.log(error);
       }
     };
-    fetchOptions();
+    //fetchOptions();
 
 
   }, [])
@@ -94,18 +94,21 @@ export default function Home() {
 
   return <div className={"flex md:flex-row flex-col justify-center items-center w-full h-screen bg-slate-800 gap-1"}>
     {
-      estados.map((e, index) => {
-        return (
-          <button key={index} onClick={() => handleClick(e.sigla)} className="w-full">
-            <div className="flex flex-col rounded-md shadow-sm h-32 bg-violet-500 p-4 hover:bg-violet-700 text-white transition-all m-4 justify-center items-center">
-              <div className="text-2xl flex flex-row justify-center items-center w-full">
-                {e.isLoading && <LoadImage />}
-                {e.descricao}
-              </div>
-            </div>
-          </button>
-        )
-      })
+      <div className={"text-white"}>
+        Período para preenchimento encerrado.
+      </div>
+      // estados.map((e, index) => {
+      //   return (
+      //     <button key={index} onClick={() => handleClick(e.sigla)} className="w-full">
+      //       <div className="flex flex-col rounded-md shadow-sm h-32 bg-violet-500 p-4 hover:bg-violet-700 text-white transition-all m-4 justify-center items-center">
+      //         <div className="text-2xl flex flex-row justify-center items-center w-full">
+      //           {e.isLoading && <LoadImage />}
+      //           {e.descricao}
+      //         </div>
+      //       </div>
+      //     </button>
+      //   )
+      // })
     }
   </div >
 }

@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn, useSession } from "next-auth/react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import Button from "@/components/elements/Button";
 import TextBox from "@/components/elements/TextBox";
 import Combo from '@/components/elements/Combo';
@@ -57,7 +57,9 @@ function LoginPage() {
   const id = useRef("");
   const password = useRef("");
 
-  const onSubmit = async () => {
+  const onSubmit = async (event: SyntheticEvent) => {
+
+    event.preventDefault()
 
     setIsLoading(true)
     setMessageError("")
@@ -111,18 +113,22 @@ function LoginPage() {
       masp,
       matriculaProfessor,
       userType,
-      redirect: true,
-      callbackUrl: "/user/listaFormularios",
+      //redirect: true,
+      //callbackUrl: "/user/listaFormularios",
+      redirect: false
       
     });
 
     if (result?.error) {
       setMessageError(result.error)
       setIsAuthenticated(false)
-
-    } else {
-      setIsAuthenticated(true)
-    }
+      setIsLoading(false)
+      return
+    } 
+    
+    setIsAuthenticated(true)
+    router.replace('/user/listaFormularios')
+    
 
   }
 
@@ -187,6 +193,8 @@ function LoginPage() {
     setAuthMessage("data")
     messageAuthType("data")
 
+    setMessageError("")
+
   }, [userType])
 
   const handleUserType = (type: string) => {
@@ -232,6 +240,8 @@ function LoginPage() {
 
     let aux = ""
     setAuthType(type)
+    setMessageError("")
+    
 
     switch (type) {
       case "data":
@@ -304,8 +314,6 @@ function LoginPage() {
           </div>
 
           <div className='flex flex-1 flex-col gap-2'>
-
-
             <label className='pb-2 pt-2'>
               Escolha uma forma para confirmarmos sua identidade:
             </label>
@@ -328,20 +336,15 @@ function LoginPage() {
             <TextBox
               labelText={authMessage}
               type={"text"}
-              onChange={(e) => (password.current = e.target.value)}
+              onChange={(e) => {password.current = e.target.value; setMessageError('')}}
               placeholder={placeHolderText}
+              error={messageError === "CredentialsSignin" ? 'Não foi possivel confirmar sua identidade. Tente novamente.' : ''}
+              
             />
-
             <Button onClick={onSubmit} isLoading={isLoading}>Login</Button>
-            {messageError === "CredentialsSignin" &&
-              <span className='text-red-900 text-sm'>Dados inválidos. Tente novamente</span>
-            }
           </div>
         </div>
-      {/* } */}
-      {/* {isAuthenticated &&
-        <SelectForm />
-      } */}
+
     </div>
   );
 }

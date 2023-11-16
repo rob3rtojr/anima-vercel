@@ -142,10 +142,19 @@ export default function Formulario({ params }: { params: { formularioId: string 
         })
     }
 
-    function handleInputText(idPergunta: string, value: string) {
+    function handleInputText(idPergunta: string, value: string, mascaraResposta: string) {
         const perguntaIndex = formulario ? formulario?.findIndex((pergunta) => pergunta.id === idPergunta) : -1;
         if (perguntaIndex !== -1 && formulario) {
             const formularioAtualizado = [...formulario]; // Faz uma cópia do estado atual
+
+            if (mascaraResposta === 'number') {
+                value = value.replace(/\D/g, '');
+
+                // Garante que o valor esteja entre 0 e valorMaximo
+                if (value !== '') {
+                    const numericValue = parseInt(value, 10);
+                }
+            }
 
             formularioAtualizado[perguntaIndex].resposta.length === 0 ?
                 formularioAtualizado[perguntaIndex].resposta.push(value) :
@@ -156,13 +165,14 @@ export default function Formulario({ params }: { params: { formularioId: string 
     }
 
     function handleInputTextBlur(idPergunta: string, value: string) {
+        
         const perguntaIndex = formulario ? formulario.findIndex((pergunta) => pergunta.id === idPergunta) : -1;
         let acao: string = ""
         let mensagem: string = ""
         if (perguntaIndex !== -1 && formulario) {
             const formularioAtualizado = [...formulario]; // Faz uma cópia do estado atual
 
-            if (formularioAtualizado[perguntaIndex].respostaBanco.length === 0 && value !== "") {
+            if ((formularioAtualizado[perguntaIndex].respostaBanco.length === 0 || formularioAtualizado[perguntaIndex].respostaBanco[0] === '') && value !== "") {
                 acao = "I"
                 mensagem = "incluída"
             } else if (formularioAtualizado[perguntaIndex].respostaBanco.length > 0 && value !== "") {
@@ -197,9 +207,12 @@ export default function Formulario({ params }: { params: { formularioId: string 
 
             }).catch(
                 error => {
-                    toast.error(`Ocorreu um erro! ${error}`)
+                    toast.error(`Ocorreu um erro de conexão com o servidor. Tente novamente!`)
                     formularioAtualizado[perguntaIndex].resposta = []
                     setFormulario(formularioAtualizado)
+
+                    console.log(formularioAtualizado[perguntaIndex].respostaBanco)
+                    console.log(formularioAtualizado[perguntaIndex].resposta)
                 }
             )
 
@@ -244,7 +257,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
                 toast.success(`Resposta ${acao === 'I' ? 'incluída' : 'alterada'} com sucesso!`)
 
             }).catch(
-                error => toast.error(`Ocorreu um erro! ${error}`)
+                error => toast.error(`Ocorreu um erro de conexão com o servidor. Tente novamente!`)
 
             )
 
@@ -308,8 +321,11 @@ export default function Formulario({ params }: { params: { formularioId: string 
 
             }).catch(
                 error => {
-                    toast.error(`Ocorreu um erro! ${error}`)
-                   setIsSaving(false)
+                    toast.error(`Ocorreu um erro de conexão com o servidor. Tente novamente!`)
+                    formularioAtualizado[perguntaIndex].resposta = [...formularioAtualizado[perguntaIndex].respostaBanco]
+                    setFormulario(formularioAtualizado); // Atualiza o estado do formulário
+
+                    setIsSaving(false)
                 }
             )
 
@@ -382,7 +398,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
         }
         setFaltaResponder(naoRespondido)
         if (naoRespondido.length > 0) {
-            toast.error("Você ainda não finalizou o preenchimento do formulário. Verifique as perguntas em vermelho")
+            toast.error("Você ainda não finalizou o preenchimento do formulário. Verifique as perguntas em vermelho.")
             setIsLoadngButtonFinish(false)
         } else {
 
@@ -516,6 +532,9 @@ export default function Formulario({ params }: { params: { formularioId: string 
                                             isVisibleButton={formulario.find((f) => f.id === p.id)?.isVisibleButton ? formulario.find((f) => f.id === p.id)?.isVisibleButton : false}
                                             isVisibleCampo={formulario.find((f) => f.id === p.id)?.isVisibleCampo ? formulario.find((f) => f.id === p.id)?.isVisibleCampo : false}
                                             inputValue={formulario.find((f) => f.id === p.id)?.resposta ? formulario.find((f) => f.id === p.id)?.resposta[0] : ""}
+                                            valorMinimo={formulario.find((f) => f.id === p.id)?.valorMinimo}
+                                            valorMaximo={formulario.find((f) => f.id === p.id)?.valorMaximo}
+                                            mascaraResposta={formulario.find((f) => f.id === p.id)?.mascaraResposta}
                                         />
 
                                     </Card>

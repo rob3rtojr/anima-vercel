@@ -1,6 +1,5 @@
 import "./globals.css";
-import Providers from "../components/Providers";
-import { Analytics } from '@vercel/analytics/react';
+import NextAuthSessionProvider from "@/providers/sessionProvider";
 
 export const metadata = {
   title: "Pesquisa Educação",
@@ -11,13 +10,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="bg-slate-800">
       <body>
-        <Providers>
-          {/* <Header /> */}
-
+        <NextAuthSessionProvider>
             {children}
-
-        </Providers>
-        <Analytics />
+        </NextAuthSessionProvider>
       </body>
     </html>
   );

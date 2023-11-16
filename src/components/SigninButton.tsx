@@ -2,6 +2,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { User } from 'lucide-react'
 import React from "react";
+import LogoutButton from "./LogoutButton";
 
 const SigninButton = () => {
   const { data: session } = useSession();
@@ -10,9 +11,7 @@ const SigninButton = () => {
     return (
       <div className="flex flex-row ml-auto justify-center items-center">
         <p className="text-white text-sm pr-2 flex flex-row justify-center items-center"><User/>{session.user.nome}</p>
-        <button onClick={() => signOut({callbackUrl:`/auth/signin?estado=${session.user.siglaEstado}`})} className="text-violet-400 hover:text-violet-700 text-sm justify-end">
-          [ SAIR ]
-        </button>
+        <LogoutButton/>
       </div>
     );
   }

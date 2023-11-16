@@ -1,25 +1,26 @@
 
+import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+const nextAuthOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "Credentials",
+      name: "credentials",
       // `credentials` is used to generate a form on the sign in page.
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
       // You can pass any HTML attribute to the <input> tag through the object.
       credentials: {
-        id: { label: "Username", type: "text", placeholder: "jsmith" },
-        dataNascimento: { label: "Password", type: "text" },
-        matricula: {type:"text"},
-        nomeMae: {type:"text"},
-        cpf: {type:"text"},
-        masp: {type:"text"},
-        matriculaProfessor: {type:"text"},
-        userType: {type:"text"}
+        id: {type: "text"},
+        dataNascimento: { type: "text" },
+        matricula: { type: "text" },
+        nomeMae: { type: "text" },
+        cpf: { type: "text" },
+        masp: { type: "text" },
+        matriculaProfessor: { type: "text" },
+        userType: { type: "text" }
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
@@ -43,19 +44,17 @@ const handler = NextAuth({
 
         const user = await res.json();
 
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
+        if (user && res.ok) {
           return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
-        }
+        } 
+        
+        return null;  
+        
       },
     }),
   ],
   callbacks: {
-    
+
     async jwt({ token, user }) {
 
       return { ...token, ...user };
@@ -69,10 +68,12 @@ const handler = NextAuth({
 
   },
   pages: {
-    signIn: `/auth/signin`,
+    signIn: `/`,
     signOut: '/auth/signout',
     error: "/auth/error"
   }
-});
+}
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(nextAuthOptions);
+
+export { handler as GET, handler as POST, nextAuthOptions };

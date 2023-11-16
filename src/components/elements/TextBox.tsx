@@ -21,8 +21,8 @@ const TextBox = React.forwardRef<HTMLInputElement, IProps>(
           <input
             id="txt"
             autoComplete="off"
-            className={`border border-slate-400 disabled:border-slate-100 w-full block outline-none py-2 px-1 transition-all text-xs lg:text-sm xl:text-base  bg-slate-50 focus:shadow focus:shadow-blue-500
-              ${error && "border-red-500 border  animate-shake"} ${
+            className={`border  disabled:border-slate-100 w-full block outline-none py-2 px-1 transition-all text-xs lg:text-sm xl:text-base  bg-slate-50 focus:shadow focus:shadow-blue-500
+              ${error!=="" ? "border-red-500 border animate-shake" : "border-slate-400"} ${
               children ? "rounded-r-md" : "rounded-md"
             }`}
             {...props}
@@ -33,7 +33,7 @@ const TextBox = React.forwardRef<HTMLInputElement, IProps>(
           <div className="flex">{children}</div>
         </div>
         {error && (
-          <p className="text-red-600 text-right animate-shake">{error}</p>
+          <p className="text-red-600 text-center animate-shake">{error}</p>
         )}
       </div>
     );

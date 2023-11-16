@@ -7,7 +7,7 @@ type PropsType = {
     props: PerguntaType,
     isDisabled: boolean,
     handleTimeOut: (idPergunta: string, timer: number | undefined) => void,
-    handleInputText: (idPergunta: string, value: string) => void,
+    handleInputText: (idPergunta: string, value: string, mascaraResposta?: string) => void,
     handleInputTextBlur: (idPergunta: string, value: string) => void,
     isVisiblePergunta?: boolean,
     isVisibleButton?: boolean,
@@ -15,7 +15,10 @@ type PropsType = {
     timer?: number,
     contador?: number,
     porcentagemTimer?: number,
-    inputValue?: string
+    inputValue?: string,
+    valorMinimo?: number,
+    valorMaximo?: number,
+    mascaraResposta?: string
 }
 
 export default function PerguntaText(props: PropsType) {
@@ -45,36 +48,57 @@ export default function PerguntaText(props: PropsType) {
                     )}
 
                     {(props.isVisibleCampo) && (
+
                         <input
                             key={`input1${props.props.id}`}
-                            onChange={(e) => props.handleInputText(props.props.id, e.target.value)}
+                            onChange={(e) => props.handleInputText(props.props.id ,e.target.value, props.props.mascaraResposta)}
                             onBlur={(e) => props.handleInputTextBlur(props.props.id, e.target.value)}
                             placeholder="Digite aqui sua resposta"
                             className="border-2 rounded-md border-blue-200 bg-white p-2"
-                            type="text"
+                            type={props.props.mascaraResposta === 'number' ? 'number' : 'text'}
                             value={props.inputValue}
-                            />
+                        />
                     )}
 
                     {(!props.isVisibleCampo && !props.isVisibleButton) && <Timer key={`timer${props.props.id}`} timer={props.timer} porcentagemTimer={props.porcentagemTimer} />}
                 </>
             }
-            {!props.timer &&
+            {!props.timer && props.mascaraResposta === 'number' &&
                 <>
                     <div key={`descricaopergunta3${props.props.id}`}>
                         <div><Pergunta key={`p${props.props.id}`} texto={`${props.props.descricao}`} /></div>
                     </div>
                     <input
                         key={`input2${props.props.id}`}
-                        onChange={(e) => props.handleInputText(props.props.id, e.target.value)}
+                        onChange={(e) => props.handleInputText(props.props.id, e.target.value, props.props.mascaraResposta)}
+                        onBlur={(e) => props.handleInputTextBlur(props.props.id, e.target.value)}
+                        placeholder="Digite aqui sua resposta (somente números)"
+                        className="border-2 rounded-md border-blue-200 bg-white p-2"
+                        type={props.props.mascaraResposta === 'number' ? 'number' : 'text'}
+                        min={props.props.valorMinimo}
+                        max={props.props.valorMaximo}
+                        step="1"
+                        value={props.inputValue}
+                    />
+                </>
+            }
+            {!props.timer && props.mascaraResposta !== 'number' &&
+                <>
+                    <div key={`descricaopergunta3${props.props.id}`}>
+                        <div><Pergunta key={`p${props.props.id}`} texto={`${props.props.descricao}`} /></div>
+                    </div>
+                    <input
+                        key={`input2${props.props.id}`}
+                        onChange={(e) => props.handleInputText(props.props.id, e.target.value, props.props.mascaraResposta)}
                         onBlur={(e) => props.handleInputTextBlur(props.props.id, e.target.value)}
                         placeholder="Digite aqui sua resposta"
-                        className="border-2 rounded-md border-blue-200 bg-white p-2" 
+                        className="border-2 rounded-md border-blue-200 bg-white p-2"
                         type="text"
                         value={props.inputValue}
                     />
                 </>
             }
+
         </div>
     )
 }

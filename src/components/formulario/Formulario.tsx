@@ -142,7 +142,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
         })
     }
 
-    function handleInputText(idPergunta: string, value: string, mascaraResposta: string) {
+    function handleInputText(idPergunta: string, value: string, mascaraResposta?: string) {
         const perguntaIndex = formulario ? formulario?.findIndex((pergunta) => pergunta.id === idPergunta) : -1;
         if (perguntaIndex !== -1 && formulario) {
             const formularioAtualizado = [...formulario]; // Faz uma cópia do estado atual

@@ -25,6 +25,7 @@ type FormularioUsuario = {
 export default function SelectForm() {
     const router = useRouter()
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [isError, setIsError] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isLoadingModal, setIsLoadingModal] = useState<boolean>(false)
     const [formularios, setFormularios] = useState<FormularioUsuario[]>([])
@@ -34,26 +35,32 @@ export default function SelectForm() {
 
 
 
+    const fetchOptions = async () => {
+
+        try {
+            setIsLoading(true)
+            setIsError(false)
+            const response = await api.get(`/${session?.user.role === "aluno" ? "listaFormulariosAluno" : "listaFormulariosProfessor"}/${session?.user.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${session?.user.accessToken}`,
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache',
+                    'Expires': '0',
+                }
+            })
+            setFormularios(response.data)
+            setIsError(false)
+            setIsLoading(false)
+        } catch (err) {
+            toast.error("Ocorreu um erro!")
+            setIsError(true)
+            setIsLoading(false)
+
+        }
+    }
+
 
     useEffect(() => {
-
-        const fetchOptions = async () => {
-            try {
-
-                const response = await api.get(`/${session?.user.role === "aluno" ? "listaFormulariosAluno" : "listaFormulariosProfessor"}/${session?.user.id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${session?.user.accessToken}`,
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache',
-                        'Expires': '0',
-                    }
-                })
-                setFormularios(response.data)
-
-            } catch (err) {
-                toast.error("Ocorreu um erro!")
-            }
-        }
 
         if (session?.user.accessToken)
             fetchOptions()
@@ -63,7 +70,7 @@ export default function SelectForm() {
     function handleClickForm(id: number, situacao: number, tempoDuracao: string) {
 
         setFormularioAtivo(id);
-        
+
         setDuracao(tempoDuracao)
         console.log(tempoDuracao)
 
@@ -102,7 +109,7 @@ export default function SelectForm() {
 
         let form = [...formularios]
         let index = -1
-        form.map((f, i)=>{
+        form.map((f, i) => {
             if (f.formulario.id === formularioAtivo) {
                 index = i
                 return;
@@ -130,7 +137,7 @@ export default function SelectForm() {
                         form[index].situacao = 4
                         form[index].isLoading = false
                         setFormularios(form)
-                        setIsLoading(false)
+                        //setIsLoading(false)
                     }
                 }).catch(error => toast.error(`Ocorreu um erro. Tente novamente.`))
 
@@ -151,7 +158,7 @@ export default function SelectForm() {
             if (index >= 0) {
                 form[index].isLoading = false
                 setFormularios(form)
-                setIsLoading(false)
+                //setIsLoading(false)
             }
             router.push(`/user/formulario/${id}`)
         }
@@ -209,6 +216,8 @@ export default function SelectForm() {
                                         <div className="text-2xl flex flex-row justify-center items-center gap-2">
                                             {!formularios[index].isLoading && <Edit />}
                                             {formularios[index].isLoading && <LoadImage />}
+
+
                                             {f.formulario.nome}
                                         </div>
                                         <div>{`${getAndamento(f.situacao)}`}</div>
@@ -218,8 +227,20 @@ export default function SelectForm() {
                             })
                         }
                         {
-                            formularios.length === 0 && <div className="flex flex-row justify-center items-center w-full"><LoadImage /> </div>
+                            isLoading && <div className="flex flex-row justify-center items-center w-full text-yellow-400"><LoadImage /></div>
                         }
+                        {
+                            formularios.length === 0 && !isError && !isLoading && <div className="flex flex-row justify-center items-center w-full text-yellow-400">Nenhum registro encontrado!</div>
+                        }
+                        {
+                            formularios.length === 0 && isError && 
+                                <div className="flex flex-col gap-4 w-full justify-center items-center">
+                                    <span className="text-red-600" >Ocorreu um erro!</span>
+                                    <button onClick={fetchOptions} className="transition-colors ml-2 p-2 mr-2 border border-violet-700 text-violet-400 hover:text-violet-400 rounded hover:bg-slate-900">Recarregar Página</button>
+
+                                </div>
+                        }
+
                     </div>
                     <DefaultModal
                         handleAccept={handleAccept}

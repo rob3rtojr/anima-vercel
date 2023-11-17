@@ -13,7 +13,7 @@ export default function LogoutButton () {
         router.replace('/')
     }
 
-    return <button onClick={logout} className="text-violet-400 hover:text-violet-700 text-sm justify-end">[ SAIR ]</button>
+    return <button onClick={logout} className="transition-colors ml-2 p-2 mr-2 border border-violet-700 text-violet-400 hover:text-violet-400 rounded hover:bg-slate-800">SAIR</button>
 
 
 }

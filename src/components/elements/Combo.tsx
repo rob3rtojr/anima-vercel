@@ -21,7 +21,6 @@ const Combo: React.FC<ComboProps> = ({ onSelect, idRota, idFiltro, idSelecionado
   const [selectedOption, setSelectedOption] = useState<string>('');
 
   useEffect(() => {
-    console.log("idFiltro",idFiltro)
     
     const fetchOptions = async () => {
       try {

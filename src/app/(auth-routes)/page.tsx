@@ -25,6 +25,8 @@ export default function Home() {
   const router = useRouter()
   const { data: session } = useSession();
   const [estados, setEstados] = useState<Estado[]>([])
+  const [erro, setErro] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
 
   if (session && session.user) {
     router.push(`/user/listaFormularios`)
@@ -55,10 +57,10 @@ export default function Home() {
   // ]
 
   useEffect(() => {
-
+    
     const fetchOptions = async () => {
       try {
-        
+        setIsLoading(true)    
         const result = await api.get(`${process.env.NEXT_PUBLIC_BASE_URL}/estados`)
         const estadosRota: any[] = result.data
 
@@ -70,10 +72,15 @@ export default function Home() {
           isLoading: false
         }))
         
+        
         setEstados(est)
+        setErro(false)
+        setIsLoading(false)
 
       } catch (error) {
+        setErro(true)
         console.log(error);
+        setIsLoading(false)
       }
     };
     fetchOptions();
@@ -92,11 +99,17 @@ export default function Home() {
     router.push(`/auth/signin?estado=${sigla}`)
   }
 
-  return <div className={"flex md:flex-row flex-col justify-center items-center w-full h-screen bg-slate-800 gap-1"}>
+  return <>
+  
+  <div className={"flex md:flex-row flex-col justify-center items-center w-full h-screen bg-slate-800 gap-1"}>
+    {isLoading && <LoadImage />}
     {
       //<div className={"text-white"}>
       //  Período para preenchimento encerrado.
       //</div>
+      
+      erro ? <div className='text-white flex flex-col justify-center items-center'><p>Não foi possível conectar ao servidor</p><p className='text-gray-400'>Tente novamente em alguns segundos!</p></div> :
+      
       estados.map((e, index) => {
         return (
           <button key={index} onClick={() => handleClick(e.sigla)} className="w-full">
@@ -109,6 +122,8 @@ export default function Home() {
           </button>
         )
       })
+
     }
   </div >
+  </>
 }

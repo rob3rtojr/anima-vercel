@@ -72,7 +72,6 @@ export default function SelectForm() {
         setFormularioAtivo(id);
 
         setDuracao(tempoDuracao)
-        console.log(tempoDuracao)
 
         if (situacao === 1 || situacao === 4) {
             setIsModalOpen(true);

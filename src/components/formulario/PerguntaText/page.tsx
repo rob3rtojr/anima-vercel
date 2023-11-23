@@ -1,4 +1,3 @@
-'use client'
 import { PerguntaType } from "@/Types/types"
 import Timer from "../Timer/page"
 import Pergunta from "../Pergunta/page"
@@ -66,7 +65,7 @@ export default function PerguntaText(props: PropsType) {
             {!props.timer && props.mascaraResposta === 'number' &&
                 <>
                     <div key={`descricaopergunta3${props.props.id}`}>
-                        <div><Pergunta key={`p${props.props.id}`} texto={`${props.props.descricao}`} /></div>
+                        <div><Pergunta key={`p${props.props.id}`} texto={`${props.props.id} - ${props.props.descricao}`} /></div>
                     </div>
                     <input
                         key={`input2${props.props.id}`}

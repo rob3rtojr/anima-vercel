@@ -70,7 +70,7 @@ export default function DefaultModal(props: PropsType) {
                 Olá, <b>{props.nome}</b>. Esse questionário faz parte de uma ampla pesquisa que a {estadoLogado?.secretaria} vem realizando para assegurar a continuidade de ações que poderão impactar positivamente a educação pública no estado. As perguntas serão sobre você, seus hábitos e suas perspectivas em relação à sua escola. É fundamental que você responda com seriedade todo o questionário.
               </p>
               <p className="text-base leading-relaxed text-gray-500 text-justify">
-                A participação nesta avaliação é voluntária, porém sua contribuição é muito importante para que juntos possamos avançar rumo a um futuro melhor para você e outros jovens do nosso estado.
+                A participação nesta avaliação é voluntária, porém sua contribuição é muito <b>importante</b> para que juntos possamos avançar rumo a um futuro melhor para você e outros jovens do nosso estado.
               </p>
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">

@@ -1,4 +1,3 @@
-'use client'
 import { AlternativaType, PerguntaType } from '../../../Types/types'
 
 type PropsType = {

@@ -1,4 +1,3 @@
-'use client'
 import { AlternativaType, PerguntaType } from "../../../Types/types"
 
 type PropsType = {
@@ -35,7 +34,7 @@ export default function PerguntaCheckbox(props: PropsType) {
                                 if (input) input.checked = checked;
                               }}                              
                         />
-                        <label key={`l${alternativa.id}`} className={`pl-2 cursor-pointer ${props.isDisabled && 'text-gray-400'} transition-all duration-700`} htmlFor={`custom-checkbox-${alternativa.id}`}>{alternativa.id} - {alternativa.descricao}</label>
+                        <label key={`l${alternativa.id}`} className={`pl-2 cursor-pointer ${props.isDisabled && 'text-gray-400'} transition-all duration-700`} htmlFor={`custom-checkbox-${alternativa.id}`}>{alternativa.descricao}</label>
                         </div>
                     </div>
 

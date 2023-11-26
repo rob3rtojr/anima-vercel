@@ -91,7 +91,7 @@ export default function DefaultModal(props: PropsType) {
             <div className="space-y-6">
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Este questionário é resultado da parceria entre a {estadoLogado?.secretaria} ({estadoLogado?.secretariaAbrebiado}) e o Instituto Ânima. Esse é um ponto de coleta de dado pessoal. Para mais informações, <a className='cursor-pointer' onClick={handleExtra}>clique aqui.</a>
+                Este questionário é resultado da parceria entre a {estadoLogado?.secretaria} ({estadoLogado?.secretariaAbrebiado}) e o Instituto Ânima. Esse é um ponto de coleta de dado pessoal. Para mais informações, <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>clique aqui.</a>
               </p>
               <p className="text-base leading-relaxed text-gray-500 text-justify">
                 Assinale abaixo se você concorda em participar da pesquisa:
@@ -101,7 +101,7 @@ export default function DefaultModal(props: PropsType) {
           {
             extra &&
             <div className="space-y-6">
-              <p className="text-base leading-relaxed text-gray-500 text-justify">“Este questionário é resultado da parceria entre a {estadoLogado?.secretaria} ({estadoLogado?.secretariaAbrebiado})  e o Instituto Ânima. Esse é um ponto de coleta de dado pessoal. Os dados pessoais são usados pelo INSTITUTO ÂNIMA SOCIESC DE INOVAÇÃO, PESQUISA E CULTURA (CNPJ – 07.749.605/0003-90) para o cumprimento de metas e objetivos no Acordo de Cooperação Técnica assinado com a {estadoLogado?.secretariaAbrebiado}, além de serem usados para enriquecer a sua experiência ao utilizar os nossos serviços. Confira, na íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer' href='https://www.institutoanimaeducacao.org.br/privacidade/' target='_blank'>neste link.</a></p>
+              <p className="text-base leading-relaxed text-gray-500 text-justify">“Este questionário é resultado da parceria entre a {estadoLogado?.secretaria} ({estadoLogado?.secretariaAbrebiado})  e o Instituto Ânima. Esse é um ponto de coleta de dado pessoal. Os dados pessoais são usados pelo INSTITUTO ÂNIMA SOCIESC DE INOVAÇÃO, PESQUISA E CULTURA (CNPJ – 07.749.605/0003-90) para o cumprimento de metas e objetivos no Acordo de Cooperação Técnica assinado com a {estadoLogado?.secretariaAbrebiado}, além de serem usados para enriquecer a sua experiência ao utilizar os nossos serviços. Confira, na íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanimaeducacao.org.br/privacidade/' target='_blank'>neste link.</a></p>
               <p className="text-base leading-relaxed text-gray-500 text-justify">Sempre que quiser, poderá pedir mais informações por meio do contato da Encarregada de Dados (DPO) do Instituto Ânima (privacidade@institutoanimaeducacao.org.br), Paula Starling.</p>
               <p className="text-base leading-relaxed text-gray-500 text-justify">Serão coletados neste questionário alguns dados pessoais como gênero, cor ou raça, idade e características do seu domicílio. Além disso, perguntamos sobre suas opiniões, atitudes, comportamentos, hábitos e algumas características da sua personalidade. Ao aceitar participar desta pesquisa você declara estar ciente que:</p>
               <ul>

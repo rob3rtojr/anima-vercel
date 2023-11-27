@@ -1,5 +1,6 @@
 import "./globals.css";
 import NextAuthSessionProvider from "@/providers/sessionProvider";
+import Analytics from "@/components/Analyticts/page";
 
 export const metadata = {
   title: "Pesquisa Educação",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <NextAuthSessionProvider>
             {children}
         </NextAuthSessionProvider>
+        <Analytics/>
       </body>
     </html>
   );

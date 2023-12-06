@@ -17,7 +17,9 @@ type PropsType = {
     inputValue?: string,
     valorMinimo?: number,
     valorMaximo?: number,
-    mascaraResposta?: string
+    mascaraResposta?: string,
+    isSaving:boolean
+    
 }
 
 export default function PerguntaText(props: PropsType) {
@@ -56,6 +58,8 @@ export default function PerguntaText(props: PropsType) {
                             className="border-2 rounded-md border-blue-200 bg-white p-2"
                             type={props.props.mascaraResposta === 'number' ? 'number' : 'text'}
                             value={props.inputValue}
+                            disabled={props.isSaving}
+
                         />
                     )}
 
@@ -78,6 +82,8 @@ export default function PerguntaText(props: PropsType) {
                         max={props.props.valorMaximo}
                         step="1"
                         value={props.inputValue}
+                        disabled={props.isSaving}
+
                     />
                 </>
             }
@@ -94,6 +100,8 @@ export default function PerguntaText(props: PropsType) {
                         className="border-2 rounded-md border-blue-200 bg-white p-2"
                         type="text"
                         value={props.inputValue}
+                        disabled={props.isSaving}
+
                     />
                 </>
             }

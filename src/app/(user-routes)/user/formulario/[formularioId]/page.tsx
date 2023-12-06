@@ -1,6 +1,10 @@
 
 import Formulario from "@/components/formulario/Formulario"
-
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Pesquisa Educação - Perguntas'
+};
 
 export default function FormularioPage({ params }: { params: { formularioId: string } }) {
 

@@ -165,7 +165,10 @@ export default function Formulario({ params }: { params: { formularioId: string 
     }
 
     function handleInputTextBlur(idPergunta: string, value: string) {
-        
+
+        const idToast = toast.loading("Aguarde...")
+        setIsSaving(true)
+
         const perguntaIndex = formulario ? formulario.findIndex((pergunta) => pergunta.id === idPergunta) : -1;
         let acao: string = ""
         let mensagem: string = ""
@@ -193,8 +196,6 @@ export default function Formulario({ params }: { params: { formularioId: string 
                 headers: { 'Authorization': `Bearer ${session?.user.accessToken}` }
             }).then(resp => {
 
-                toast.success(`Resposta ${mensagem} com sucesso!`)
-
                 //acao === "E" ? formularioAtualizado[perguntaIndex].respostaBanco = new Array<string> : formularioAtualizado[perguntaIndex].respostaBanco[0] = value
                 formularioAtualizado[perguntaIndex].respostaBanco = []
                 formularioAtualizado[perguntaIndex].respostaBanco.push(value)
@@ -203,25 +204,30 @@ export default function Formulario({ params }: { params: { formularioId: string 
                 formularioAtualizado[perguntaIndex].resposta.push(value)
 
                 setFormulario(formularioAtualizado);
-                handleResposta(idPergunta, value)
+                handleResposta(idPergunta, value);
+                setIsSaving(false)
+                toast.update(idToast, {render: `Resposta ${mensagem} com sucesso!`, type:"success", isLoading:false, autoClose:2000})
 
             }).catch(
                 error => {
-                    toast.error(`Ocorreu um erro de conexão com o servidor. Tente novamente!`)
+                    toast.update(idToast, {render:`Ocorreu um erro de conexão com o servidor. Tente novamente!`, type:"error", isLoading:false, autoClose:2000})
                     formularioAtualizado[perguntaIndex].resposta = []
                     setFormulario(formularioAtualizado)
-
-                    console.log(formularioAtualizado[perguntaIndex].respostaBanco)
-                    console.log(formularioAtualizado[perguntaIndex].resposta)
+                    setIsSaving(false)
                 }
             )
 
 
+
+
+        }else {
+            setIsSaving(false)
         }
     }
 
     function handleClickOption(idPergunta: string, idAlternativa: string, value: string) {
-
+        setIsSaving(true)
+        const idToast = toast.loading("Aguarde...")
         const perguntaIndex = formulario ? formulario.findIndex((pergunta) => pergunta.id === idPergunta) : -1;
         let acao: string = ""
 
@@ -254,19 +260,25 @@ export default function Formulario({ params }: { params: { formularioId: string 
 
                 setFormulario(formularioAtualizado);
                 handleResposta(idPergunta, value)
-                toast.success(`Resposta ${acao === 'I' ? 'incluída' : 'alterada'} com sucesso!`)
-
+                //toast.success(`Resposta ${acao === 'I' ? 'incluída' : 'alterada'} com sucesso!`)
+                toast.update(idToast,{render: `Resposta ${acao === 'I' ? 'incluída' : 'alterada'} com sucesso!`, type:"success", isLoading: false, autoClose:2000 })
+                setIsSaving(false)
             }).catch(
-                error => toast.error(`Ocorreu um erro de conexão com o servidor. Tente novamente!`)
-
+                error => {
+                    toast.update(idToast, {render:`Ocorreu um erro de conexão com o servidor. Tente novamente!`, type: "error", isLoading: false, autoClose:2000});
+                    setIsSaving(false)
+                }
+                
             )
 
+        }else {
+            setIsSaving(false)
         }
 
     }
 
     function handleClickAlternativa(idPergunta: string, idAlternativa: string, value: boolean) {
-
+        const idToast = toast.loading("Aguarde...")
         setIsSaving(true)
 
         const perguntaIndex = formulario ? formulario.findIndex((pergunta) => pergunta.id === idPergunta) : -1;
@@ -316,12 +328,12 @@ export default function Formulario({ params }: { params: { formularioId: string 
                 }
 
                 handleResposta(idPergunta, formularioAtualizado[perguntaIndex].resposta.join(','))
-                toast.success(`Resposta ${mensagem} com sucesso!`)
+                toast.update(idToast, {render: `Resposta ${mensagem} com sucesso!`, type:"success",isLoading:false,autoClose:2000})
                 setIsSaving(false)
 
             }).catch(
                 error => {
-                    toast.error(`Ocorreu um erro de conexão com o servidor. Tente novamente!`)
+                    toast.update(idToast, {render: `Ocorreu um erro de conexão com o servidor. Tente novamente!`, type:"error",isLoading:false,autoClose:2000})
                     formularioAtualizado[perguntaIndex].resposta = [...formularioAtualizado[perguntaIndex].respostaBanco]
                     setFormulario(formularioAtualizado); // Atualiza o estado do formulário
 
@@ -330,6 +342,8 @@ export default function Formulario({ params }: { params: { formularioId: string 
             )
 
 
+        }else {
+            setIsSaving(false)
         }
     }
 
@@ -401,8 +415,9 @@ export default function Formulario({ params }: { params: { formularioId: string 
             toast.error("Você ainda não finalizou o preenchimento do formulário. Verifique as perguntas em vermelho.")
             setIsLoadngButtonFinish(false)
         } else {
-
-
+            const idToast = toast.loading("Aguarde, Finalizando...")
+            
+            //`Ocorreu um erro de conexão com o servidor. Tente novamente!`
             const resp = api.put("/situacaoFormulario", {
                 tipo: session?.user.role,
                 formularioId: params.formularioId,
@@ -412,13 +427,13 @@ export default function Formulario({ params }: { params: { formularioId: string 
                 headers: { 'Authorization': `Bearer ${session?.user.accessToken}` }
             }).then(resp => {
 
-                toast.success(`Finalizado com sucesso!`)
+                toast.update(idToast, {render: `Finalizado com sucesso!`, type:"success", isLoading:false, autoClose:3000 })
                 setIsLoadngButtonFinish(false)
                 router.push(`/user/listaFormularios`)
 
 
             }).catch(error => {
-                toast.error(`Ocorreu um erro ao finalizar. Tente novamente.`)
+                toast.update(idToast, {render: `Ocorreu um erro ao finalizar. Tente novamente.`, type:"error", isLoading:false, autoClose:3000 })
                 setIsLoadngButtonFinish(false)
             })
 
@@ -431,13 +446,15 @@ export default function Formulario({ params }: { params: { formularioId: string 
             {isLoading && <Loading />}
             {!isLoading &&
                 <>
+                    
                     <header className="bg-slate-750 mt-20">
+                
                         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                             <h1 className="font-alt text-3xl  tracking-tight text-gray-400">{nomeFormulario}</h1>
                             <p className='text-gray-400 text-sm'></p>
                         </div>
                     </header>
-
+                    
                     {
                         formulario && formulario.length > 0 &&
                         formulario.map((p, index) => {
@@ -472,7 +489,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
                             if (p.tipoPerguntaId === TipoPerguntaEnum.TITULO) {
                                 return (
                                     <Card key={`card${p.id}`} faltaResponder={marcaFaltaResponder} >
-                                        <Pergunta key={index} texto={p.descricao} />
+                                        <Pergunta key={index} texto={p.descricao}/>
                                     </Card>
                                 )
                             }
@@ -481,7 +498,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
 
                                     <Card key={`card${p.id}`} faltaResponder={marcaFaltaResponder}>
 
-                                        <Pergunta key={index} isDisabled={isDisabled} texto={`${p.numero} - ${p.descricao}`} />
+                                        <Pergunta key={index} isDisabled={isDisabled} texto={`${p.numero} - ${p.descricao}`}/>
 
                                         <PerguntaCheckbox
                                             props={p}
@@ -499,7 +516,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
                             else if (p.tipoPerguntaId === TipoPerguntaEnum.RADIO) {
                                 return (
                                     <Card key={`card${p.id}`} faltaResponder={marcaFaltaResponder}>
-                                        <Pergunta key={index} isDisabled={isDisabled} texto={`${p.numero} - ${p.descricao}`} />
+                                        <Pergunta key={index} isDisabled={isDisabled} texto={`${p.numero} - ${p.descricao}`}/>
 
                                         <PerguntaOption
                                             props={p}
@@ -507,6 +524,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
                                             handle={handleClickOption}
                                             alternativas={formulario[index].alternativa}
                                             resposta={formulario[index].resposta.length > 0 ? formulario[index].resposta[0] : ""}
+                                            isSaving={isSaving}
                                         />
 
                                     </Card>
@@ -535,6 +553,8 @@ export default function Formulario({ params }: { params: { formularioId: string 
                                             valorMinimo={formulario.find((f) => f.id === p.id)?.valorMinimo}
                                             valorMaximo={formulario.find((f) => f.id === p.id)?.valorMaximo}
                                             mascaraResposta={formulario.find((f) => f.id === p.id)?.mascaraResposta}
+                                            isSaving={isSaving}
+
                                         />
 
                                     </Card>
@@ -553,6 +573,7 @@ export default function Formulario({ params }: { params: { formularioId: string 
                                             step={formulario.find((f) => f.id === p.id)?.step ? formulario.find((f) => f.id === p.id)?.step : 0}
                                             mascara={formulario.find((f) => f.id === p.id)?.mascaraResposta ? formulario.find((f) => f.id === p.id)?.mascaraResposta : ""}
                                             handleInputTextBlur={handleInputTextBlur}
+                                            isSaving={isSaving}
                                         />
 
                                     </Card>

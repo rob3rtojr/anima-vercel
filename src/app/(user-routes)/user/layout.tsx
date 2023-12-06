@@ -2,7 +2,7 @@
 import Header from "@/components/Header";
 
 export const metadata = {
-  title: "Instituto Anima",
+  title: "Pesquisa Educação - Selecione um Formulário",
   description: "Formulário",
 };
 

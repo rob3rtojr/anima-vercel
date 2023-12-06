@@ -3,7 +3,7 @@ import NextAuthSessionProvider from "@/providers/sessionProvider";
 import Analytics from "@/components/Analyticts/page";
 
 export const metadata = {
-  title: "Pesquisa Educação",
+  title: "Pesquisa Educação - Autenticação",
   description: "Formulário de Pesquisa",
 };
 

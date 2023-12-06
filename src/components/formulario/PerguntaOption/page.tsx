@@ -5,7 +5,8 @@ type PropsType = {
     isDisabled: boolean,
     handle: (idPergunta: string, idAlternativa: string, value: string) => void,
     alternativas: AlternativaType[]
-    resposta: string
+    resposta: string,
+    isSaving: boolean
 }
 
 export default function PerguntaOption(props: PropsType) {
@@ -30,7 +31,7 @@ export default function PerguntaOption(props: PropsType) {
                             id={`custom-radio-${alternativa.id}`}
                             name={`opt-${props.props.id}`}
                             value={alternativa.id}
-                            disabled={props.isDisabled}
+                            disabled={props.isDisabled || props.isSaving}
                             //checked={props.resposta === alternativa.id.toString()}
                             defaultChecked={props.resposta === alternativa.id.toString()}
                             onChange={(e)=>props.handle(props.props.id,alternativa.id,e.target.value)}

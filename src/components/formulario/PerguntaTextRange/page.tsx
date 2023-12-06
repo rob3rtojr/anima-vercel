@@ -2,6 +2,7 @@
 import { PerguntaType } from "@/Types/types"
 import Pergunta from "../Pergunta/page"
 import { useEffect, useState } from "react";
+
 type PropsType = {
     props: PerguntaType,
     isDisabled: boolean,
@@ -10,7 +11,8 @@ type PropsType = {
     min: number | undefined,
     max: number | undefined,
     step: number | undefined,
-    mascara: string | undefined
+    mascara: string | undefined,
+    isSaving: boolean
 }
 
 export default function PerguntaRange(props: PropsType) {
@@ -52,6 +54,8 @@ export default function PerguntaRange(props: PropsType) {
                 onMouseUp={(e) => props.handleInputTextBlur(props.props.id, width.toString())}
                 value={width}
                 className="w-full h-2 bg-blue-300 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                disabled={props.isSaving}
+
             />
 
             <div className="">

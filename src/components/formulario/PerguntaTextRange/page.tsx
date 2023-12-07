@@ -52,6 +52,7 @@ export default function PerguntaRange(props: PropsType) {
                 step={props.step}
                 onChange={changeWidth}
                 onMouseUp={(e) => props.handleInputTextBlur(props.props.id, width.toString())}
+                onTouchEnd={(e) => props.handleInputTextBlur(props.props.id, width.toString())}
                 value={width}
                 className="w-full h-2 bg-blue-300 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                 disabled={props.isSaving}

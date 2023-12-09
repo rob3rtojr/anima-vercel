@@ -80,7 +80,20 @@ export default function SelectForm() {
             toast.success("Você já preencheu o formulário. Obrigado!")
 
         } else {
-            handleOpenFormulario(id)
+            
+            // Obtém a data atual
+            const dataAtual = new Date();
+
+            // Define a data limite
+            const dataLimite = new Date(`${process.env.NEXT_PUBLIC_LIMIT_DATE}`);
+
+            // Compara as datas
+            if (dataAtual < dataLimite) {
+                // Coloque o trecho de código que você quer executar aqui
+                handleOpenFormulario(id)
+            }else {
+                toast.warning("Período para preenchimento encerrado.")
+            }
         }
     }
 
@@ -145,20 +158,7 @@ export default function SelectForm() {
             }
         }
 
-        // Obtém a data atual
-        const dataAtual = new Date();
-
-        // Define a data limite
-        const dataLimite = new Date(`${process.env.NEXT_PUBLIC_LIMIT_DATE}`);
-
-        // Compara as datas
-        if (dataAtual < dataLimite) {
-            //se a data atual for menor que a limite, continua
-            fetchOptions();
-        }else {
-            router.push ("/")
-        }
-
+        fetchOptions()
     }
 
     function handleOpenFormulario(id: number) {

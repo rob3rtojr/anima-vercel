@@ -90,7 +90,7 @@ export default function Home() {
     const dataAtual = new Date();
 
     // Define a data limite (08/12/2023 23:59:59)
-    const dataLimite = new Date('2023-12-08T23:59:59');
+    const dataLimite = new Date(`${process.env.NEXT_PUBLIC_LIMIT_DATE}`);
 
     // Compara as datas
     if (dataAtual < dataLimite) {
@@ -99,6 +99,9 @@ export default function Home() {
       setDataLimite(false)
     }else {
       setDataLimite(true)
+      console.log(dataAtual)
+      console.log(dataLimite)
+
     }
 
     

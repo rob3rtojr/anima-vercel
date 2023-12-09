@@ -96,6 +96,8 @@ export default function Home() {
     if (dataAtual < dataLimite) {
       // Coloque o trecho de código que você quer executar aqui
       fetchOptions();
+      setDataLimite(false)
+    }else {
       setDataLimite(true)
     }
 
@@ -117,11 +119,11 @@ export default function Home() {
   
   <div className={"flex md:flex-row flex-col justify-center items-center w-full h-screen bg-slate-800 gap-1"}>
     {isLoading && !dataLimite && <LoadImage />}
-    {dataLimite && "Período de preenchimento enreccado."}
+    {dataLimite && <div className={"text-white"}>Período de preenchimento enreccado.</div>}
     {
-      //<div className={"text-white"}>
+      //
       //  Período para preenchimento encerrado.
-      //</div>
+      //
       
       erro ? <div className='text-white flex flex-col justify-center items-center'><p>Não foi possível conectar ao servidor</p><p className='text-gray-400'>Tente novamente em alguns segundos!</p></div> :
       

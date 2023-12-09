@@ -27,6 +27,7 @@ export default function Home() {
   const [estados, setEstados] = useState<Estado[]>([])
   const [erro, setErro] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [dataLimite, setDataLimite] = useState<boolean>(false)
 
   if (session && session.user) {
     router.push(`/user/listaFormularios`)
@@ -95,7 +96,7 @@ export default function Home() {
     if (dataAtual < dataLimite) {
       // Coloque o trecho de código que você quer executar aqui
       fetchOptions();
-      console.log("menor")
+      setDataLimite(true)
     }
 
     
@@ -115,7 +116,8 @@ export default function Home() {
   return <>
   
   <div className={"flex md:flex-row flex-col justify-center items-center w-full h-screen bg-slate-800 gap-1"}>
-    {isLoading && <LoadImage />}
+    {isLoading && !dataLimite && <LoadImage />}
+    {dataLimite && "Período de preenchimento enreccado."}
     {
       //<div className={"text-white"}>
       //  Período para preenchimento encerrado.

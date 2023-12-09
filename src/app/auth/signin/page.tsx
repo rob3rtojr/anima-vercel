@@ -7,7 +7,6 @@ import Button from "@/components/elements/Button";
 import TextBox from "@/components/elements/TextBox";
 import Combo from '@/components/elements/Combo';
 import { api } from '@/lib/api';
-import SelectForm from '@/components/SelectForm';
 
 type PropsType = {
   siglaEstado: string
@@ -51,10 +50,6 @@ function LoginPage() {
   const [userType, setUserType] = useState<string>("aluno");
   const [authMessage, setAuthMessage] = useState<string>();
   const [placeHolderText, setPlaceHolderText] = useState<string>();
-  const { status } = useSession();
-
-
-  const id = useRef("");
   const password = useRef("");
 
   const onSubmit = async (event: SyntheticEvent) => {
@@ -151,6 +146,22 @@ function LoginPage() {
     if (!searchParams.get("estado")) {
       router.push ("/")
     }else {
+
+      // Obtém a data atual
+      const dataAtual = new Date();
+
+      // Define a data limite (08/12/2023 23:59:59)
+      const dataLimite = new Date('2023-12-08T23:59:59');
+
+      // Compara as datas
+      if (dataAtual < dataLimite) {
+        // Coloque o trecho de código que você quer executar aqui
+        fetchOptions();
+      }else {
+        router.push ("/")
+      }
+
+
       fetchOptions();
     }
 

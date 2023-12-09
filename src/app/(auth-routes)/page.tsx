@@ -119,7 +119,7 @@ export default function Home() {
   
   <div className={"flex md:flex-row flex-col justify-center items-center w-full h-screen bg-slate-800 gap-1"}>
     {isLoading && !dataLimite && <LoadImage />}
-    {dataLimite && <div className={"text-white"}>Período de preenchimento enreccado.</div>}
+    {dataLimite && <div className={"text-white"}>Período de preenchimento encerrado.</div>}
     {
       //
       //  Período para preenchimento encerrado.

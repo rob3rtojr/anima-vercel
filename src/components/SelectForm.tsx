@@ -145,7 +145,19 @@ export default function SelectForm() {
             }
         }
 
-        fetchOptions()
+        // Obtém a data atual
+        const dataAtual = new Date();
+
+        // Define a data limite
+        const dataLimite = new Date(`${process.env.NEXT_PUBLIC_LIMIT_DATE}`);
+
+        // Compara as datas
+        if (dataAtual < dataLimite) {
+            //se a data atual for menor que a limite, continua
+            fetchOptions();
+        }else {
+            router.push ("/")
+        }
 
     }
 

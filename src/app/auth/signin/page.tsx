@@ -160,9 +160,6 @@ function LoginPage() {
       }else {
         router.push ("/")
       }
-
-
-      fetchOptions();
     }
 
     

@@ -94,8 +94,22 @@ export default function Formulario({ params }: { params: { formularioId: string 
 
         }
 
-        if (session?.user.accessToken)
-            fetchOptions()
+        if (session?.user.accessToken) {
+            
+            // Obtém a data atual
+            const dataAtual = new Date();
+
+            // Define a data limite
+            const dataLimite = new Date(`${process.env.NEXT_PUBLIC_LIMIT_DATE}`);
+
+            // Compara as datas
+            if (dataAtual < dataLimite) {
+                fetchOptions()
+            }else {
+                toast.warning("Período para preenchimento encerrado.")
+            }
+
+        }
 
     }, [session?.user.accessToken])
 

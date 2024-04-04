@@ -94,7 +94,6 @@ export default function Home() {
 
     // Compara as datas
     if (dataAtual < dataLimite) {
-      // Coloque o trecho de código que você quer executar aqui
       fetchOptions();
       setDataLimite(false)
     }else {

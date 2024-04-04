@@ -1,5 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation'
 import { Edit } from 'lucide-react'
 import { useEffect, useState } from "react";
@@ -33,7 +33,13 @@ export default function SelectForm() {
     const [duracao, setDuracao] = useState<string>("")
     const { data: session } = useSession();
 
+    async function logout() {
+        await signOut({
+            redirect: false
+        })
 
+        router.replace('/')
+    }
 
     const fetchOptions = async () => {
 
@@ -48,6 +54,11 @@ export default function SelectForm() {
                     'Expires': '0',
                 }
             })
+
+            if (response.status === 401) {
+                logout()
+            }
+
             setFormularios(response.data)
             setIsError(false)
             setIsLoading(false)
@@ -55,7 +66,7 @@ export default function SelectForm() {
             toast.error("Ocorreu um erro!")
             setIsError(true)
             setIsLoading(false)
-
+            logout()
         }
     }
 
@@ -80,7 +91,7 @@ export default function SelectForm() {
             toast.success("Você já preencheu o formulário. Obrigado!")
 
         } else {
-            
+
             // Obtém a data atual
             const dataAtual = new Date();
 
@@ -91,7 +102,7 @@ export default function SelectForm() {
             if (dataAtual < dataLimite) {
                 // Coloque o trecho de código que você quer executar aqui
                 handleOpenFormulario(id)
-            }else {
+            } else {
                 toast.warning("Período para preenchimento encerrado.")
             }
         }
@@ -167,11 +178,13 @@ export default function SelectForm() {
             let form = [...formularios]
             let index = form.findIndex((f) => f.formulario.id === id)
             if (index >= 0) {
-                form[index].isLoading = false
+                form[index].isLoading = true
                 setFormularios(form)
                 //setIsLoading(false)
             }
+
             router.push(`/user/formulario/${id}`)
+
         }
     }
 
@@ -222,7 +235,7 @@ export default function SelectForm() {
                             formularios.map((f, index) => {
 
 
-                                return (<button key={index} onClick={() => handleClickForm(f.formulario.id, f.situacao, f.formulario.duracao)}>
+                                return (<button key={index} disabled={formularios[index].isLoading} onClick={() => handleClickForm(f.formulario.id, f.situacao, f.formulario.duracao)}>
                                     <div className="flex flex-col rounded-md shadow-sm md:w-96 min-w-96  h-32 bg-violet-500 p-4 hover:bg-violet-700 text-white transition-all m-4 justify-center items-center">
                                         <div className="text-2xl flex flex-row justify-center items-center gap-2">
                                             {!formularios[index].isLoading && <Edit />}
@@ -244,12 +257,12 @@ export default function SelectForm() {
                             formularios.length === 0 && !isError && !isLoading && <div className="flex flex-row justify-center items-center w-full text-yellow-400">Nenhum registro encontrado!</div>
                         }
                         {
-                            formularios.length === 0 && isError && 
-                                <div className="flex flex-col gap-4 w-full justify-center items-center">
-                                    <span className="text-red-600" >Ocorreu um erro!</span>
-                                    <button onClick={fetchOptions} className="transition-colors ml-2 p-2 mr-2 border border-violet-700 text-violet-400 hover:text-violet-400 rounded hover:bg-slate-900">Recarregar Página</button>
+                            formularios.length === 0 && isError &&
+                            <div className="flex flex-col gap-4 w-full justify-center items-center">
+                                <span className="text-red-600" >Ocorreu um erro!</span>
+                                <button onClick={fetchOptions} className="transition-colors ml-2 p-2 mr-2 border border-violet-700 text-violet-400 hover:text-violet-400 rounded hover:bg-slate-900">Recarregar Página</button>
 
-                                </div>
+                            </div>
                         }
 
                     </div>

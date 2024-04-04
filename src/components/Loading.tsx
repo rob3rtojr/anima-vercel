@@ -2,9 +2,11 @@ export default function Loading() {
 
     return (
         <>
+
             <header className="bg-slate-750 mt-20">
-                <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                    <h1 className="font-alt text-3xl  tracking-tight text-gray-400">Carregando o formulário...</h1>
+                <div className="flex flex-col justify-center gap-1 items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                    <h1 className="font-alt text-4xl tracking-tight text-gray-200">Aguarde...</h1>
+                    <p className='text-gray-400 text-sm'>Estamos carregando o formulário!</p>
                 </div>
             </header>
 

@@ -7,6 +7,7 @@ import Button from "@/components/elements/Button";
 import TextBox from "@/components/elements/TextBox";
 import Combo from '@/components/elements/Combo';
 import { api } from '@/lib/api';
+import { ToastContainer, toast } from 'react-toastify';
 
 type PropsType = {
   siglaEstado: string
@@ -47,7 +48,7 @@ function LoginPage() {
   const [alunos, setAlunos] = useState<Aluno[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [authType, setAuthType] = useState<string>("data");
-  const [userType, setUserType] = useState<string>("aluno");
+  const [userType, setUserType] = useState<string>("professor");
   const [authMessage, setAuthMessage] = useState<string>();
   const [placeHolderText, setPlaceHolderText] = useState<string>();
   const password = useRef("");
@@ -98,7 +99,7 @@ function LoginPage() {
         matriculaProfessor=""
         break;
     }
-    console.log
+
     const result = await signIn("credentials", {
       id: id,
       dataNascimento,
@@ -139,7 +140,7 @@ function LoginPage() {
         setEstado({ id, sigla, nome });
 
       } catch (error) {
-        console.log(error);
+        toast.error(`Ocorreu um erro! Tente novamente.`)
       }
     };
 
@@ -188,7 +189,7 @@ function LoginPage() {
         }
 
       } catch (error) {
-        console.log(error);
+        toast.error(`Ocorreu um erro! Tente novamente.`)
       }
     };
 
@@ -298,7 +299,8 @@ function LoginPage() {
       {/* {!isAuthenticated && */}
 
         <div className="px-7 py-4 shadow bg-gray-100 rounded-md flex flex-col gap-2 justify-between w-[500px]">
-          <div className="flex flex-row justify-start">
+          {/* <div className="flex flex-row justify-start"> */}
+          <div className="hidden">
             <div className='pr-4'><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="aluno" ref={input => { if (input && userType === "aluno") input.checked = true; }} /> Sou Aluno</div>
             <div><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="professor" ref={input => { if (input && userType === "professor") input.checked = true; }} /> Sou Professor</div>
           </div>
@@ -328,8 +330,7 @@ function LoginPage() {
 
             <div className="flex md:flex-row flex-col md:gap-4 gap-2 ">
 
-              <div>
-                <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data de Nascimento</div>
+              {userType === "aluno" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data de Nascimento</div>}
 
               {userType === "aluno" && estado.sigla === "PA" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
               {userType === "aluno" && estado.sigla !== "PA" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matricula") input.checked = true; }} value="matricula" /> Matrícula</div>}
@@ -337,7 +338,7 @@ function LoginPage() {
               
               {userType === "professor" && estado.sigla !== "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
               {userType === "professor" && estado.sigla === "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "masp") input.checked = true; }} value="masp" /> MASP</div>}
-              {userType === "professor" && estado.sigla === "PA" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Matrícula Professor</div>}
+              {userType === "professor" && estado.sigla !== "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Matrícula Professor</div>}
 
             </div>
 
@@ -347,12 +348,11 @@ function LoginPage() {
               onChange={(e) => {password.current = e.target.value; setMessageError('')}}
               placeholder={placeHolderText}
               error={messageError === "CredentialsSignin" ? 'Não foi possivel confirmar sua identidade. Tente novamente.' : ''}
-              
             />
-            <Button onClick={onSubmit} isLoading={isLoading}>Login</Button>
+            <Button onClick={onSubmit} disabled={isLoading} isLoading={isLoading}>Login</Button>
           </div>
         </div>
-
+        <ToastContainer />
     </div>
   );
 }

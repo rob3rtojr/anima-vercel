@@ -74,7 +74,7 @@ export default function Adm() {
     }, [])
 
     const handleAgruparEscola = () => {
-        console.log(agrupador)
+        
         agrupador === '' ? setAgrupador('escola') : setAgrupador('')
     }
 
@@ -166,7 +166,6 @@ export default function Adm() {
                 agrupador!=='' ? rota+=`&agrupador=${agrupador}` : rota+=''
             }
 
-            console.log(rota)
             await api.get(rota)
                 .then((response) => {
 
@@ -193,7 +192,7 @@ export default function Adm() {
                                 "total": total
                             }
                         } else {
-                            //console.log( `${((formataNumero(r[1]) * 100) / formataNumero(total)).toFixed(2)} %`)
+
                             d = {
                                 "nome": r.nome,
                                 "nao_iniciado": ((formataNumero(r[1]) * 100) / formataNumero(total)).toFixed(2),
@@ -255,7 +254,7 @@ export default function Adm() {
 
 
         if (formularioId === "0" || formularioId === "todos") {
-            console.log("toast")
+
             toast.warn("Escolha um formulário")
             return
         }

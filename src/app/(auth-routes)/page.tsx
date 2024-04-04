@@ -65,22 +65,22 @@ export default function Home() {
         const result = await api.get(`${process.env.NEXT_PUBLIC_BASE_URL}/estados`)
         const estadosRota: any[] = result.data
 
-        console.log(result)
-
         const est: Estado[] = estadosRota.map(e=>({
           sigla: e.sigla,
           descricao: e.nome,
           isLoading: false
         }))
-        
-        
-        setEstados(est)
-        setErro(false)
-        setIsLoading(false)
+
+        if (est.length===1) {
+          router.push(`/auth/signin?estado=${est[0].sigla}`)
+        } else {        
+          setEstados(est)
+          setErro(false)
+          setIsLoading(false)        
+        }
 
       } catch (error) {
         setErro(true)
-        console.log(error);
         setIsLoading(false)
       }
     };
@@ -99,9 +99,6 @@ export default function Home() {
       setDataLimite(false)
     }else {
       setDataLimite(true)
-      console.log(dataAtual)
-      console.log(dataLimite)
-
     }
 
     

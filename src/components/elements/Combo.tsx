@@ -59,13 +59,13 @@ const Combo: React.FC<ComboProps> = ({ onSelect, idRota, idFiltro, idSelecionado
     <div>
         {labelText && (
           <label
-            className="block text-gray-600  mb-1 text-xs lg:text-sm xl:text-base"
+            className="block text-gray-600  mb-1 text-sm xl:text-base"
             htmlFor="txt"
           >
             {labelText}
           </label>
         )}        
-    <select className='border border-slate-400 disabled:border-slate-100 w-full block outline-none py-1 px-1 transition-all text-xs lg:text-sm xl:text-base  bg-slate-50 focus:shadow focus:shadow-blue-500 rounded-md' value={selectedOption} onChange={handleChange}>
+    <select className='border border-slate-400 disabled:border-slate-100 w-full block outline-none py-1 px-1 transition-all text-xs lg:text-sm xl:text-base mb-1 md:mb-4 bg-slate-50 focus:shadow focus:shadow-blue-500 rounded-md' value={selectedOption} onChange={handleChange}>
       <option value="0">{textFirtstOption}</option>
       {options.map((option) => (
         <option key={option.id} value={option.id}>

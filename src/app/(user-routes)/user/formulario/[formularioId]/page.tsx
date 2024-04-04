@@ -1,5 +1,5 @@
 
-import Formulario from "@/components/formulario/Formulario"
+import FormularioV2 from '@/components/formulariov2/FormularioV2';
 import { Metadata } from 'next';
  
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export default function FormularioPage({ params }: { params: { formularioId: str
 
     return (
         <div className='h-[full] flex flex-col bg-slate-800'>          
-            <Formulario params={params} />
+            <FormularioV2 params={params} />
         </div>
     )
 

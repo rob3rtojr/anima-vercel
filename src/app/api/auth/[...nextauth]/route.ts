@@ -5,10 +5,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 const nextAuthOptions: NextAuthOptions = {
   session: {
-    maxAge: 6 * 60 * 60 //6 horas
+    maxAge: 2 * 60 * 60 //2 horas
   },
   jwt: {
-    maxAge: 6 * 60 * 60 //6 horas
+    maxAge: 2 * 60 * 60 //2 horas
   },
   providers: [
     CredentialsProvider({

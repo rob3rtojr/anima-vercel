@@ -579,7 +579,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                             if (respostas[p.id] === "") {
                                                 return (
 
-                                                    <Link href={`#${p.id}`}>[ {p.numero} ] </Link>
+                                                    <Link key={index} href={`#${p.id}`}>[ {p.numero} ] </Link>
                                                 )
                                             }
                                         }

@@ -335,7 +335,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                     method: "Get",
                     headers: {
                         'Authorization': `Bearer ${session?.user.accessToken}`,
-                        'Cache-Control': 'no-cache',
+                        'Cache-Control': 'no-store',
                         'Expires': '0',
                     }
                 })
@@ -365,7 +365,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
             }
             catch (err: any) {
 
-                toast.error(`Ocorreu um erro: ${err.message}`)
+                toast.error(`Ocorreu um erro. Tente novamente. Erro: ${err.message}`)
                 return
             }
         }

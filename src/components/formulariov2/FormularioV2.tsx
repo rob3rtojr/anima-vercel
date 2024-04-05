@@ -127,9 +127,20 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
             headers: { 'Authorization': `Bearer ${session?.user.accessToken}` }
         }).then(resp => {
 
-            toast.update(idToast, { render: `Resposta incluída com sucesso!`, type: "success", isLoading: false, autoClose: 2000 })
-            if (alternativaId !== "")
-                desmarcaItensDependentes(perguntaId, alternativaId, valor)
+            if (resp.status === 200) {
+
+                toast.update(idToast, { render: `Resposta incluída com sucesso! ${resp.status}`, type: "success", isLoading: false, autoClose: 2000 })
+                if (alternativaId !== "")
+                    desmarcaItensDependentes(perguntaId, alternativaId, valor)
+
+            }else {
+
+                limparSelecao(perguntaId)
+
+                toast.update(idToast, { render: `Ocorreu um erro! Tente novamente! ${resp.status}`, type: "error", isLoading: false, autoClose: 2000 })
+
+                setIsSaving(false)                
+            }
         }).catch(
             error => {
 
@@ -433,7 +444,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.TITULO) {
                                         return (
-                                            <CardPergunta id={pergunta.id} className={"text-white bg-gray-800"} key={pergunta.id} faltaResponder={false} >
+                                            <CardPergunta id={`C-${pergunta.id}`} className={"text-white bg-gray-800"} key={pergunta.id} faltaResponder={false} >
                                                 <Pergunta className={"text-gray-400 text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
                                             </CardPergunta>
                                         )
@@ -441,7 +452,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.RADIO) {
                                         return (
-                                            <Card id={pergunta.id} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
@@ -472,7 +483,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.CHECKBOX) {
                                         return (
-                                            <Card id={pergunta.id} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
@@ -502,7 +513,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.TEXT) {
                                         return (
-                                            <Card id={pergunta.id} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
@@ -531,7 +542,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.RANGE) {
                                         return (
-                                            <Card id={pergunta.id} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
@@ -579,7 +590,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                             if (respostas[p.id] === "") {
                                                 return (
 
-                                                    <Link key={index} href={`#${p.id}`}>[ {p.numero} ] </Link>
+                                                    <Link key={index} href={`#C-${p.id}`}>[ {p.numero} ] </Link>
                                                 )
                                             }
                                         }
@@ -603,7 +614,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                     {perguntas &&
                         <footer className={`bg-slate-900 text-gray-300 fixed bottom-0 w-full justify-center text-center`}>
-                            {Object.keys(respostas).filter(key => respostas[key] !== "").length} de {perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length} -
+                            <span className='hidden'>{Object.keys(respostas).filter(key => respostas[key] !== "").length} de {perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length} -</span>
                             Você respondeu {Math.round(100 * Object.keys(respostas).filter(key => respostas[key] !== "").length / perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length)}%
                         </footer>
                     }

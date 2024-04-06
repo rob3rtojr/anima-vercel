@@ -35,8 +35,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
     const [isSaving, setIsSaving] = useState<boolean>(false)
     const [isDebugging, setIsDebugging] = useState<boolean>(false)
     const [isValidForm, setIsValidForm] = useState<boolean>(true)
-
-
+    const [podePreencher, setPodePreencher] = useState<boolean>(true)
     const [nomeFormulario, setNomeFormulario] = useState<string>("")
 
     // // Simulação de dados obtidos da API
@@ -353,6 +352,12 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                     }
                 })
 
+                if (res.status === 401) {
+                    setPodePreencher(false)
+                    router.replace('/user/listaFormularios')
+                }
+                
+
                 const response = await res.json();
 
 
@@ -408,7 +413,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
     return (
         <>
             {isLoading && <Loading />}
-            {!isLoading &&
+            {!isLoading && podePreencher &&
                 <>
                     <div className='flex flex-col'>
 

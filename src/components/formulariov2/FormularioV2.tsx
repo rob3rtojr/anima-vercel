@@ -127,8 +127,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
             headers: { 'Authorization': `Bearer ${session?.user.accessToken}` }
         }).then(resp => {
 
-            if (resp.status === 200) {
+            //console.log(resp)
 
+            if (resp.status === 200) {
+                setIsSaving(false)                
                 toast.update(idToast, { render: `Resposta incluída com sucesso! ${resp.status}`, type: "success", isLoading: false, autoClose: 2000 })
                 if (alternativaId !== "")
                     desmarcaItensDependentes(perguntaId, alternativaId, valor)
@@ -413,7 +415,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                         <header className="bg-slate-750 mt-20">
                             <div className="flex flex-col justify-center gap-1 items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                                 <h1 className="font-alt text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
-                                <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role}s</p>
+                                <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p>
                             </div>
                         </header>
 
@@ -466,7 +468,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                     value={alternativa.id}
                                                                     checked={respostas[pergunta.id]?.toString() === alternativa.id.toString()}
                                                                     onChange={() => atualizarResposta(pergunta.id, alternativa.id, alternativa.id, pergunta.tipoPerguntaId)}
-                                                                    disabled={pergunta.isDisabled}
+                                                                    disabled={pergunta.isDisabled || isSaving}
                                                                 />
                                                                 <label className={`pl-2`} htmlFor={alternativa.id}>{alternativa.descricao}</label>
                                                             </div>

@@ -199,8 +199,8 @@ function LoginPage() {
 
   useEffect(() => {
 
-    setAuthMessage("data")
-    messageAuthType("data")
+    setAuthMessage("cpf")
+    messageAuthType("cpf")
 
     setMessageError("")
 
@@ -274,7 +274,7 @@ function LoginPage() {
         setPlaceHolderText('')
         break;
       case "matriculaprofessor":
-        setAuthMessage(`Informe a matrícula`)
+        setAuthMessage(`Informe a matrícula/vínculo servidor`)
         setPlaceHolderText('')
         break;
       default:
@@ -309,7 +309,7 @@ function LoginPage() {
             <Combo labelText='Município' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} />
 
             {userType === "professor" &&
-              <Combo labelText='Professores' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} />
+              <Combo labelText='Servidores' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} />
             }
             {userType === "aluno" &&
               <>
@@ -334,11 +334,26 @@ function LoginPage() {
 
               {userType === "aluno" && estado.sigla === "PA" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
               {userType === "aluno" && estado.sigla !== "PA" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matricula") input.checked = true; }} value="matricula" /> Matrícula</div>}
-              {userType === "aluno" && <div className='flex md:flex-col flex-row justify-start items-center'><div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "mae") input.checked = true; }} value="mae" /> Nome da mãe</div><span className='text-sm text-gray-500 pl-2'>(primeiro nome)</span></div>}
+              {userType === "aluno" && 
+                <div className='flex md:flex-col flex-row justify-start items-center'>
+                  <div>
+                    <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "mae") input.checked = true; }} value="mae" /> Nome da mãe
+                  </div>
+                  <span className='text-sm text-gray-500 pl-2'>(primeiro nome)</span>
+                </div>
+              }
               
               {userType === "professor" && estado.sigla !== "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
               {userType === "professor" && estado.sigla === "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "masp") input.checked = true; }} value="masp" /> MASP</div>}
-              {userType === "professor" && estado.sigla !== "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Matrícula Professor</div>}
+              {userType === "professor" && estado.sigla !== "MG" && 
+                <div >
+                  <div>
+                    <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Nº de matrícula/vínculo servidor
+                  </div>
+                  <span className='text-sm text-gray-500 pl-1'>(número disponível no contracheque/holerite)</span>
+                </div>
+                
+                }
 
             </div>
 

@@ -266,7 +266,7 @@ function LoginPage() {
         setPlaceHolderText('')
         break;
       case "cpf":
-        setAuthMessage(`Informe o cpf`)
+        setAuthMessage(`Informe o CPF`)
         setPlaceHolderText('000.000.000-00')
         break;
       case "masp":

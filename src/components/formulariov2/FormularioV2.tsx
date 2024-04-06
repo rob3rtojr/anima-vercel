@@ -62,17 +62,27 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
             const formularioAtualizado = [...perguntas]; // Faz uma cópia do estado atual
 
             if (mascaraResposta === 'number') {
-                value = value.replace(/\D/g, '');
+                value = value.replace(/\D/g, '')
+                
+                formularioAtualizado[perguntaIndex].resposta.length === 0 ?
+                formularioAtualizado[perguntaIndex].resposta.push(value) :
+                formularioAtualizado[perguntaIndex].resposta[0] = value                
 
-                // Garante que o valor esteja entre 0 e valorMaximo
-                if (value !== '') {
-                    const numericValue = parseInt(value, 10);
+            }
+            else if (mascaraResposta === 'idade') {
+                if (/^\d{0,2}$/.test(value)) {
+                    formularioAtualizado[perguntaIndex].resposta.length === 0 ?
+                        formularioAtualizado[perguntaIndex].resposta.push(value) :
+                        formularioAtualizado[perguntaIndex].resposta[0] = value
                 }
+
+            } else {
+                formularioAtualizado[perguntaIndex].resposta.length === 0 ?
+                    formularioAtualizado[perguntaIndex].resposta.push(value) :
+                    formularioAtualizado[perguntaIndex].resposta[0] = value
             }
 
-            formularioAtualizado[perguntaIndex].resposta.length === 0 ?
-                formularioAtualizado[perguntaIndex].resposta.push(value) :
-                formularioAtualizado[perguntaIndex].resposta[0] = value
+
 
             setPerguntas(formularioAtualizado);
         }
@@ -129,18 +139,18 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
             //console.log(resp)
 
             if (resp.status === 200) {
-                setIsSaving(false)                
+                setIsSaving(false)
                 toast.update(idToast, { render: `Resposta incluída com sucesso! ${resp.status}`, type: "success", isLoading: false, autoClose: 2000 })
                 if (alternativaId !== "")
                     desmarcaItensDependentes(perguntaId, alternativaId, valor)
 
-            }else {
+            } else {
 
                 limparSelecao(perguntaId)
 
                 toast.update(idToast, { render: `Ocorreu um erro! Tente novamente! ${resp.status}`, type: "error", isLoading: false, autoClose: 2000 })
 
-                setIsSaving(false)                
+                setIsSaving(false)
             }
         }).catch(
             error => {
@@ -356,7 +366,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                     setPodePreencher(false)
                     router.replace('/user/listaFormularios')
                 }
-                
+
 
                 const response = await res.json();
 
@@ -419,8 +429,13 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                         <header className="bg-slate-750 mt-20">
                             <div className="flex flex-col justify-center gap-1 items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                                <h1 className="font-alt text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
-                                <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p>
+                                {/*<h1 className="font-alt text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
+                                 <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p> */}
+                                <h1 className="font-alt text-4xl tracking-tight text-gray-200">Questionário</h1>
+                                <p className='text-gray-400 text-sm'>“Sua colaboração neste questionário é essencial para aprofundarmos nossa compreensão
+                                    sobre o perfil de gestores pedagógicos (coordenadores, gestores, assessores, coordenadores
+                                    de área, etc). Por gentileza, responda às seguintes perguntas com base em suas experiências
+                                    e na sua situação atual.”</p>
                             </div>
                         </header>
 
@@ -526,16 +541,36 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                     <CardBody>
 
                                                         <div className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'}`}>
-                                                            <input
-                                                                className='rounded-md w-full'
-                                                                id={`txt-${pergunta.id}`}
-                                                                type="text"
-                                                                name={pergunta.id}
-                                                                value={pergunta.resposta}
-                                                                onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
-                                                                onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
-                                                                disabled={pergunta.isDisabled}
-                                                            />
+                                                            {pergunta.mascaraResposta === 'idade' &&
+                                                                <input
+                                                                    className='rounded-md w-full'
+                                                                    id={`txt-${pergunta.id}`}
+                                                                    type='number'
+                                                                    name={pergunta.id}
+                                                                    value={pergunta.resposta}
+                                                                    onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
+                                                                    onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
+                                                                    disabled={pergunta.isDisabled}
+                                                                    min={pergunta.valorMinimo}
+                                                                    max={pergunta.valorMaximo}
+                                                                    maxLength={2}
+
+
+
+                                                                />
+                                                            }
+                                                            {pergunta.mascaraResposta !== 'idade' &&
+                                                                <input
+                                                                    className='rounded-md w-full'
+                                                                    id={`txt-${pergunta.id}`}
+                                                                    type='text'
+                                                                    name={pergunta.id}
+                                                                    value={pergunta.resposta}
+                                                                    onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
+                                                                    onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
+                                                                    disabled={pergunta.isDisabled}
+                                                                />
+                                                            }
                                                         </div>
 
                                                         {isDebugging && <DebubArea pergunta={pergunta} resposta={respostas[pergunta.id]} limpar={limparSelecao} />}

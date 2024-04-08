@@ -3,16 +3,14 @@ import { api } from '@/lib/api';
 import React, { useState, useEffect } from 'react';
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { AlternativaType, PerguntaType } from "@/Types/types";
+import { PerguntaType } from "@/Types/types";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { TipoPerguntaEnum } from '@/enum/TipoPergunta';
 import Loading from '../Loading';
-import { stat } from 'fs';
 import { Card, CardBody, CardPergunta } from '../formulario/Card/page';
 import Pergunta from '../formulario/Pergunta/page';
 import PerguntaRangeV2 from './PerguntaTextRangeV2/page';
-import { unescape } from 'querystring';
 import LoadImage from '../elements/LoadImage';
 import DebubArea from './DebugArea';
 import Link from "next/link";
@@ -140,7 +138,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
             if (resp.status === 200) {
                 setIsSaving(false)
-                toast.update(idToast, { render: `Resposta incluída com sucesso! ${resp.status}`, type: "success", isLoading: false, autoClose: 2000 })
+                toast.update(idToast, { render: `Resposta incluída com sucesso!`, type: "success", isLoading: false, autoClose: 2000 })
                 if (alternativaId !== "")
                     desmarcaItensDependentes(perguntaId, alternativaId, valor)
 
@@ -148,7 +146,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                 limparSelecao(perguntaId)
 
-                toast.update(idToast, { render: `Ocorreu um erro! Tente novamente! ${resp.status}`, type: "error", isLoading: false, autoClose: 2000 })
+                toast.update(idToast, { render: `Ocorreu um erro! Tente novamente!`, type: "error", isLoading: false, autoClose: 2000 })
 
                 setIsSaving(false)
             }
@@ -432,10 +430,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                 {/*<h1 className="font-alt text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
                                  <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p> */}
                                 <h1 className="font-alt text-4xl tracking-tight text-gray-200">Questionário</h1>
-                                <p className='text-gray-400 text-sm'>“Sua colaboração neste questionário é essencial para aprofundarmos nossa compreensão
+                                <p className='text-gray-400 text-sm'>Sua colaboração neste questionário é essencial para aprofundarmos nossa compreensão
                                     sobre o perfil de gestores pedagógicos (coordenadores, gestores, assessores, coordenadores
                                     de área, etc). Por gentileza, responda às seguintes perguntas com base em suas experiências
-                                    e na sua situação atual.”</p>
+                                    e na sua situação atual.</p>
                             </div>
                         </header>
 

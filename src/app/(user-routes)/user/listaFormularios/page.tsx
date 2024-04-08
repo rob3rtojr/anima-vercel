@@ -1,5 +1,10 @@
 import SelectForm from "@/components/SelectForm";
 
+export const metadata = {
+    title: "Pesquisa Educação - Meus Formulários",
+    description: "Formulário",
+  };
+
 export default function ListaFormularios() {
     return (
         <>

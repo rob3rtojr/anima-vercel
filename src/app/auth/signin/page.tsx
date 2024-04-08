@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
 import Button from "@/components/elements/Button";
 import TextBox from "@/components/elements/TextBox";

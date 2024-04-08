@@ -6,7 +6,7 @@ import { inter } from "@/app/styles/fonts";
 export const metadata = {
   title: "Pesquisa Educação - Autenticação",
   description: "Formulário de Pesquisa",
-};
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

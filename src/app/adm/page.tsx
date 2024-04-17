@@ -216,26 +216,30 @@ export default function Adm() {
                         // 7	Educação Financeira	professor                      
                         switch (estadoId) {
                             case "1":
-                            case "3":
-
-                                if (formularioId === "4") {
-                                    setMeta(70)
-                                } else if (formularioId === "5") {
-                                    setMeta(80)
+                                if (formularioId === "1") {
+                                    setMeta(90)
                                 }
                                 break;
+                            // case "3":
 
-                            case "2":
-                                if (formularioId === "4") {
-                                    setMeta(20)
-                                } else if (formularioId === "5") {
-                                    setMeta(30)
-                                } else if (formularioId === "6") {
-                                    setMeta(75)
-                                } else if (formularioId === "7") {
-                                    setMeta(85)
-                                }
-                                break
+                            //     if (formularioId === "4") {
+                            //         setMeta(70)
+                            //     } else if (formularioId === "5") {
+                            //         setMeta(80)
+                            //     }
+                            //     break;
+
+                            // case "2":
+                            //     if (formularioId === "4") {
+                            //         setMeta(20)
+                            //     } else if (formularioId === "5") {
+                            //         setMeta(30)
+                            //     } else if (formularioId === "6") {
+                            //         setMeta(75)
+                            //     } else if (formularioId === "7") {
+                            //         setMeta(85)
+                            //     }
+                            //     break
                             default:
                                 break;
                         }

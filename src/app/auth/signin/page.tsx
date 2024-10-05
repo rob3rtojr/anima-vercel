@@ -47,8 +47,8 @@ function LoginPage() {
   //const [aluno, setAluno] = useState<Aluno | undefined>();
   const [alunos, setAlunos] = useState<Aluno[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [authType, setAuthType] = useState<string>("data");
-  const [userType, setUserType] = useState<string>("professor");
+  const [authType, setAuthType] = useState<string>("");
+  const [userType, setUserType] = useState<string>("aluno");
   const [authMessage, setAuthMessage] = useState<string>();
   const [placeHolderText, setPlaceHolderText] = useState<string>();
   const password = useRef("");
@@ -300,7 +300,7 @@ function LoginPage() {
 
         <div className="px-7 py-4 shadow bg-gray-100 rounded-md flex flex-col gap-2 justify-between w-[500px]">
           {/* <div className="flex flex-row justify-start"> */}
-          <div className="hidden">
+          <div>
             <div className='pr-4'><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="aluno" ref={input => { if (input && userType === "aluno") input.checked = true; }} /> Sou Aluno</div>
             <div><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="professor" ref={input => { if (input && userType === "professor") input.checked = true; }} /> Sou Professor</div>
           </div>
@@ -345,16 +345,15 @@ function LoginPage() {
               
               {userType === "professor" && estado.sigla !== "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
               {userType === "professor" && estado.sigla === "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "masp") input.checked = true; }} value="masp" /> MASP</div>}
-              {userType === "professor" && estado.sigla !== "MG" && 
+              {userType === "professor" && estado.sigla !== "GO" && 
                 <div >
                   <div>
                     <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Nº de matrícula/vínculo servidor
                   </div>
                   <span className='text-sm text-gray-500 pl-1'>(número disponível no contracheque/holerite)</span>
                 </div>
-                
                 }
-
+              {userType === "professor" && estado.sigla === "GO" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data Nascimento</div>}
             </div>
 
             <TextBox

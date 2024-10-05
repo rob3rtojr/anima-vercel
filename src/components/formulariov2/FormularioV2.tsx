@@ -61,10 +61,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
             if (mascaraResposta === 'number') {
                 value = value.replace(/\D/g, '')
-                
+
                 formularioAtualizado[perguntaIndex].resposta.length === 0 ?
-                formularioAtualizado[perguntaIndex].resposta.push(value) :
-                formularioAtualizado[perguntaIndex].resposta[0] = value                
+                    formularioAtualizado[perguntaIndex].resposta.push(value) :
+                    formularioAtualizado[perguntaIndex].resposta[0] = value
 
             }
             else if (mascaraResposta === 'idade') {
@@ -343,8 +343,31 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
     }
 
-    // Carregar dados da API e inicializar respostas
+    function ordenarPerguntas(formulario) {
+        // Primeiro, separe o bloco 1 do restante
+        const bloco1 = formulario.filter((f) => f.bloco === 1);
+        const outrosBlocos = formulario.filter((f) => f.bloco !== 1);
+      
+        // Agrupe as perguntas por bloco (exceto bloco 1)
+        const blocosAgrupados = outrosBlocos.reduce((acc, curr) => {
+          if (!acc[curr.bloco]) {
+            acc[curr.bloco] = [];
+          }
+          acc[curr.bloco].push(curr);
+          return acc;
+        }, {});
+      
+        // Embaralhe os blocos (exceto o bloco 1)
+        const blocosAleatorios = Object.values(blocosAgrupados)
+          .map((bloco) => ({ bloco, sortKey: Math.random() }))
+          .sort((a, b) => a.sortKey - b.sortKey)
+          .map(({ bloco }) => bloco);
+      
+        // Retorne o bloco 1 seguido pelos blocos embaralhados
+        return [...bloco1, ...blocosAleatorios.flat()];
+      }
 
+    // Carregar dados da API e inicializar respostas
     useEffect(() => {
 
         const fetchOptions = async () => {
@@ -367,7 +390,6 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
 
                 const response = await res.json();
-
 
                 setPerguntas(response)
 
@@ -427,20 +449,20 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                         <header className="bg-slate-750 mt-20">
                             <div className="flex flex-col justify-center gap-1 items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                                {/*<h1 className="font-alt text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
-                                 <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p> */}
-                                <h1 className="font-alt text-4xl tracking-tight text-gray-200">Questionário</h1>
+                                <h1 className="font-alt text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
+                                <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p>
+                                {/* <h1 className="font-alt text-4xl tracking-tight text-gray-200">Questionário</h1>
                                 <p className='text-gray-400 text-sm'>Sua colaboração neste questionário é essencial para aprofundarmos nossa compreensão
                                     sobre o perfil de gestores pedagógicos (coordenadores, gestores, assessores, coordenadores
                                     de área, etc). Por gentileza, responda às seguintes perguntas com base em suas experiências
-                                    e na sua situação atual.</p>
+                                    e na sua situação atual.</p> */}
                             </div>
                         </header>
 
                         <div className="flex flex-col just">
                             {
                                 perguntas.map((pergunta, index) => {
-
+                                    
 
                                     let isDisabled: boolean | undefined = false;
                                     let marcaFaltaResponder: boolean = false
@@ -465,7 +487,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.TITULO) {
                                         return (
                                             <CardPergunta id={`C-${pergunta.id}`} className={"text-white bg-gray-800"} key={pergunta.id} faltaResponder={false} >
-                                                <Pergunta className={"text-gray-400 text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
+                                               <Pergunta className={"text-gray-400 text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
                                             </CardPergunta>
                                         )
                                     }
@@ -474,7 +496,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
+                                                <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
                                                         {pergunta.alternativa.map(alternativa => (
 
@@ -505,7 +527,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
+                                                <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
                                                         {pergunta.alternativa.map(alternativa => (
 
@@ -535,7 +557,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
+                                                <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
 
                                                         <div className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'}`}>
@@ -584,7 +606,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
+                                                <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
                                                         <PerguntaRangeV2
                                                             props={pergunta}

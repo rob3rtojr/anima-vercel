@@ -31,6 +31,7 @@ type PerguntaType = {
     isVisibleCampo?: boolean,
     isDisabled:boolean,
     respostaBanco:string[],
+    bloco?: number
 }
 
 export type { AlternativaType, EscutarType, PerguntaType };

@@ -67,17 +67,19 @@ export default function DefaultModal(props: PropsType) {
             <div className="space-y-6">
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Olá, <b>{props.nome}</b>. Esse questionário faz parte de uma ampla pesquisa que a {estadoLogado?.secretaria} vem realizando para assegurar a continuidade de ações que poderão impactar positivamente a educação pública no estado. As perguntas serão sobre você, seus hábitos e suas perspectivas em relação à sua escola. É fundamental que você responda com seriedade todo o questionário.
+                Olá, <b>{props.nome}</b>. Esse questionário faz parte de uma ampla pesquisa que a {estadoLogado?.secretaria} vem realizando para assegurar a continuidade de ações que poderão impactar positivamente a educação pública no estado. As perguntas serão sobre você, seus hábitos e suas perspectivas em relação à sua escola. Não há respostas certas ou erradas, mas é fundamental que você responda com seriedade e sinceridade.
               </p>
+              
+              <p className="text-base leading-relaxed text-gray-500 text-justify">
+                Vale dizer que se trata de um <b>questionário anônimo</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'alunos, colegas, e gestores da escola ou da secretaria de educação'} não saberão de nada do que você responder aqui – e <b>suas respostas não terão nenhum efeito {props.tipo === "aluno" ? 'nas suas notas ou no seu desempenho escolar' : 'na sua carreira'}</b>.
+              </p>
+
               <p className="text-base leading-relaxed text-gray-500 text-justify">
                 A participação nesta avaliação é voluntária, porém sua contribuição é muito <b>importante</b> para que juntos possamos avançar rumo a um futuro melhor para você e outros jovens do nosso estado.
               </p>
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Vale dizer que se trata de um <b>questionário anônimo</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'alunos, colegas, e gestores da escola ou da secretaria de educação'} não saberão de nada do que você responder aqui – e <b>suas respostas não terão nenhum efeito {props.tipo === "aluno" ? 'nas suas notas ou no seu desempenho escolar' : 'na sua carreira'}</b>.
-              </p>
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                O conteúdo desta pesquisa subsidiará ações internas da {estadoLogado?.secretariaAbrebiado} e os dados pessoais fornecidos serão tratados com segurança, conforme a LGPD e demais Leis de Proteção de Dados Aplicáveis;
+                O conteúdo desta pesquisa subsidiará ações internas da {estadoLogado?.secretariaAbrebiado} e os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de Proteção de Dados (LGPD) e demais Leis de proteção de dados aplicáveis;
               </p>
               <p className="text-base leading-relaxed text-gray-500 text-justify">
                 O tempo médio para finalizar o preenchimento desse questionário é de <b>{props.duracao}</b>. As questões são de preenchimento obrigatório para o consequente avanço. <b>Não há respostas certas ou erradas</b>, o importante é que seja sincero(a) em todo momento.

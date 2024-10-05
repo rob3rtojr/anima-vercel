@@ -564,7 +564,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
                                                     <CardBody>
-
+                                                    
                                                         <div className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'}`}>
                                                             {pergunta.mascaraResposta === 'idade' &&
                                                                 <input
@@ -594,6 +594,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                     onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
                                                                     onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
                                                                     disabled={pergunta.isDisabled}
+                                                                    placeholder='digite aqui'
                                                                 />
                                                             }
                                                         </div>

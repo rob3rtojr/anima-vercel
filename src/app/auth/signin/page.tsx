@@ -199,8 +199,8 @@ function LoginPage() {
 
   useEffect(() => {
 
-    setAuthMessage("cpf")
-    messageAuthType("cpf")
+    setAuthMessage("")
+    messageAuthType("")
 
     setMessageError("")
 

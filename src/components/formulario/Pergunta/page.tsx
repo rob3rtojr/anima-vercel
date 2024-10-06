@@ -7,14 +7,14 @@ type PropsType = {
 }
 
 export default function Pergunta(props: PropsType) {
-    return(
-        <div 
+    return (
+        <div
             className={
-                cn("pb-4 font-bold text-xl text-justify transition-all duration-700, text-blue-900",
-                props.className,
-                {'text-gray-400' : props.isDisabled}
+                cn("font-bold text-xl text-justify transition-all duration-700, text-blue-900",
+                    props.className,
+                    { 'text-gray-400': props.isDisabled }
                 )}>
-            {props.texto}
+            <span>{props.texto}</span>
         </div>
     )
 }

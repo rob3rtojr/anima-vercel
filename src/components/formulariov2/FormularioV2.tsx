@@ -141,7 +141,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                 setIsSaving(false)
                 toast.update(idToast, { render: `Resposta incluída com sucesso!`, type: "success", isLoading: false, autoClose: 2000 })
                 if (alternativaId !== "")
-                    desmarcaItensDependentes(perguntaId, alternativaId, valor)
+                    desmarcaItensDependentes2(perguntaId, alternativaId, valor)
 
             } else {
 
@@ -277,6 +277,69 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
     }
 
+    async function desmarcaItensDependentes2(idPergunta: string, idAlternativa: string, valorResposta: string) {
+
+        let contMarcado = 0;
+        const url: any[] = []
+        const perguntasDependentes: string[] = []
+        var isDisabled: boolean = false
+        var precisaMudar: boolean = false
+        var possuiResposta: boolean = false
+        var tipoPerguntaPai: number | undefined = perguntas.find(p => p.id === idPergunta)?.tipoPerguntaId
+
+        possuiResposta = valorResposta === "" ? false : true
+
+        //localiza as perguntas que escutam a alternativa
+        perguntas.map((pergunta, index) => {
+
+            pergunta.escutar.map((e) => {
+
+                if (e.escutarPerguntaId.toString() === idPergunta.toString()) {
+                    if (!perguntasDependentes.includes(pergunta.id)) {
+                        perguntasDependentes.push(pergunta.id);
+                    }                    
+                }
+            })
+
+        })
+
+        if (perguntasDependentes.length >0) {
+            
+            const idToast = toast.loading("Aguarde, Verificando itens dependentes...")
+
+            //limpa a resposta
+            perguntasDependentes.forEach((pd)=> {
+                setRespostas(prevRespostas => ({
+                    ...prevRespostas,
+                    [pd]: ''
+                }));  
+            })
+
+            //console.log("perguntasDependentes", JSON.stringify(perguntasDependentes))
+            //console.log("perguntasDependentes-join", perguntasDependentes.join(','))
+
+            //grava respostas 
+            try {
+                
+                const resp = await api.post("/deletaResposta", {
+                    tipo: session?.user.role,
+                    listaIdPergunta: JSON.stringify(perguntasDependentes),
+                    pessoaId: session?.user.id
+                }, {
+                    headers: { 'Authorization': `Bearer ${session?.user.accessToken}` }
+               })        
+               
+               toast.update(idToast, { render: `Perguntas dependentes atualizadas!`, type: "success", isLoading: false, autoClose: 3000 })
+
+            } catch (error) {
+                toast.update(idToast, { render: `Ocorreu um erro ao atualizar itens dependentes!`, type: "error", isLoading: false, autoClose: 3000 })
+            }           
+
+
+        }
+
+    }
+
     // Função para limpar o valor selecionado em um grupo
     const limparSelecao = (perguntaId: string) => {
 
@@ -377,7 +440,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
               r.sequencia = novaSequencia;
             }
           });
-        console.log('result', result)
+        //console.log('result', result)
 
         // Retorne o bloco 1 seguido pelos blocos embaralhados
         return result;
@@ -511,33 +574,33 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.RADIO) {
                                         return (
-                                            <>
-                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
-                                                <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} />
-                                                    <SequenciaOriginal numeroOriginal={pergunta.numero} />
-                                                    <CardBody>
-                                                        {pergunta.alternativa.map(alternativa => (
+                                            <React.Fragment key={pergunta.id}>
+                                                <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                                    <div>
+                                                        <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} />
+                                                        <SequenciaOriginal numeroOriginal={pergunta.numero} />
+                                                        <CardBody>
+                                                            {pergunta.alternativa.map(alternativa => (
 
-                                                            <div key={alternativa.id} className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'} `}>
-                                                                <input
-                                                                    id={alternativa.id}
-                                                                    type="radio"
-                                                                    name={pergunta.id}
-                                                                    value={alternativa.id}
-                                                                    checked={respostas[pergunta.id]?.toString() === alternativa.id.toString()}
-                                                                    onChange={() => atualizarResposta(pergunta.id, alternativa.id, alternativa.id, pergunta.tipoPerguntaId)}
-                                                                    disabled={pergunta.isDisabled || isSaving}
-                                                                />
-                                                                <label className={`pl-2`} htmlFor={alternativa.id}>{alternativa.descricao}</label>
-                                                            </div>
-                                                        ))}
+                                                                <div key={alternativa.id} className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'} `}>
+                                                                    <input
+                                                                        id={alternativa.id}
+                                                                        type="radio"
+                                                                        name={pergunta.id}
+                                                                        value={alternativa.id}
+                                                                        checked={respostas[pergunta.id]?.toString() === alternativa.id.toString()}
+                                                                        onChange={() => atualizarResposta(pergunta.id, alternativa.id, alternativa.id, pergunta.tipoPerguntaId)}
+                                                                        disabled={pergunta.isDisabled || isSaving}
+                                                                    />
+                                                                    <label className={`pl-2`} htmlFor={alternativa.id}>{alternativa.descricao}</label>
+                                                                </div>
+                                                            ))}
 
-                                                        {isDebugging && <DebubArea pergunta={pergunta} resposta={respostas[pergunta.id]} limpar={limparSelecao} />}
-                                                    </CardBody>
-                                                </div>
-                                            </Card>
-                                            </>
+                                                            {isDebugging && <DebubArea pergunta={pergunta} resposta={respostas[pergunta.id]} limpar={limparSelecao} />}
+                                                        </CardBody>
+                                                    </div>
+                                                </Card>
+                                            </React.Fragment>
                                         )
                                     }
 
@@ -672,10 +735,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                 {
                                     perguntas.map((p, index) => {
                                         if (p.tipoPerguntaId !== TipoPerguntaEnum.TITULO && !p.isDisabled) {
-                                            if (respostas[p.id] === "") {
+                                            if (respostas[p.id] === "" || respostas[p.id] === undefined) {
                                                 return (
 
-                                                    <Link key={index} href={`#C-${p.id}`}>[ {p.sequencia} ] </Link>
+                                                    <Link key={p.id} href={`#C-${p.id}`}>[ {p.sequencia} ] </Link>
                                                 )
                                             }
                                         }

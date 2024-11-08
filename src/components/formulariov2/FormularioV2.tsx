@@ -332,6 +332,15 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                toast.update(idToast, { render: `Perguntas dependentes atualizadas!`, type: "success", isLoading: false, autoClose: 3000 })
 
             } catch (error) {
+
+                //caso tenha ocorrido algum erro, desmarcar item pai para que o usuário faça o processo novamente
+                setRespostas(prevRespostas => ({
+                    ...prevRespostas,
+                    [idPergunta]: ''
+                }));
+                
+                desmarcarAlternativas(idPergunta)
+
                 toast.update(idToast, { render: `Ocorreu um erro ao atualizar itens dependentes!`, type: "error", isLoading: false, autoClose: 3000 })
             }           
 
@@ -339,6 +348,28 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
         }
 
     }
+
+    const desmarcarAlternativas = (perguntaId: string) => {
+        setPerguntas((prevPerguntas) =>
+            prevPerguntas.map((pergunta) => {
+                // Verifica se o ID da pergunta corresponde
+                if (pergunta.id === perguntaId) {
+                    // Define isChecked como false para todas as alternativas
+                    const alternativasAtualizadas = pergunta.alternativa.map((alternativa) => ({
+                        ...alternativa,
+                        isChecked: false,
+                    }));
+                    
+                    // Retorna a pergunta com as alternativas atualizadas
+                    return { ...pergunta, alternativa: alternativasAtualizadas };
+                }
+                
+                // Retorna a pergunta sem modificações
+                return pergunta;
+            })
+        );
+    };
+          
 
     // Função para limpar o valor selecionado em um grupo
     const limparSelecao = (perguntaId: string) => {

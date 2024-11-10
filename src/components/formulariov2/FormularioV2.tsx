@@ -141,7 +141,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                 setIsSaving(false)
                 toast.update(idToast, { render: `Resposta incluída com sucesso!`, type: "success", isLoading: false, autoClose: 2000 })
                 if (alternativaId !== "")
-                    desmarcaItensDependentes2(perguntaId, alternativaId, valor)
+                    desmarcaItensDependentes2(perguntaId, valor)
 
             } else {
 
@@ -164,128 +164,11 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
     };
 
-    async function desmarcaItensDependentes(idPergunta: string, idAlternativa: string, valorResposta: string) {
+    
+    async function desmarcaItensDependentes2(idPergunta: string, valorResposta: string) {
 
-        let contMarcado = 0;
-        const url: any[] = []
         const perguntasDependentes: string[] = []
-        var isDisabled: boolean = false
-        var precisaMudar: boolean = false
         var possuiResposta: boolean = false
-        var tipoPerguntaPai: number | undefined = perguntas.find(p => p.id === idPergunta)?.tipoPerguntaId
-        possuiResposta = valorResposta === "" ? false : true
-
-        //localiza as perguntas que escutam a alternativa
-        perguntas.map((f, index) => {
-
-            f.escutar.map((e) => {
-
-                if (e.escutarPerguntaId.toString() === idPergunta.toString() && e.escutarAlternativaId.toString() === idAlternativa.toString()) {
-
-                    // //verifica se alguma alternativa que está sendo escutada está marcada
-                    // perguntas[index].escutar.map((a) => {
-
-                    //     const perguntaIndex = perguntas.findIndex((pergunta) => pergunta.id.toString() === a.escutarPerguntaId.toString());
-                    //     const alternativaIndex = perguntas[perguntaIndex].alternativa.findIndex((alternativa) => alternativa.id.toString() === a.escutarAlternativaId.toString());
-
-
-                    //     if (perguntas[perguntaIndex].tipoPerguntaId === TipoPerguntaEnum.CHECKBOX && perguntas[perguntaIndex].alternativa[alternativaIndex].isChecked) {
-                    //         contMarcado++
-                    //         return
-                    //     }
-                    // })
-
-
-                    perguntasDependentes.push(perguntas[index].id)
-
-                    //if (contMarcado <= 0) {
-                    if (tipoPerguntaPai === TipoPerguntaEnum.CHECKBOX) {
-                        if (!possuiResposta) {
-
-                            isDisabled = true
-                            precisaMudar = true
-
-                        } else {
-                            isDisabled = false
-                            precisaMudar = false
-
-                            //HABILITA
-                            if (perguntas[index].isDisabled === true) {
-                                precisaMudar = true
-                            }
-
-                        }
-                    }
-                    else {
-                        // isDisabled = true
-                        // precisaMudar = true                        
-                    }
-
-                } else if (e.escutarPerguntaId.toString() === idPergunta.toString() && tipoPerguntaPai !== TipoPerguntaEnum.CHECKBOX) {
-                    isDisabled = true
-                    precisaMudar = true
-                    perguntasDependentes.push(perguntas[index].id)
-                }
-            })
-
-        })
-
-        if (precisaMudar) {
-
-            const perguntasAux = [...perguntas]
-            perguntasDependentes.map(async pd => {
-
-                let indexP = perguntasAux.findIndex(p => p.id === pd)
-
-                if (indexP) {
-
-                    //habilita ou desabilita a pergunta
-                    perguntasAux[indexP].isDisabled = isDisabled
-
-                    if (isDisabled) {
-
-                        for (let i = 0; i < perguntasAux[indexP].alternativa.length; i++) {
-                            //desmarca os itens
-                            perguntasAux[indexP].alternativa[i].isChecked = false
-                        }
-
-                        //limpa a resposta
-                        setRespostas(prevRespostas => ({
-                            ...prevRespostas,
-                            [perguntasAux[indexP].id]: ''
-                        }));
-
-
-                    }
-
-                }
-
-
-            })
-
-            //grava respostas            
-            const resp = await api.post("/respostav2DeleteMany", {
-                tipo: session?.user.role,
-                perguntaId: perguntasDependentes.join(','),
-                pessoaId: session?.user.id.toString()
-            }, {
-                headers: { 'Authorization': `Bearer ${session?.user.accessToken}` }
-            })
-
-            setPerguntas(perguntasAux)
-        }
-
-    }
-
-    async function desmarcaItensDependentes2(idPergunta: string, idAlternativa: string, valorResposta: string) {
-
-        let contMarcado = 0;
-        const url: any[] = []
-        const perguntasDependentes: string[] = []
-        var isDisabled: boolean = false
-        var precisaMudar: boolean = false
-        var possuiResposta: boolean = false
-        var tipoPerguntaPai: number | undefined = perguntas.find(p => p.id === idPergunta)?.tipoPerguntaId
 
         possuiResposta = valorResposta === "" ? false : true
 
@@ -313,6 +196,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                     ...prevRespostas,
                     [pd]: ''
                 }));  
+
+                limparRespostaPorId(pd)
             })
 
             //console.log("perguntasDependentes", JSON.stringify(perguntasDependentes))
@@ -369,6 +254,22 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
             })
         );
     };
+
+    const limparRespostaPorId = (perguntaId: string) => {
+
+        setRespostas(prevRespostas => ({
+            ...prevRespostas,
+            [perguntaId]: ''
+        }));
+
+
+        let perguntasAux = [...perguntas]
+        const perguntaIndex = perguntasAux ? perguntasAux.findIndex((pergunta) => pergunta.id === perguntaId) : -1;
+        perguntasAux[perguntaIndex].resposta = []
+
+        setPerguntas(perguntasAux)
+
+    };     
           
 
     // Função para limpar o valor selecionado em um grupo
@@ -441,7 +342,9 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
     function ordenarPerguntas(formulario: PerguntaType[]): PerguntaType[] {
         // Primeiro, separe o bloco 1 do restante
         const bloco1 = formulario.filter((f) => f.bloco === 1);
-        const outrosBlocos = formulario.filter((f) => f.bloco !== 1);
+        const bloco2 = formulario.filter((f) => f.bloco === 2);
+
+        const outrosBlocos = formulario.filter((f) => f.bloco !== 1 && f.bloco !==2);
 
         // Agrupe as perguntas por bloco (exceto bloco 1)
         const blocosAgrupados: { [key: number]: PerguntaType[] } = outrosBlocos.reduce(
@@ -463,7 +366,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
             .sort((a, b) => a.sortKey - b.sortKey)
             .map(({ bloco }) => bloco);
 
-        const result: PerguntaType[] = [...bloco1, ...blocosAleatorios.flat()]
+        const result: PerguntaType[] = [...bloco1,...bloco2, ...blocosAleatorios.flat()]
         let novaSequencia: number = 0
         result.forEach((r) => {
             if (r.tipoPerguntaId !== 4) {

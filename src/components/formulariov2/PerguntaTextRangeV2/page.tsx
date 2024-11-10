@@ -52,15 +52,15 @@ export default function PerguntaRangeV2(props: PropsType) {
 
                 onMouseUp={(e) => props.handleAtualizaResposta(props.props.id,"", width.toString(), props.props.tipoPerguntaId)}
                 onTouchEnd={(e) => props.handleAtualizaResposta(props.props.id,"", width.toString(), props.props.tipoPerguntaId)}
-                value={width}
+                value={props.isDisabled ? 0: width}
                 className="w-full h-2 bg-blue-300 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                disabled={props.isSaving}
+                disabled={props.isDisabled}
 
             />
 
             <div className="">
                 {props.mascara === "moeda" && <Pergunta key={`pr${props.props.id}`} texto={`Resposta: ${parseInt(width).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`} />}
-                {props.mascara === "" && <Pergunta key={`pr${props.props.id}`} texto={`Resposta: ${width}`} />}
+                {props.mascara === "" && <Pergunta key={`pr${props.props.id}`} texto={`Resposta: ${props.isDisabled ? 0: width}`} />}
             </div>
 
             

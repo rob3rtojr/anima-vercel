@@ -37,7 +37,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
     const [isFinishClick, setIsFinishClick] = useState<boolean>(false);
     const [isLoadingButtonFinish, setIsLoadngButtonFinish] = useState<boolean>(false);
     const [isSaving, setIsSaving] = useState<boolean>(false)
-    const [isDebugging] = useState<boolean>(false)
+    const [isDebugging] = useState<boolean>(true)
     const [isValidForm, setIsValidForm] = useState<boolean>(true)
     const [podePreencher, setPodePreencher] = useState<boolean>(true)
     const [nomeFormulario, setNomeFormulario] = useState<string>("")
@@ -119,13 +119,31 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
         }));
 
         //desmarcaItensDependentes(perguntaId, alternativaId, valor)
-        desmarcaItensDependentes2(perguntaId, alternativaId, valor)
+        desmarcaItensDependentes2(perguntaId)
         //apagaRespostaPerguntaDesabilitada()
         //apagaRespostaItensDesabilitados()
 
         setIsSaving(false)
         //console.log(respostas)
     };
+
+    const limparRespostaPorId = (perguntaId: string) => {
+
+        setRespostas(prevRespostas => ({
+            ...prevRespostas,
+            [perguntaId]: ''
+        }));
+
+
+        let perguntasAux = [...perguntas]
+        const perguntaIndex = perguntasAux ? perguntasAux.findIndex((pergunta) => pergunta.id === perguntaId) : -1;
+        perguntasAux[perguntaIndex].resposta = []
+
+        setPerguntas(perguntasAux)
+
+    };    
+
+  
 
     // Função para limpar o valor selecionado em um grupo
     const limparSelecao = (perguntaId: string) => {
@@ -138,7 +156,6 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
         let perguntasAux = [...perguntas]
         const perguntaIndex = perguntasAux ? perguntasAux.findIndex((pergunta) => pergunta.id === perguntaId) : -1;
-        var selecionados: string[] = []
 
         perguntasAux[perguntaIndex].alternativa.map(a => {
             a.isChecked = false;
@@ -222,7 +239,8 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
     function ordenarPerguntas(formulario: PerguntaType[]): PerguntaType[] {
         // Primeiro, separe o bloco 1 do restante
         const bloco1 = formulario.filter((f) => f.bloco === 1);
-        const outrosBlocos = formulario.filter((f) => f.bloco !== 1);
+        const bloco2 = formulario.filter((f) => f.bloco === 2);
+        const outrosBlocos = formulario.filter((f) => f.bloco !== 1 && f.bloco !== 2);
 
         // Agrupe as perguntas por bloco (exceto bloco 1)
         const blocosAgrupados: { [key: number]: PerguntaType[] } = outrosBlocos.reduce(
@@ -244,7 +262,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
             .sort((a, b) => a.sortKey - b.sortKey)
             .map(({ bloco }) => bloco);
 
-        const result: PerguntaType[] = [...bloco1, ...blocosAleatorios.flat()]
+        const result: PerguntaType[] = [...bloco1, ...bloco2, ...blocosAleatorios.flat()]
         let novaSequencia: number = 0
         result.forEach((r) => {
             if (r.tipoPerguntaId !== 4) {
@@ -258,17 +276,9 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
         return result;
     }
 
-    async function desmarcaItensDependentes2(idPergunta: string, idAlternativa: string, valorResposta: string) {
+    async function desmarcaItensDependentes2(idPergunta: string) {
 
-        let contMarcado = 0;
-        const url: any[] = []
         const perguntasDependentes: string[] = []
-        var isDisabled: boolean = false
-        var precisaMudar: boolean = false
-        var possuiResposta: boolean = false
-        var tipoPerguntaPai: number | undefined = perguntas.find(p => p.id === idPergunta)?.tipoPerguntaId
-
-        possuiResposta = valorResposta === "" ? false : true
 
         //localiza as perguntas que escutam a alternativa
         perguntas.map((pergunta, index) => {
@@ -290,7 +300,9 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
                 setRespostas(prevRespostas => ({
                     ...prevRespostas,
                     [pd]: ''
-                }));  
+                }));
+                //debugger
+                limparRespostaPorId(pd);
             })
         }
     }  
@@ -303,7 +315,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
             try {
 
-                const estadoAPI = await api.get(`${baseUrl}/estados/${params.estado}`)
+                const estadoAPI = await api.get(`${baseUrl}/estadosgeral/${params.estado}`)
                 const { id, sigla, nome } = estadoAPI.data        
                 setEstado({ id, sigla, nome });
 

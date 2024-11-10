@@ -348,12 +348,12 @@ function LoginPage() {
               {userType === "professor" && estado.sigla !== "GO" && 
                 <div >
                   <div>
-                    <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Nº de matrícula/vínculo servidor
+                    <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Nº de matrícula
                   </div>
-                  <span className='text-sm text-gray-500 pl-1'>(número disponível no contracheque/holerite)</span>
+                  {/* <span className='text-sm text-gray-500 pl-1'>(número disponível no contracheque/holerite)</span> */}
                 </div>
                 }
-              {userType === "professor" && estado.sigla === "GO" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data Nascimento</div>}
+              {userType === "professor" && (estado.sigla === "GO" || estado.sigla === "PA") && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data Nascimento</div>}
             </div>
 
             <TextBox

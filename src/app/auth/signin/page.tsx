@@ -332,7 +332,7 @@ function LoginPage() {
 
               {userType === "aluno" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data de Nascimento</div>}
 
-              {userType === "aluno" && estado.sigla === "PA" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
+              {userType === "aluno" && estado.sigla === "xx" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
               {userType === "aluno" && estado.sigla !== "PA" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matricula") input.checked = true; }} value="matricula" /> Matrícula</div>}
               {userType === "aluno" && 
                 <div className='flex md:flex-col flex-row justify-start items-center'>

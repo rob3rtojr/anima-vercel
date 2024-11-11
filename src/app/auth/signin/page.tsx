@@ -306,14 +306,14 @@ function LoginPage() {
           </div>
           <div className='flex flex-1 flex-col pr-2'>
 
-            <Combo labelText='Município' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} />
+            <Combo labelText='Município' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} tipo={userType} />
 
             {userType === "professor" &&
               <Combo labelText='Servidores' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} />
             }
             {userType === "aluno" &&
               <>
-                <Combo labelText='Escola' idRota="escolas" onSelect={handleSelectEscola} idFiltro={municipioId} idSelecionado={escolaId} />
+                <Combo labelText='Escola' idRota="escolas" onSelect={handleSelectEscola} idFiltro={municipioId} idSelecionado={escolaId} tipo={userType} />
 
                 <Combo labelText='Turma' idRota="turmas" onSelect={handleSelectTurma} idFiltro={escolaId} idSelecionado={turmaId} />
 

@@ -12,9 +12,10 @@ type ComboProps = {
   idFiltro: string
   idSelecionado: string
   labelText: string
+  tipo?: string
 };
 
-const Combo: React.FC<ComboProps> = ({ onSelect, idRota, idFiltro, idSelecionado, labelText }) => {
+const Combo: React.FC<ComboProps> = ({ onSelect, idRota, idFiltro, idSelecionado, labelText, tipo }) => {
 
   const [options, setOptions] = useState<Option[]>([]);
   const [textFirtstOption, setTextFirtstOption] = useState<string>('Selecione...');
@@ -29,7 +30,11 @@ const Combo: React.FC<ComboProps> = ({ onSelect, idRota, idFiltro, idSelecionado
         let urlRota = `/${idRota}`
         if (idFiltro !== "todos")
           urlRota += `/${idFiltro}`
-        
+
+        if (tipo) {
+          urlRota +='?tipo=' + tipo
+        }
+
         const response = await api.get(urlRota);
 
         setOptions(response.data);
@@ -47,7 +52,7 @@ const Combo: React.FC<ComboProps> = ({ onSelect, idRota, idFiltro, idSelecionado
         setOptions([]);
       }    
 
-  }, [idFiltro]);
+  }, [idFiltro, tipo]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;

@@ -345,7 +345,7 @@ function LoginPage() {
               
               {userType === "professor" && estado.sigla !== "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
               {userType === "professor" && estado.sigla === "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "masp") input.checked = true; }} value="masp" /> MASP</div>}
-              {userType === "professor" && estado.sigla !== "GO" && 
+              {userType === "professor" && estado.sigla !== "GO" && estado.sigla !== "BA" &&
                 <div >
                   <div>
                     <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Nº de matrícula

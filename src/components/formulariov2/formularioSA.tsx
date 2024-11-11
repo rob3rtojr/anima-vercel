@@ -21,7 +21,7 @@ type EstadoProps = {
     id: number;
     nome: string;
     sigla: string;
-  };
+};
 
 
 export default function FormularioSA({ params }: { params: { formularioId: string, estado: string } }) {
@@ -85,7 +85,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
     const atualizarResposta = (perguntaId: string, alternativaId: string, valor: string, tipoPerguntaId: number) => {
         // const idToast = toast.loading("Aguarde...")
         setIsSaving(true)
-        
+
         if (tipoPerguntaId === TipoPerguntaEnum.CHECKBOX || tipoPerguntaId === TipoPerguntaEnum.RADIO) {
 
             const perguntasAux = [...perguntas]
@@ -141,9 +141,9 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
         setPerguntas(perguntasAux)
 
-    };    
+    };
 
-  
+
 
     // Função para limpar o valor selecionado em um grupo
     const limparSelecao = (perguntaId: string) => {
@@ -201,7 +201,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
             //SALVAR AS RESPOSTAS
             setIsSaving(true)
-    
+
             const resp = api.post("/respostaSA", {
                 tipo: tipoFormulario,
                 estadoId: '1',
@@ -216,14 +216,14 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
                     setFinalizado(true)
                 } else {
-    
+
                     toast.update(idToast, { render: `Ocorreu um erro! Tente novamente!`, type: "error", isLoading: false, autoClose: 2000 })
                     setIsSaving(false)
                     setIsLoadngButtonFinish(false)
                 }
             }).catch(
                 error => {
-    
+
                     toast.update(idToast, { render: `Ocorreu um erro de conexão com o servidor. Tente novamente!`, type: "error", isLoading: false, autoClose: 2000 })
                     setIsSaving(false)
                     setIsLoadngButtonFinish(false)
@@ -288,15 +288,15 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
                 if (e.escutarPerguntaId.toString() === idPergunta.toString()) {
                     if (!perguntasDependentes.includes(pergunta.id)) {
                         perguntasDependentes.push(pergunta.id);
-                    }                    
+                    }
                 }
             })
 
         })
 
-        if (perguntasDependentes.length >0) {
+        if (perguntasDependentes.length > 0) {
             //limpa a resposta
-            perguntasDependentes.forEach((pd)=> {
+            perguntasDependentes.forEach((pd) => {
                 setRespostas(prevRespostas => ({
                     ...prevRespostas,
                     [pd]: ''
@@ -305,7 +305,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
                 limparRespostaPorId(pd);
             })
         }
-    }  
+    }
 
 
     // Carregar dados da API e inicializar respostas
@@ -316,11 +316,11 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
             try {
 
                 const estadoAPI = await api.get(`${baseUrl}/estadosgeral/${params.estado}`)
-                const { id, sigla, nome } = estadoAPI.data        
+                const { id, sigla, nome } = estadoAPI.data
                 setEstado({ id, sigla, nome });
 
                 const formularioAPI = await api.get(`${baseUrl}/tipoFormularios/${params.formularioId}`)
-                const {nome: nomeForm, tipo} = formularioAPI.data
+                const { nome: nomeForm, tipo } = formularioAPI.data
                 setNomeFormulario(nomeForm)
                 setTipoFormulario(tipo)
 
@@ -338,6 +338,11 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
 
                 const response = await res.json();
+
+                if (response.length === 0) {
+                    setPodePreencher(false)
+                }
+
                 const responsOrdenado = ordenarPerguntas(response)
                 setPerguntas(responsOrdenado)
 
@@ -373,6 +378,16 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
     return (
         <>
             {isLoading && <Loading />}
+            {!podePreencher &&
+
+                <header className="bg-slate-750 mt-20">
+                    <div className="flex flex-col justify-center gap-1 items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                        <h1 className="font-alt text-4xl tracking-tight text-gray-200">Ops...</h1>
+                        <p className='text-gray-400 text-sm'>Questionário não encontrado!</p>
+                    </div>
+                </header>
+
+            }
             {!isLoading && podePreencher && !finalizado &&
                 <>
                     <div className='flex flex-col'>
@@ -392,10 +407,10 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
                                     let isDisabled: boolean | undefined = false;
                                     let marcaFaltaResponder: boolean = false
 
-                                    marcaFaltaResponder = isFinishClick && ((respostas[pergunta.id] === '' || respostas[pergunta.id] === undefined) && !pergunta.isDisabled)  ? true : false
+                                    marcaFaltaResponder = isFinishClick && ((respostas[pergunta.id] === '' || respostas[pergunta.id] === undefined) && !pergunta.isDisabled) ? true : false
 
                                     if (pergunta.escutar.length > 0) {
-                                        isDisabled = true;                                        
+                                        isDisabled = true;
                                     }
 
                                     for (let i = 0; i < pergunta.escutar.length; i++) {
@@ -406,13 +421,13 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
                                             break;
                                         }
                                     }
-                                    
+
                                     if (isDisabled) {
                                         marcaFaltaResponder = false
                                     } else {
-                                        marcaFaltaResponder = isFinishClick && ((respostas[pergunta.id] === '' || respostas[pergunta.id] === undefined))  ? true : false
+                                        marcaFaltaResponder = isFinishClick && ((respostas[pergunta.id] === '' || respostas[pergunta.id] === undefined)) ? true : false
                                     }
-                                    
+
 
                                     pergunta.isDisabled = isDisabled
 
@@ -443,7 +458,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
                                                                         checked={respostas[pergunta.id]?.toString() === alternativa.id.toString()}
                                                                         onChange={() => atualizarResposta(pergunta.id, alternativa.id, alternativa.id, pergunta.tipoPerguntaId)}
                                                                         disabled={pergunta.isDisabled || isSaving}
-                                                                    /> 
+                                                                    />
                                                                     <label className={`pl-2`} htmlFor={alternativa.id}>{alternativa.descricao}</label>
                                                                 </div>
                                                             ))}
@@ -591,7 +606,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
                                                 return (
 
                                                     <Link key={p.id} href={`#C-${p.id}`}>[ {p.sequencia} ] </Link>
-                                                )                                             
+                                                )
                                             }
                                         }
                                     })
@@ -625,11 +640,11 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
             }
             {isDebugging &&
-            <div className="fixed top-4 right-4 bg-blue-500 text-white p-4 rounded-lg shadow-lg">
-                {
-                    JSON.stringify(respostas)
-                }
-            </div>
+                <div className="fixed top-4 right-4 bg-blue-500 text-white p-4 rounded-lg shadow-lg">
+                    {
+                        JSON.stringify(respostas)
+                    }
+                </div>
             }
             <ToastContainer />
         </>

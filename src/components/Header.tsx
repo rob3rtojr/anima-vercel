@@ -7,6 +7,7 @@ import Image from "next/image";
 import logoGO from "../assets/GO.png"
 import logoMG from "../assets/MG.png"
 import logoPA from "../assets/PA.png"
+import logoBA from "../assets/BA.png"
 import { Menu, X } from 'lucide-react';
 import NomeUsuario from "./NomeUsuario";
 import LogoutButton from "./LogoutButton";
@@ -72,6 +73,7 @@ const AppBar = () => {
                             {session.user.siglaEstado === "GO" && <Image src={logoGO} width={100} height={32} alt="Logo Estado de Goiás" />}
                             {session.user.siglaEstado === "PA" && <Image src={logoPA} width={150} height={32} alt="Logo Estado de Minas Gerais" />}
                             {session.user.siglaEstado === "MG" && <Image src={logoMG} width={187} height={32} alt="Logo Estado do Pará" />}
+                            {session.user.siglaEstado === "BA" && <Image src={logoBA} width={126} height={32} alt="Logo Estado da Bahia" />}
                         </a>
                         <div>
                             <div className="flex flex-row items-center">

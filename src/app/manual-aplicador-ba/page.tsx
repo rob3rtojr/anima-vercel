@@ -1,6 +1,6 @@
 'use client'
 
-export default function ManualAplicadorBa() {
+export default function ManualAplicadorBA() {
     return (
         <div className='w-full h-screen bg-slate-50'>
             <object className='w-full h-full' data="https://rsadmweb.com.br/anima/manual-aplicador-ba.pdf" type="application/pdf">

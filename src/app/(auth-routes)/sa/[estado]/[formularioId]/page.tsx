@@ -4,12 +4,7 @@ import DefaultModal from '@/components/DefaultModal';
 import Button from '@/components/elements/Button';
 import FormularioSA from '@/components/formulariov2/formularioSA';
 import { api } from '@/lib/api';
-import { Metadata } from 'next';
 import { useEffect, useState } from 'react';
-
-export const metadata: Metadata = {
-    title: 'Pesquisa Educação - Formulário'
-};
 
 export default function FormularioPage({ params }: { params: { estado: string, formularioId: string } }) {
     const baseUrl: any = process.env.NEXT_PUBLIC_BASE_URL

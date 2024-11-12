@@ -13,7 +13,7 @@ type PropsType = {
   estadoLogado: string,
   nome: string,
   tipo: string,
-  duracao: string
+  duracao: string,
 }
 
 type DadosEstado = {
@@ -46,6 +46,12 @@ export default function DefaultModal(props: PropsType) {
       "secretaria": "Secretaria de Estado da Educação do Pará",
       "secretariaAbrebiado": "SEDUC-PA"
     },
+    {
+      "sigla": "BA",
+      "descricao": "Bahia",
+      "secretaria": "Secretaria de Estado da Educação da Bahia",
+      "secretariaAbrebiado": "SEDUC-BA"
+    },    
   ]
 
   useEffect(() => {

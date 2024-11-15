@@ -43,6 +43,7 @@ export default function Adm() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [formularios, setFormularios] = useState<Formulario[]>();
     const [formularioId, setFormularioId] = useState<string>("0");
+    const [filtroInicialFormulario, setFiltroInicialFormulario] = useState<string>("");
     const [filtroInicialEstado, setFiltroInicialEstado] = useState<string>("");
     const [estadoId, setEstadoId] = useState<string>("0");
     const [regionalId, setRegionalId] = useState<string>("0");
@@ -67,8 +68,8 @@ export default function Adm() {
 
         }
         fetchOptions()
-
-        setFiltroInicialEstado("todos")
+        setFiltroInicialFormulario("todos")
+        setFiltroInicialEstado("0")
 
 
     }, [])
@@ -80,6 +81,7 @@ export default function Adm() {
 
     const handleSelectFormulario = (selectedOption: string) => {
         setFormularioId(selectedOption)
+        setFiltroInicialEstado(selectedOption.toString())
         setHideCampos(false)
 
         const index = formularios?.findIndex((f) => f.id.toString() === selectedOption)
@@ -90,6 +92,7 @@ export default function Adm() {
                     setEscolaId("0")
                     setTurmaId("0")
                     setTipo(formularios[index].tipo)
+                    
                 }
             }
         }
@@ -308,8 +311,8 @@ export default function Adm() {
                 <div className="bg-slate-900 text-white h-10 w-full text-center text-2xl">Acompanhamento</div>
                 <div className="ml-8 mr-8 mb-8">
                     <div className="flex flex-row justify-between w-full gap-2 pt-4">
-                        <div className="w-full"><Combo labelText='Formulário' idRota="tipoFormularios" idFiltro={filtroInicialEstado} onSelect={handleSelectFormulario} idSelecionado={formularioId} /></div>
-                        <div className="w-full"><Combo labelText='Estado' idRota="estados" idFiltro={filtroInicialEstado} onSelect={handleSelectEstado} idSelecionado={estadoId} /></div>
+                        <div className="w-full"><Combo labelText='Formulário Autenticado' idRota="tipoFormulariosAutenticados" idFiltro={filtroInicialFormulario} onSelect={handleSelectFormulario} idSelecionado={formularioId} /></div>
+                        <div className="w-full"><Combo labelText='Estado' idRota="estadosporformulario" idFiltro={filtroInicialEstado} onSelect={handleSelectEstado} idSelecionado={estadoId} /></div>
                         <div className="w-full"><Combo labelText='Regional' idRota="regionais" idFiltro={estadoId} onSelect={handleSelectReginal} idSelecionado={regionalId} /></div>
                     </div>
                     <div className="flex flex-row justify-between w-full gap-2">

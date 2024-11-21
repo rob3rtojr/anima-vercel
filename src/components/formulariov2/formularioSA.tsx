@@ -15,7 +15,6 @@ import LoadImage from '../elements/LoadImage';
 import DebubArea from './DebugArea';
 import Link from "next/link";
 import SequenciaOriginal from '../formulario/SequenciaOriginal/page';
-import FinalizadoSA from './finalizadoSA';
 
 type EstadoProps = {
     id: number;
@@ -204,7 +203,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
             const resp = api.post("/respostaSA", {
                 tipo: tipoFormulario,
-                estadoId: '1',
+                estadoId: estado.id,
                 resposta: JSON.stringify(respostas)
             }).then(resp => {
                 if (resp.status === 200) {

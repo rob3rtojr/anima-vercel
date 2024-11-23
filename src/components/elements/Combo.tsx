@@ -57,9 +57,10 @@ const Combo: React.FC<ComboProps> = ({ onSelect, idRota, idFiltro, idSelecionado
       fetchOptions();
     } else {
       setOptions([]);
+      setSelectedOption("0")
     }
 
-  }, [idFiltro, tipo]);
+  }, [idFiltro, tipo, idSelecionado]);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;

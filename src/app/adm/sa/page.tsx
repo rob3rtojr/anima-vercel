@@ -62,7 +62,7 @@ export default function Adm() {
                 <div className="ml-8 mr-8 mb-8">
                     
                     <div className="flex flex-row justify-between w-full gap-2 pt-4">
-                        <div className="w-full"><Combo labelText='Formulário Autenticado' idRota="tipoFormulariosNaoAutenticados" idFiltro={filtroInicialFormulario} onSelect={handleSelectFormulario} idSelecionado={formularioId} /></div>
+                        <div className="w-full"><Combo labelText='Formulário Sem Autenticação' idRota="tipoFormulariosNaoAutenticados" idFiltro={filtroInicialFormulario} onSelect={handleSelectFormulario} idSelecionado={formularioId} /></div>
                     </div>
 
                     <div className="flex flex-row items-center pt-8 gap-2">

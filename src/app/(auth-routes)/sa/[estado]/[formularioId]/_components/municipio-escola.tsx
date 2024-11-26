@@ -88,7 +88,7 @@ export function MunicipioEscola(props: MunicipioEscolaProps) {
     return (
         <Card className="w-full">
             <CardHeader>
-                <CardTitle>Questionário: {props.nomeFormulario}</CardTitle>
+                <CardTitle>{`${loadingMunicipio ? 'Aguarde...' : 'Questionário: ' + props.nomeFormulario}`}</CardTitle>
                 <CardDescription>Escolha seu município e sua escola</CardDescription>
             </CardHeader>
             <CardContent>
@@ -97,7 +97,7 @@ export function MunicipioEscola(props: MunicipioEscolaProps) {
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="municipio">Município</Label>
                             <select id="municipio" onChange={(municipio) => { handleListEscolas(municipio.target.value) }} className='border border-slate-400 disabled:border-slate-100 w-full block outline-none py-1 px-1 transition-all text-xs lg:text-sm xl:text-base mb-1 md:mb-4 bg-slate-50 focus:shadow focus:shadow-blue-500 rounded-md'>
-                                <option value="0">{`${loadingEscola ? 'Carregando municipios...' : 'Informe o município'}`}</option>
+                                <option value="0">{`${loadingMunicipio ? 'Carregando municipios...' : 'Informe o município'}`}</option>
                                 {listaMunicipios.map((option) => (
                                     <option key={option.id} value={option.id}>
                                         {option.nome}

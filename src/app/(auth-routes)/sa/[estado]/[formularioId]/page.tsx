@@ -31,6 +31,7 @@ export default function FormularioPage({ params }: { params: { estado: string, f
     const [duracao, setDuracao] = useState<string>('')
     const [accept, setAccept] = useState<boolean>(false)
     const [start, setStart] = useState<boolean>(false)
+    const [permitido, setPermitido] = useState<boolean>(true)
     const [selectedEscola, setSelectedEscola] = useState<string>('')
     const [selectedMunicipio, setSelectedMunicipio] = useState<string>('')
     const [estado, setEstado] = useState<EstadoProps>({ id: 0, nome: '', sigla: '' });
@@ -68,6 +69,14 @@ export default function FormularioPage({ params }: { params: { estado: string, f
 
             try {
 
+                const form = await api.get(`${baseUrl}/tipoFormularios/${params.formularioId}`)
+                const { permiteSemAutenticacao } = form.data
+               
+                if (permiteSemAutenticacao !== "1") {
+                    setPermitido(false)
+                    return
+                }
+
                 const estadoAPI = await api.get(`${baseUrl}/estadosgeral/${params.estado}`)
                 const { id, sigla, nome } = estadoAPI.data
                 setEstado({ id, sigla, nome });    
@@ -79,7 +88,7 @@ export default function FormularioPage({ params }: { params: { estado: string, f
                 setNomeFormulario(`${nomeForm} - ${tipo}`)
                 setDuracao(duracao)
 
-                console.log('useEffect')
+
 
             }
             catch (err: any) {
@@ -94,7 +103,14 @@ export default function FormularioPage({ params }: { params: { estado: string, f
     return (
         <>
             <div className='h-[full] flex flex-col bg-slate-800'>
-                {!accept && !start &&
+                {!permitido &&
+                    <div className="flex flex-col items-center justify-center h-screen gap-2" >
+                    <span className='text-white text-center text-3xl'>Página não encontrada!</span> 
+
+                    {/* <Button onClick={handleRestartForm}>Reiniciar Questionário</Button> */}
+                </div>                
+                }
+                {permitido && !accept && !start &&
                     <div className='flex h-screen w-full justify-center items-center'>
                         <div className='w-[500px]'>
                             <MunicipioEscola estadoId={estado.id} handleSelectedMunicipio={handleSelectedMunicipio} handleSelectEscola={handleSelectEscola} handleStart={handleStart} nomeFormulario={nomeFormulario} />
@@ -102,7 +118,7 @@ export default function FormularioPage({ params }: { params: { estado: string, f
                     </div>
                 }
 
-                {!accept && start &&
+                {permitido && !accept && start &&
                     <DefaultModal
                         handleAccept={handleAccept}
                         setIsModalOpen={setIsModalOpen}
@@ -114,11 +130,11 @@ export default function FormularioPage({ params }: { params: { estado: string, f
                         duracao={duracao}
                     />
                 }
-                {accept &&
+                {permitido && accept &&
                     <FormularioSA params={{...params, escolaId: selectedEscola, municipioId: selectedMunicipio}} />
                 }
 
-                {!isModalOpen && !accept &&
+                {permitido && !isModalOpen && !accept &&
                     <div className="flex flex-col items-center justify-center h-screen gap-2" >
                         <span className='text-white text-center text-3xl'>Que pena...</span> 
                         <span className='text-white text-sm pb-8'>agradecemos sua participação!</span>

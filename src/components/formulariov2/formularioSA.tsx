@@ -23,7 +23,7 @@ type EstadoProps = {
 };
 
 
-export default function FormularioSA({ params }: { params: { formularioId: string, estado: string } }) {
+export default function FormularioSA({ params }: { params: { formularioId: string, estado: string, escolaId: string, municipioId: string } }) {
 
     const router = useRouter()
     const baseUrl: any = process.env.NEXT_PUBLIC_BASE_URL
@@ -204,6 +204,8 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
             const resp = api.post("/respostaSA", {
                 tipo: tipoFormulario,
                 estadoId: estado.id,
+                municipioId: params.municipioId,
+                escolaId: params.escolaId,
                 resposta: JSON.stringify(respostas)
             }).then(resp => {
                 if (resp.status === 200) {

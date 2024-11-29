@@ -52,6 +52,12 @@ export default function DefaultModal(props: PropsType) {
       "secretaria": "Secretaria de Estado da Educação da Bahia",
       "secretariaAbrebiado": "SEDUC-BA"
     },    
+    {
+      "sigla": "SP",
+      "descricao": "São Paulo",
+      "secretaria": "Secretaria de Estado da Educação de São Paulo",
+      "secretariaAbrebiado": "SEDUC-SP"
+    },       
   ]
 
   useEffect(() => {

@@ -23,7 +23,7 @@ type EstadoProps = {
 };
 
 
-export default function FormularioSA({ params }: { params: { formularioId: string, estado: string, escolaId: string, municipioId: string } }) {
+export default function FormularioSA({ params }: { params: { formularioId: string, estado: string, escolaId: string, municipioId: string, turmaId: string } }) {
 
     const router = useRouter()
     const baseUrl: any = process.env.NEXT_PUBLIC_BASE_URL
@@ -142,8 +142,6 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
 
     };
 
-
-
     // Função para limpar o valor selecionado em um grupo
     const limparSelecao = (perguntaId: string) => {
 
@@ -206,6 +204,7 @@ export default function FormularioSA({ params }: { params: { formularioId: strin
                 estadoId: estado.id,
                 municipioId: params.municipioId,
                 escolaId: params.escolaId,
+                turmaId: params.turmaId,
                 resposta: JSON.stringify(respostas)
             }).then(resp => {
                 if (resp.status === 200) {

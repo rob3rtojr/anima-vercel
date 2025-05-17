@@ -216,8 +216,8 @@ export default function DefaultModal(props: PropsType) {
           </Modal.Footer>
         }
         <div className='flex flex-row justify-between items-center pt-2 p-4'>
-          <div>{passo > 1 && !extra && <button onClick={() => setPasso(passo - 1)} className='flex flex-row justify-between items-center text-blue-800'><ArrowBigLeft />Anterior</button>}</div>
-          <div>{passo < 2 && !extra && <button onClick={() => setPasso(passo + 1)} className='flex flex-row justify-between items-center text-blue-800'>Próximo <ArrowBigRight /></button>}</div>
+          <div>{passo && !extra && <button onClick={() => setPasso(passo - 1)} className='flex flex-row justify-between items-center text-blue-800'><ArrowBigLeft />Anterior</button>}</div>
+          <div>{passo && !extra && <button onClick={() => setPasso(passo + 1)} className='flex flex-row justify-between items-center text-blue-800'>Próximo <ArrowBigRight /></button>}</div>
         </div>
       </Modal>
     </>

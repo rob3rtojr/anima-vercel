@@ -112,7 +112,7 @@ export default function DefaultModal(props: PropsType) {
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">
 
-                O tempo médio para finalizar o preenchimento deste questionário é de {props.duracao} As
+                O tempo médio para finalizar o preenchimento deste questionário é de <b>{props.duracao}</b>. As
                 questões são de preenchimento obrigatório para o consequente avanço. Não há
                 respostas certas ou erradas, o importante é que você seja sincero em todo momento.                
               </p>

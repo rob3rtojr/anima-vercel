@@ -26,6 +26,8 @@ const nextAuthOptions: NextAuthOptions = {
         cpf: { type: "text" },
         masp: { type: "text" },
         matriculaProfessor: { type: "text" },
+        email: { type: "text" },
+        celular: { type: "text" },
         userType: { type: "text" }
       },
       async authorize(credentials, req) {
@@ -44,6 +46,8 @@ const nextAuthOptions: NextAuthOptions = {
             cpf: credentials?.cpf,
             masp: credentials?.masp,
             matriculaProfessor: credentials?.matriculaProfessor,
+            email: credentials?.email,
+            celular: credentials?.celular,
             userType: credentials?.userType
           }),
         });

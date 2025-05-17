@@ -8,9 +8,10 @@ import logoGO from "../assets/GO.png"
 import logoMG from "../assets/MG.png"
 import logoPA from "../assets/PA.png"
 import logoBA from "../assets/BA.png"
-import { Menu, X } from 'lucide-react';
+import { CircleHelpIcon, Menu, X, CopyCheck } from 'lucide-react';
 import NomeUsuario from "./NomeUsuario";
 import LogoutButton from "./LogoutButton";
+import AjudaModal from "./AjudaModal";
 
 const AppBar = () => {
 
@@ -19,6 +20,7 @@ const AppBar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollTop, setLastScrollTop] = useState(0);
     const [clickedMenu, setClickedMenu] = useState(false);
+    const [isAjudaOpen, setIsAjudaOpen] = useState<boolean>(false);
 
     useEffect(() => {
         function handleScroll() {
@@ -87,14 +89,20 @@ const AppBar = () => {
                         <div className={`flex justify-center max-w-screen-xl border-gray-200 w-full `} >
                             <div className="flex flex-row justify-end items-center pl-4 pr-4 w-full">
 
-                                <Link className="flex items-center gap-2 transition-colors ml-2 p-2 mr-2 text-violet-400  rounded hover:bg-violet-700 hover:text-white" href={"/user/listaFormularios"}>Meus Formulários</Link>
+                                <Link className="flex items-center gap-2 transition-colors ml-2 p-2 mr-2 text-violet-400  rounded hover:bg-violet-700 hover:text-white" href={"/user/listaFormularios"}><CopyCheck /> Meus Formulários</Link>
+                                <span className="text-gray-500">|</span>
+                                <div onClick={()=>setIsAjudaOpen(true)} className="flex flex-row items-center gap-2 transition-colors ml-2 p-2 mr-2 text-violet-400  rounded hover:bg-violet-700 hover:text-white cursor-pointer"><CircleHelpIcon/> Ajuda</div>
                                 <span className="text-gray-500">|</span>
                                 <div><LogoutButton /></div>
                             </div>
                         </div>
                     </div>
                 </nav>
-
+                <AjudaModal
+                    setIsModalOpen={setIsAjudaOpen}
+                    isModalOpen={isAjudaOpen}
+                    tipoAjuda={'geral'}
+                /> 
 
             </>
         );

@@ -15,7 +15,7 @@ import LoadImage from '../elements/LoadImage';
 import DebubArea from './DebugArea';
 import Link from "next/link";
 import SequenciaOriginal from '../formulario/SequenciaOriginal/page';
-
+import SubPergunta from '../formulario/SubPergunta/page';
 
 
 export default function FormularioV2({ params }: { params: { formularioId: string } }) {
@@ -404,8 +404,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
 
                 const response = await res.json();
-                const responsOrdenado = ordenarPerguntas(response)
-                setPerguntas(responsOrdenado)
+                //aleatoriza as perguntas dentro do bloco
+                //const responsOrdenado = ordenarPerguntas(response)
+                //setPerguntas(responsOrdenado)
+                setPerguntas(response)
 
                 const respostasIniciais: { [key: string]: string | null } = {};
 
@@ -502,6 +504,9 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <CardPergunta id={`C-${pergunta.id}`} className={"text-white bg-gray-800"} key={pergunta.id} faltaResponder={false} >
                                                 <Pergunta className={"text-gray-400 text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
+                                                {pergunta.descricaoAuxiliar &&
+                                                <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />
+                                                }
                                             </CardPergunta>
                                         )
                                     }
@@ -511,8 +516,9 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                             <React.Fragment key={pergunta.id}>
                                                 <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                     <div>
-                                                        <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} />
-                                                        <SequenciaOriginal numeroOriginal={pergunta.numero} />
+                                                        {/* <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} /> */}
+                                                        <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} textoAuxiliar={pergunta.descricaoAuxiliar} />
+                                                        <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
                                                         <CardBody>
                                                             {pergunta.alternativa.map(alternativa => (
 
@@ -543,8 +549,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} />
-                                                    <SequenciaOriginal numeroOriginal={pergunta.numero} />
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
+                                                    <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
                                                     <CardBody>
                                                         {pergunta.alternativa.map(alternativa => (
 
@@ -574,8 +580,9 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} />
-                                                    <SequenciaOriginal numeroOriginal={pergunta.numero} />
+                                                    {/* <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} /> */}
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
+                                                    <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
                                                     <CardBody>
 
                                                         <div className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'}`}>
@@ -607,7 +614,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                     onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
                                                                     onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
                                                                     disabled={pergunta.isDisabled}
-                                                                    placeholder='digite aqui'
+                                                                    placeholder='digite aqui sua resposta'
                                                                 />
                                                             }
                                                         </div>
@@ -625,8 +632,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} />
-                                                    <SequenciaOriginal numeroOriginal={pergunta.numero} />
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
+                                                    <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
                                                     <CardBody>
                                                         <PerguntaRangeV2
                                                             props={pergunta}
@@ -672,7 +679,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                             if (respostas[p.id] === "" || respostas[p.id] === undefined) {
                                                 return (
 
-                                                    <Link key={p.id} href={`#C-${p.id}`}>[ {p.sequencia} ] </Link>
+                                                    <Link key={p.id} href={`#C-${p.id}`}>[ {p.numero} ] </Link>
                                                 )
                                             }
                                         }

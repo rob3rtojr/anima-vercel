@@ -15,7 +15,7 @@ export default function LogoutButton () {
         router.replace('/')
     }
 
-    return <button onClick={logout} className="flex items-center gap-2 transition-colors ml-2 p-2 mr-2 text-violet-400  rounded hover:bg-violet-700 hover:text-white">Sair <LogOut/></button>
+    return <button onClick={logout} className="flex items-center gap-2 transition-colors ml-2 p-2 mr-2 text-violet-400  rounded hover:bg-violet-700 hover:text-white"><LogOut/> Sair</button>
 
 
 }

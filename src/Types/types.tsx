@@ -12,7 +12,8 @@ type EscutarType = {
 type PerguntaType = {
     id: string,
     descricao:string,
-    numero:string,
+    descricaoAuxiliar?: string,
+    numero: string,
     ordem:number,
     tipoPerguntaId: number,
     timer?: number,
@@ -32,7 +33,8 @@ type PerguntaType = {
     isDisabled:boolean,
     respostaBanco:string[],
     bloco?: number,
-    sequencia?:number
+    sequencia?:number,
+    identificador?:string
 }
 
 export type { AlternativaType, EscutarType, PerguntaType };

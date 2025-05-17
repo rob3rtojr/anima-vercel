@@ -187,38 +187,42 @@ export default function DefaultModal(props: PropsType) {
           }
 
         </Modal.Body>
-        {passo === 2 && !extra &&
-          <Modal.Footer>
-            <div className='flex md:flex-row flex-col justify-between w-full gap-2'>
+        <Modal.Footer>
+          <div className='flex flex-col w-full items-center justify-center'>
+          {passo === 2 && !extra &&
+            
+              <div className='flex md:flex-row flex-col justify-between w-full gap-2 pb-8'>
 
-              <button onClick={() => props.handleAccept(true)} className='flex justify-center items-center md:w-[50%] w-full text-white rounded-md p-1 h-24 bg-green-500 transition duration-300 ease-in-out hover:bg-green-700'>
-                {props.isLoading && <LoadImage />}
-                {!props.isLoading && "Eu declaro que entendi os objetivos, riscos e benefícios da participação nesta pesquisa, e que concordo em participar."}
-              </button>
+                <button onClick={() => props.handleAccept(true)} className='flex justify-center items-center md:w-[50%] w-full text-white rounded-md p-1 h-24 bg-green-500 transition duration-300 ease-in-out hover:bg-green-700'>
+                  {props.isLoading && <LoadImage />}
+                  {!props.isLoading && "Eu declaro que entendi os objetivos, riscos e benefícios da participação nesta pesquisa, e que concordo em participar."}
+                </button>
 
-              <button color="gray" onClick={() => props.handleAccept(false)} className='md:w-[50%] w-full text-white rounded-md p-1 h-24 bg-red-500 transition duration-300 ease-in-out hover:bg-red-700'>
-                Eu não concordo em participar desta pesquisa.
-              </button>
+                <button color="gray" onClick={() => props.handleAccept(false)} className='md:w-[50%] w-full text-white rounded-md p-1 h-24 bg-red-500 transition duration-300 ease-in-out hover:bg-red-700'>
+                  Eu não concordo em participar desta pesquisa.
+                </button>
 
-            </div>
-          </Modal.Footer>
-        }
-        {extra &&
-          <Modal.Footer>
-            <div className='flex md:flex-row flex-col justify-between w-full gap-2'>
+              </div>
 
-              <button onClick={handleExtra} className='flex justify-center items-center w-full text-white rounded-md p-1 h-12 bg-green-500 transition duration-300 ease-in-out hover:bg-green-700'>
-                Voltar
-              </button>
+          }
+          {extra &&
 
+              <div className='flex md:flex-row flex-col justify-between w-full gap-2'>
 
-            </div>
-          </Modal.Footer>
-        }
-        <div className='flex flex-row justify-between items-center pt-2 p-4'>
-          <div>{passo && !extra && <button onClick={() => setPasso(passo - 1)} className='flex flex-row justify-between items-center text-blue-800'><ArrowBigLeft />Anterior</button>}</div>
-          <div>{passo && !extra && <button onClick={() => setPasso(passo + 1)} className='flex flex-row justify-between items-center text-blue-800'>Próximo <ArrowBigRight /></button>}</div>
-        </div>
+                <button onClick={handleExtra} className='flex justify-center items-center w-full text-white rounded-md p-1 h-12 bg-green-500 transition duration-300 ease-in-out hover:bg-green-700'>
+                  Voltar
+                </button>
+
+              </div>
+            
+          }
+          <div className='flex flex-row justify-between items-center pt-2 p-4 w-full'>
+            <div>{passo > 1 && !extra && <button onClick={() => setPasso(passo - 1)} className='flex flex-row justify-between items-center text-blue-800'><ArrowBigLeft />Anterior</button>}</div>
+            <div>{passo < 2 && !extra && <button onClick={() => setPasso(passo + 1)} className='flex flex-row justify-between items-center text-blue-800'>Próximo <ArrowBigRight /></button>}</div>
+          </div> 
+
+          </div>        
+        </Modal.Footer>   
       </Modal>
     </>
   )

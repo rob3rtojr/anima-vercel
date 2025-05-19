@@ -50,7 +50,7 @@ function LoginPage() {
   const [alunos, setAlunos] = useState<Aluno[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [authType, setAuthType] = useState<string>("");
-  const [userType, setUserType] = useState<string>("aluno");
+  const [userType, setUserType] = useState<string>("professor");
   const [authMessage, setAuthMessage] = useState<string>();
   const [placeHolderText, setPlaceHolderText] = useState<string>();
   const [isAjudaOpen, setIsAjudaOpen] = useState<boolean>(false);

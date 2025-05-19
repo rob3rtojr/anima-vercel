@@ -20,9 +20,8 @@ export default function AjudaModal(props: PropsType) {
               {props.tipoAjuda === 'geral' && 
               <div className='flex flex-col'>
                 <span className='font-bold mb-2'>Dúvidas / Dificuldades</span>
-                <span className='text-justify'>Em caso de dúvidas ou dificuldades, entre em contato com o e-mail a seguir apresentando todas as informações preenchidas:<br/>pesquisaeducacao@institutoanima.org.br</span>
-                <span className='font-bold mb-2 mt-4'>Autenticação</span>
-                <span className='text-justify'>Caso tenha problema na autenticação, pedimos que entre em contato pelo e-mail pesquisaeducacao@institutoanima.org.br e nos informe o município, nome completo, e-mail e telefone para verificarmos se o respondente está na lista de selecionados para a pesquisa.</span>
+                <span className='text-justify'>Em caso de dúvidas ou dificuldades no cadastro, pedimos que entre em contato pelo e-mail <span className='pt-4 text-blue-800'>pesquisaeducacao@institutoanima.org.br</span> e nos informe o município, nome completo, e-mail e telefone para verificarmos se o(a) respondente está na lista de selecionados para a pesquisa.</span>              
+                
               </div>
               }
             </div>          

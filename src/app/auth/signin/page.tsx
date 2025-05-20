@@ -10,6 +10,7 @@ import { api } from '@/lib/api';
 import { ToastContainer, toast } from 'react-toastify';
 import AjudaModal from '../../../components/AjudaModal'
 import { CircleHelpIcon } from 'lucide-react';
+import { ComboFilter } from '@/components/elements/ComboFilter';
 
 type PropsType = {
   siglaEstado: string
@@ -236,7 +237,9 @@ function LoginPage() {
   // };
 
   const handleSelectMunicipio = (selectedOption: string) => {
+    console.log("handleSelectMunicipio")
     setMunicipioId(selectedOption)
+    setProfessorId("0")
     setEscolaId("0")
     setTurmaId("0")
   };
@@ -329,11 +332,12 @@ function LoginPage() {
           <div className='flex flex-row items-center gap-2'><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="professor" ref={input => { if (input && userType === "professor") input.checked = true; }} /> Sou profissional da educação</div>
         </div>
         <div className='flex flex-1 flex-col pr-2'>
-
-          <Combo labelText='Município' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} tipo={userType} />
+          <ComboFilter  labelText='Município' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} tipo={userType}/>
+          {/* <Combo labelText='Município' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} tipo={userType} /> */}
 
           {userType === "professor" &&
-            <Combo labelText='Servidores' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} />
+            // <Combo labelText='Servidores' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} tipo={userType}/>
+            <ComboFilter  labelText='Servidores' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} tipo={userType}/>
           }
           {userType === "aluno" &&
             <>

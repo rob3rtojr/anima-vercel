@@ -83,7 +83,7 @@ export default function DefaultModal(props: PropsType) {
               </p>
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Você está sendo convidado a participar de uma pesquisa sobre coordenação 
+                Você está sendo convidado(a) a participar de uma pesquisa sobre coordenação 
                 pedagógica no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).
                 A avaliação tem como objetivo produzir evidências sobre o papel do(a)
                 coordenador(a) pedagógico(a) e suas atribuições, bem como identificar os desafios e
@@ -114,7 +114,7 @@ export default function DefaultModal(props: PropsType) {
 
                 O tempo médio para finalizar o preenchimento deste questionário é de <b>{props.duracao}</b>. As
                 questões são de preenchimento obrigatório para o consequente avanço. Não há
-                respostas certas ou erradas, o importante é que você seja sincero em todo momento.                
+                respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.                
               </p>
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">

@@ -126,7 +126,7 @@ export default function DefaultModal(props: PropsType) {
               </p>  
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">
-                  Leia atentamente os termos de aceite para participar desta pesquisa no <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>ANEXO.</a>
+                  Leia atentamente os termos de aceite para participar desta pesquisa <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>AQUI</a>.
               </p>                                         
 
               {/* <p className="text-base leading-relaxed text-gray-500 text-justify">

@@ -94,7 +94,7 @@ export default function DefaultModal(props: PropsType) {
                 As perguntas incluem o mapeamento de informações sobre seu perfil, como dados
                 pessoais (gênero, cor ou raça, idade e características do seu domicílio) e sua trajetória
                 profissional e acadêmica (qualificação e especialização para o exercício da
-                coordenação pedagógica).              
+                coordenação pedagógica), e suas percepções em situações comuns na rotina da escola.           
               </p>       
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">
@@ -103,8 +103,8 @@ export default function DefaultModal(props: PropsType) {
               </p>
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Esta pesquisa é <b>anônima</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'alunos, colegas ou outros profissionais da SEDUC'} não
-                terão acesso a informações nominais, e sim informações agregadas e/ou anonimizadas.
+                Esta pesquisa é <b>anônima</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'estudantes, colegas ou outros profissionais da SEDUC'} não
+                terão acesso a informações nominais, somente às informações agregadas e/ou anonimizadas.
                 Os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de
                 Proteção de Dados (LGPD) e demais leis de proteção de dados aplicáveis. Confira, na
                 íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanima.org.br/privacidade/' target='_blank'>neste link</a>.              
@@ -168,10 +168,9 @@ export default function DefaultModal(props: PropsType) {
             <div className="space-y-6">
               <p className="text-base leading-relaxed text-gray-500 text-justify">Ao aceitar participar desta pesquisa você declara estar ciente que:</p>
               <ul>
-                <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	Os dados e as informações coletadas serão gerenciadas pelo INSTITUTO ÂNIMA (CNPJ – 07.749.605/0003-90) no âmbito do Acordo de Cooperação assinado com a {estadoLogado?.secretaria};</p></li>
+                <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	Os dados e as informações coletadas serão gerenciados pelo INSTITUTO ÂNIMA (CNPJ – 07.749.605/0003-90) no âmbito do Acordo de Cooperação assinado com a {estadoLogado?.secretaria};</p></li>
                 <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	As informações obtidas através da sua participação não permitirão a identificação da sua pessoa, exceto para a equipe de pesquisa, e a divulgação das mencionadas informações agregadas e/ou anonimizadas só será feita entre as instituições, profissionais e parceiros do estudo;</p></li>
                 <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	Você tem direito de solicitar acesso, retificação ou eliminação dos seus Dados Pessoais, ou revogar o seu consentimento, sem que isso lhe traga qualquer penalidade ou prejuízo.</p></li>
-                <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	Os dados agregados (e apenas os agregados) serão divulgados para a Rede de Ensino.</p></li>
               </ul>
               {/* <p className="text-base leading-relaxed text-gray-500 text-justify">“Este questionário é resultado da parceria entre a {estadoLogado?.secretaria} ({estadoLogado?.secretariaAbrebiado})  e o Instituto Ânima. Esse é um ponto de coleta de dado pessoal. Os dados pessoais são usados pelo INSTITUTO ÂNIMA SOCIESC DE INOVAÇÃO, PESQUISA E CULTURA (CNPJ – 07.749.605/0003-90) para o cumprimento de metas e objetivos no Acordo de Cooperação Técnica assinado com a {estadoLogado?.secretariaAbrebiado}, além de serem usados para enriquecer a sua experiência ao utilizar os nossos serviços. Confira, na íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanimaeducacao.org.br/privacidade/' target='_blank'>neste link.</a></p>
               <p className="text-base leading-relaxed text-gray-500 text-justify">Sempre que quiser, poderá pedir mais informações por meio do contato da Encarregada de Dados (DPO) do Instituto Ânima (privacidade@institutoanimaeducacao.org.br), Paula Starling.</p>

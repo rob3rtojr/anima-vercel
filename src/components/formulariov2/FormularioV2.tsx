@@ -466,7 +466,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                         <header className="bg-slate-750 mt-20">
                             <div className="flex flex-col justify-center gap-1 items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                                 <h1 className="font-alt text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
-                                <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p>
+                                {/* <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p> */}
                                 {/* <h1 className="font-alt text-4xl tracking-tight text-gray-200">Questionário</h1>
                                 <p className='text-gray-400 text-sm'>Sua colaboração neste questionário é essencial para aprofundarmos nossa compreensão
                                     sobre o perfil de gestores pedagógicos (coordenadores, gestores, assessores, coordenadores

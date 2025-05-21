@@ -1,4 +1,7 @@
+"use client";
+
 import { cn } from "@/lib/utils"
+import DOMPurify from "dompurify";
 
 type PropsType = {
     texto: string,
@@ -7,6 +10,7 @@ type PropsType = {
 }
 
 export default function SubPergunta(props: PropsType) {
+    const safeHtml = DOMPurify.sanitize(props.texto);
     return (
         <div
             className={
@@ -14,7 +18,7 @@ export default function SubPergunta(props: PropsType) {
                     props.className,
                     { 'text-gray-400': props.isDisabled }
                 )}>
-            <span>{props.texto}</span>
+            <span dangerouslySetInnerHTML={{ __html: safeHtml }} />
         </div>
     )
 }

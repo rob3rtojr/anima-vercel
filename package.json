@@ -23,6 +23,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
+    "dompurify": "^3.2.6",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "flowbite": "^1.7.0",

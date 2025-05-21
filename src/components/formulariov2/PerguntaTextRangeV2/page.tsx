@@ -34,6 +34,19 @@ export default function PerguntaRangeV2(props: PropsType) {
         props.handleInputText(idPergunta, event.target.value,mascaraResposta)
     };
 
+    const onClickRange = (idPergunta: string, idAlternativa: string, valor: string, idTipoPergunta: number) => {
+        let valorAux: string;
+
+        if (valor.toString() ==="0") {
+            setWidth(min.toString())
+            valorAux = min.toString()
+        } else {
+            valorAux = valor
+        }
+
+        props.handleAtualizaResposta(idPergunta,"", valorAux, idTipoPergunta)
+    }
+
     return (
         <>
 
@@ -50,8 +63,8 @@ export default function PerguntaRangeV2(props: PropsType) {
                 step={props.step}
                 onChange={(e) => changeWidth(e,props.props.id,props.props.mascaraResposta)}
 
-                onMouseUp={(e) => props.handleAtualizaResposta(props.props.id,"", width.toString(), props.props.tipoPerguntaId)}
-                onTouchEnd={(e) => props.handleAtualizaResposta(props.props.id,"", width.toString(), props.props.tipoPerguntaId)}
+                onMouseUp={(e) => onClickRange(props.props.id,"", width.toString(), props.props.tipoPerguntaId)}
+                onTouchEnd={(e) => onClickRange(props.props.id,"", width.toString(), props.props.tipoPerguntaId)}
                 value={props.isDisabled ? 0: width}
                 className="w-full h-2 bg-blue-300 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                 disabled={props.isDisabled}

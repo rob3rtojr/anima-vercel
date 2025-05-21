@@ -92,7 +92,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
     const atualizarResposta = (perguntaId: string, alternativaId: string, valor: string, tipoPerguntaId: number) => {
         const idToast = toast.loading("Aguarde...")
         setIsSaving(true)
-
+        
 
         if (tipoPerguntaId === TipoPerguntaEnum.CHECKBOX || tipoPerguntaId === TipoPerguntaEnum.RADIO) {
 

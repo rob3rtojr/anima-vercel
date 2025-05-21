@@ -19,7 +19,7 @@ const AppBar = () => {
 
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollTop, setLastScrollTop] = useState(0);
-    const [clickedMenu, setClickedMenu] = useState(false);
+    const [clickedMenu, setClickedMenu] = useState(true);
     const [isAjudaOpen, setIsAjudaOpen] = useState<boolean>(false);
 
     useEffect(() => {
@@ -81,7 +81,7 @@ const AppBar = () => {
                             <div className="flex flex-row items-center">
                                 <NomeUsuario />
                                 <Menu className={`text-white cursor-pointer transition-all duration-300 ${clickedMenu ? 'hidden' : 'block'}`} onClick={() => handleMenuClick()} />
-                                <X className={`text-white cursor-pointer transition-all duration-300 ${!clickedMenu ? 'hidden' : 'block'}`} onClick={() => handleMenuClick()} />
+                                {/* <X className={`text-white cursor-pointer transition-all duration-300 ${!clickedMenu ? 'hidden' : 'block'}`} onClick={() => handleMenuClick()} /> */}
                             </div>
                         </div>
                     </div>

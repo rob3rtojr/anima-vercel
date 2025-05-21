@@ -85,9 +85,7 @@ export default function DefaultModal(props: PropsType) {
               <p className="text-base leading-relaxed text-gray-500 text-justify">
                 Você está sendo convidado(a) a participar de uma pesquisa sobre coordenação 
                 pedagógica no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).
-                A avaliação tem como objetivo produzir evidências sobre o papel do(a)
-                coordenador(a) pedagógico(a) e suas atribuições, bem como identificar os desafios e
-                oportunidades das práticas da coordenação pedagógica na rede paulista.
+                A avaliação tem como objetivo produzir evidências sobre o papel do(a) coordenador(a) pedagógico(a) e suas atribuições, bem como identificar os desafios e oportunidades relacionadas à essa função na rede paulista.
               </p>
 
               <p className="text-base leading-relaxed text-gray-500 text-justify">

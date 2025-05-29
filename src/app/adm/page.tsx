@@ -50,6 +50,11 @@ export default function Adm() {
     const [municipioId, setMunicipioId] = useState<string>("0");
     const [escolaId, setEscolaId] = useState<string>("0");
     const [turmaId, setTurmaId] = useState<string>("0");
+    const [grupoId, setGrupoId] = useState<string>("0");
+    const [estratoId, setEstratoId] = useState<string>("0");
+    const [filtroInicialGrupo, setFiltroInicialGrupo] = useState<string>("");
+    const [filtroInicialEstrato, setFiltroInicialEstrato] = useState<string>("");
+
     const [tipo, setTipo] = useState<string>("");
     const [agrupador, setAgrupador] = useState<string>("");
 
@@ -70,7 +75,8 @@ export default function Adm() {
         fetchOptions()
         setFiltroInicialFormulario("todos")
         setFiltroInicialEstado("0")
-
+        setFiltroInicialGrupo("todos")
+        setFiltroInicialEstrato("todos")
 
     }, [])
 
@@ -131,6 +137,14 @@ export default function Adm() {
         setTurmaId(selectedOption)
     }
 
+    const handleSelectGrupo = (selectedOption: string) => {
+        setGrupoId(selectedOption)
+    }  
+    
+    const handleSelectEstrato = (selectedOption: string) => {
+        setEstratoId(selectedOption)
+    }      
+
     const handleClear = () => {
         setResultado([])
 
@@ -168,6 +182,9 @@ export default function Adm() {
                 rota += `estadoId=${estadoId}`
                 agrupador!=='' ? rota+=`&agrupador=${agrupador}` : rota+=''
             }
+
+            grupoId!=='' ? rota+=`&grupo=${grupoId}` : rota+=''
+            estratoId!=='' ? rota+=`&estrato=${estratoId}` : rota+=''
 
             await api.get(rota)
                 .then((response) => {
@@ -320,10 +337,13 @@ export default function Adm() {
                         {!hideCampos &&
                             <>
                                 <div className="w-full"><Combo labelText='Escola' idRota="escolas-por-regional" idFiltro={regionalId} onSelect={handleSelectEscola} idSelecionado={escolaId} /></div>
+                                <div className="w-full"><Combo labelText='Grupo' idRota="grupos" idFiltro={filtroInicialGrupo} onSelect={handleSelectGrupo} idSelecionado={grupoId} /></div>
+                                <div className="w-full"><Combo labelText='Estrato' idRota="estratos" idFiltro={filtroInicialEstrato} onSelect={handleSelectEstrato} idSelecionado={estratoId} /></div>
                             </>
                         }
                         
                     </div>
+
                     {estadoId !== '0' && regionalId==='0' &&
                     <div className="flex flex-row items-center pt-8 gap-2 text-gray-400">
                         <input 

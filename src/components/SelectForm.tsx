@@ -224,19 +224,19 @@ export default function SelectForm() {
     if (session && session.user) {
         return (
             <>
-                <div className="flex flex-col">
-                    <div className="text-white top-0 ml-4 mr-4 mb-4 pb-2">
+                <div className="flex flex-col justify-center items-center mt-28">
+                    <div className="text-white top-20 md:top-0 ml-4 mr-4 mb-4 pb-2">
                         <p className="text-white text-2xl pr-2">{`Olá, ${session.user.nome}`}</p>
                         <p>Selecione um formulário abaixo: </p>
                     </div>
 
-                    <div className="flex md:flex-row flex-col just">
+                    <div className="flex md:flex-row flex-col">
                         {formularios.length > 0 &&
                             formularios.map((f, index) => {
 
 
                                 return (<button key={index} disabled={formularios[index].isLoading} onClick={() => handleClickForm(f.formulario.id, f.situacao, f.formulario.duracao)}>
-                                    <div className="flex flex-col rounded-md shadow-sm md:w-96 min-w-96  h-36 bg-violet-500 p-1 hover:bg-violet-700 text-white transition-all m-4 justify-center items-center">
+                                    <div className="flex flex-col rounded-md shadow-sm md:w-96 min-w-96  h-44 md:h-36 bg-violet-500 p-1 hover:bg-violet-700 text-white transition-all m-4 justify-center items-center">
                                         <div className="flex flex-row gap-4 items-center p-4">
                                             <div className="text-md text-justify">
                                                 {f.formulario.nome}.

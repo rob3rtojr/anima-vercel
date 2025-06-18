@@ -1,7 +1,8 @@
 type AlternativaType = {
     id: string,
     descricao: string,
-    isChecked: boolean
+    isChecked: boolean,
+    valor: string
 }
 
 type EscutarType = {
@@ -34,7 +35,8 @@ type PerguntaType = {
     respostaBanco:string[],
     bloco?: number,
     sequencia?:number,
-    identificador?:string
+    identificador?:string,
+    somatorioResposta?: number
 }
 
 export type { AlternativaType, EscutarType, PerguntaType };

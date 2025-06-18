@@ -120,7 +120,7 @@ export function ComboFilter(
           response = await api.get(urlRota);
           setOptions(response.data);
           setValue("")
-          console.log("aqui")
+          //console.log("aqui")
         }
         else {
           setOptions([]);
@@ -172,7 +172,7 @@ export function ComboFilter(
           <Command className="w-full">
             <CommandInput placeholder="Localizar..." className="w-full" />
             <CommandList className="w-full max-h-[200px] overflow-auto">
-              <CommandEmpty>No option found.</CommandEmpty>
+              <CommandEmpty>Nenhum item encontrado.</CommandEmpty>
               <CommandGroup className="w-full">
                 {options.map((option) => (
                   <CommandItem
@@ -186,7 +186,7 @@ export function ComboFilter(
                         setValue(selected.nome); // continua exibindo o nome
                         setOpen(false);
                         onSelect?.(selected.id); // aqui você envia o ID correto
-                        console.log("ID selecionado:", selected.id);
+                        //console.log("ID selecionado:", selected.id);
                       }
                     }}
                   >

@@ -11,7 +11,7 @@ export default function Pergunta(props: PropsType) {
     return (
         <div
             className={
-                cn("flex flex-col font-bold text-xl text-justify transition-all duration-700, text-blue-900",
+                cn("flex flex-col font-bold text-lg lg:text-xl text-justify transition-all duration-700, text-blue-900",
                     props.className,
                     { 'text-gray-400': props.isDisabled }
                 )}>

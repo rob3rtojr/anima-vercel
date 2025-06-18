@@ -3,5 +3,6 @@ export const TipoPerguntaEnum = {
     CHECKBOX: 2,
     TEXT: 3,
     TITULO: 4,
-    RANGE: 5
+    RANGE: 5,
+    SOMA: 6
   };

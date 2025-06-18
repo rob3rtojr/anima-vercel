@@ -16,6 +16,7 @@ import DebubArea from './DebugArea';
 import Link from "next/link";
 import SequenciaOriginal from '../formulario/SequenciaOriginal/page';
 import SubPergunta from '../formulario/SubPergunta/page';
+import PerguntaRangeSoma from './PerguntaTextRangeSoma/page';
 
 
 export default function FormularioV2({ params }: { params: { formularioId: string } }) {
@@ -32,7 +33,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
     const [isFinishClick, setIsFinishClick] = useState<boolean>(false);
     const [isLoadingButtonFinish, setIsLoadngButtonFinish] = useState<boolean>(false);
     const [isSaving, setIsSaving] = useState<boolean>(false)
-    const [isDebugging, setIsDebugging] = useState<boolean>(false)
+    const [isDebugging, ] = useState<boolean>(false)
     const [isValidForm, setIsValidForm] = useState<boolean>(true)
     const [podePreencher, setPodePreencher] = useState<boolean>(true)
     const [nomeFormulario, setNomeFormulario] = useState<string>("")
@@ -93,14 +94,14 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
         const idToast = toast.loading("Aguarde...")
         setIsSaving(true)
         
-
-        if (tipoPerguntaId === TipoPerguntaEnum.CHECKBOX || tipoPerguntaId === TipoPerguntaEnum.RADIO) {
+        if (tipoPerguntaId === TipoPerguntaEnum.CHECKBOX || tipoPerguntaId === TipoPerguntaEnum.RADIO || tipoPerguntaId === TipoPerguntaEnum.SOMA) {
 
             const perguntasAux = [...perguntas]
             const perguntaIndex = perguntasAux ? perguntasAux.findIndex((pergunta) => pergunta.id === perguntaId) : -1;
             const alternativaIndex = perguntasAux[perguntaIndex].alternativa.findIndex(a => a.id === alternativaId)
 
             if (tipoPerguntaId === TipoPerguntaEnum.CHECKBOX) {
+
                 var selecionados: string[] = []
 
                 perguntasAux[perguntaIndex].alternativa[alternativaIndex].isChecked = !perguntasAux[perguntaIndex].alternativa[alternativaIndex].isChecked;
@@ -110,8 +111,17 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                 })
 
                 valor = selecionados.join(",")
+            } else if (tipoPerguntaId === TipoPerguntaEnum.SOMA) {
+                var selecionados: string[] = []
+                perguntasAux[perguntaIndex].alternativa[alternativaIndex].valor = valor
+                perguntasAux[perguntaIndex].alternativa.map(a => {
+                        selecionados.push(a.valor === "" || a.valor === undefined ? `${a.id}:0` : `${a.id}:${a.valor}`)
+                })
+                perguntasAux[perguntaIndex].somatorioResposta = perguntasAux[perguntaIndex].alternativa.reduce((total, item) => total + parseFloat(item.valor || '0'), 0)                
+                valor = selecionados.join(",")
 
             } else {
+
                 perguntasAux[perguntaIndex].alternativa.map(a => a.isChecked = false)
                 perguntasAux[perguntaIndex].alternativa[alternativaIndex].isChecked = true
 
@@ -297,13 +307,15 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
     function handleValidaFormulario() {
 
-        setIsLoadngButtonFinish(true)
+        setIsLoadngButtonFinish(true)   
         setIsFinishClick(true)
 
         const faltaResponder: number = Object.keys(respostas).filter(key => respostas[key] !== "").length
         const totalPergunta: number = perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length
 
-        if (faltaResponder !== totalPergunta) {
+        const faltaResponderTextRangeSoma: number = perguntas.filter(f => f.tipoPerguntaId === TipoPerguntaEnum.SOMA).filter(i => i.somatorioResposta !== 100)?.length
+
+        if (faltaResponder !== totalPergunta || faltaResponderTextRangeSoma > 0) {
             toast.error("Você ainda não finalizou o preenchimento do formulário. Verifique as perguntas em vermelho.")
             setIsLoadngButtonFinish(false)
             setIsValidForm(false)
@@ -484,6 +496,9 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                     let marcaFaltaResponder: boolean = false
 
                                     marcaFaltaResponder = !pergunta.isDisabled && isFinishClick && respostas[pergunta.id] === '' ? true : false
+                                    if (pergunta.tipoPerguntaId === TipoPerguntaEnum.SOMA) {
+                                        marcaFaltaResponder = !pergunta.isDisabled && isFinishClick && pergunta.somatorioResposta !== 100 ? true : false
+                                    }
 
                                     if (pergunta.escutar.length > 0) {
                                         isDisabled = true;
@@ -520,9 +535,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                         <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} textoAuxiliar={pergunta.descricaoAuxiliar} />
                                                         <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
                                                         <CardBody>
+                                                            <div className={`flex ${pergunta.mascaraResposta === 'escala0a10' ? 'flex-row justify-between' : 'flex-col'}`}>
                                                             {pergunta.alternativa.map(alternativa => (
 
-                                                                <div key={alternativa.id} className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'} `}>
+                                                                <div key={alternativa.id} className={`flex flex-row p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'} `}>
                                                                     <input
                                                                         id={alternativa.id}
                                                                         type="radio"
@@ -532,10 +548,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                         onChange={() => atualizarResposta(pergunta.id, alternativa.id, alternativa.id, pergunta.tipoPerguntaId)}
                                                                         disabled={pergunta.isDisabled || isSaving}
                                                                     />
-                                                                    <label className={`pl-2`} htmlFor={alternativa.id}>{alternativa.descricao}</label>
+                                                                    <label className={`md:pl-2`} htmlFor={alternativa.id}>{alternativa.descricao}</label>
                                                                 </div>
                                                             ))}
-
+                                                            </div>
                                                             {isDebugging && <DebubArea pergunta={pergunta} resposta={respostas[pergunta.id]} limpar={limparSelecao} />}
                                                         </CardBody>
                                                     </div>
@@ -658,6 +674,93 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         )
                                     }
 
+                                    if (pergunta.tipoPerguntaId === TipoPerguntaEnum.SOMA) {
+                                        return(
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                                <div>
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
+                                                    <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
+                                                    <CardBody>
+                                                        {(() => {
+                                                            // Converte a string de resposta em um dicionário { id: valor }
+                                                            const respostaMap = Object.fromEntries(
+                                                            (pergunta.resposta?.[0] || "")
+                                                                .split(',')
+                                                                .map(pair => {
+                                                                const [id, valor] = pair.split(':');
+                                                                return [id, valor];
+                                                                })
+                                                            );
+
+                                                            return pergunta.alternativa.map(alternativa => (
+                                                            <div
+                                                                key={alternativa.id}
+                                                                className={`flex flex-col border-b-2 border-b-slate-300 lg:flex-row pb-8 p-1 rounded-md justify-start lg:items-end ${
+                                                                pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'
+                                                                }`}
+                                                            >
+                                                                <div className="lg:w-[45%] md:pr-4">
+                                                                <label className="lg:pl-2" htmlFor={alternativa.id}>
+                                                                    {alternativa.descricao}
+                                                                </label>
+                                                                </div>
+
+                                                                <PerguntaRangeSoma
+                                                                idAlternativa={alternativa.id}
+                                                                props={pergunta}
+                                                                isDisabled={pergunta.isDisabled}
+                                                                inputValue={respostaMap[alternativa.id.toString()] ?? alternativa.valor}
+                                                                min={pergunta.valorMinimo ?? 0}
+                                                                max={pergunta.valorMaximo ?? 0}
+                                                                step={pergunta.step ?? 0}
+                                                                mascara={pergunta.mascaraResposta ?? ''}
+                                                                handleInputText={handleInputText}
+                                                                handleAtualizaResposta={atualizarResposta}
+                                                                isSaving={false}
+                                                                />
+                                                            </div>
+                                                            ));
+                                                        })()}     
+                                                            <div
+                                                                className={`flex flex-col border-b-2 border-b-slate-300 lg:flex-row pb-8 p-1 rounded-md justify-start lg:items-end ${
+                                                                pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'
+                                                                }`}
+                                                            >
+                                                                <div className="lg:w-[45%] md:pr-4">
+                                                                    <label className="lg:pl-2">
+                                                                        Total:
+                                                                    </label>                                                                    
+                                                                </div>      
+                                                                <div
+                                                                className={`flex flex-col w-full pr-8 font-semibold text-xl ${
+                                                                    (() => {
+                                                                    const soma = respostas[pergunta.id]
+                                                                        ?.split(',')
+                                                                        .map(par => parseFloat(par.split(':')[1] || '0'))
+                                                                        .reduce((acc, valor) => acc + valor, 0)
+
+                                                                    return soma === 100 ? 'text-green-600' : 'text-red-600'
+                                                                    })()
+                                                                }`}
+                                                                >
+                                                                {(() => {
+                                                                    const soma = respostas[pergunta.id]
+                                                                    ?.split(',')
+                                                                    .map(par => parseFloat(par.split(':')[1] || '0'))
+                                                                    .reduce((acc, valor) => acc + valor, 0)
+
+                                                                    return `${soma} %`
+                                                                })()}
+                                                                </div>                                                                                                                   
+                                                            </div>                                                                                                           
+                                                        {isDebugging && <DebubArea pergunta={pergunta} resposta={respostas[pergunta.id]} limpar={limparSelecao} />}
+
+                                                    </CardBody>
+                                                </div>
+                                            </Card>                                            
+                                        )
+                                    }
+
 
                                 })}
 
@@ -667,18 +770,22 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                     </div>
 
 
-                    {!isValidForm && Object.keys(respostas).filter(key => respostas[key] !== "").length !== perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length &&
+                    {!isValidForm && (
+                        Object.keys(respostas).filter(key => respostas[key] !== "").length !== perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length 
+                        || 
+                        perguntas.filter(f => f.tipoPerguntaId === TipoPerguntaEnum.SOMA && f.isDisabled === false && f?.somatorioResposta !== 100).length > 0
+                        ) &&
 
                         <Card faltaResponder={true} >
+                            
                             <span className='font-bold text-xl text-justify transition-all duration-700, text-red-900 tracking-tighter'>Você ainda não respondeu as pergutas abaixo:</span>
                             <span className='text-sm text-red-900 pb-2'>Clique no número da pergunta para responder.</span>
                             <div className='grid grid-cols-5 md:grid-cols-10 text-red-900 items-center'>
                                 {
                                     perguntas.map((p, index) => {
                                         if (p.tipoPerguntaId !== TipoPerguntaEnum.TITULO && !p.isDisabled) {
-                                            if (respostas[p.id] === "" || respostas[p.id] === undefined) {
+                                            if (respostas[p.id] === "" || respostas[p.id] === undefined || (p.tipoPerguntaId === TipoPerguntaEnum.SOMA && p?.somatorioResposta !== 100)) {
                                                 return (
-
                                                     <Link key={p.id} href={`#C-${p.id}`}>[ {p.numero} ] </Link>
                                                 )
                                             }

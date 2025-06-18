@@ -78,76 +78,124 @@ export default function DefaultModal(props: PropsType) {
           {passo === 1 && !extra &&
             <div className="space-y-6">
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Olá, <b>{props.nome}</b>
-              </p>
+              {props.tipo === 'professor' &&
+                <>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Olá, <b>{props.nome}</b>
+                  </p>
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Você está sendo convidado(a) a participar de uma pesquisa sobre coordenação 
-                pedagógica no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).
-                A avaliação tem como objetivo produzir evidências sobre o papel do(a) coordenador(a) pedagógico(a) e suas atribuições, bem como identificar os desafios e oportunidades relacionadas à essa função na rede paulista.
-              </p>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Você está sendo convidado(a) a participar de uma pesquisa sobre coordenação 
+                    pedagógica no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).
+                    A avaliação tem como objetivo produzir evidências sobre o papel do(a) coordenador(a) pedagógico(a) e suas atribuições, bem como identificar os desafios e oportunidades relacionadas à essa função na rede paulista.
+                  </p>
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                As perguntas incluem o mapeamento de informações sobre seu perfil, como dados
-                pessoais (gênero, cor ou raça, idade e características do seu domicílio) e sua trajetória
-                profissional e acadêmica (qualificação e especialização para o exercício da
-                coordenação pedagógica), e suas percepções em situações comuns na rotina da escola.           
-              </p>       
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    As perguntas incluem o mapeamento de informações sobre seu perfil, como dados
+                    pessoais (gênero, cor ou raça, idade e características do seu domicílio) e sua trajetória
+                    profissional e acadêmica (qualificação e especialização para o exercício da
+                    coordenação pedagógica), e suas percepções em situações comuns na rotina da escola.           
+                  </p>       
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Ao responder, considere exclusivamente seu vínculo na Rede Estadual,
-                independentemente de você possuir vínculos ou experiências em outras redes.                
-              </p>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Ao responder, considere exclusivamente seu vínculo na Rede Estadual,
+                    independentemente de você possuir vínculos ou experiências em outras redes.                
+                  </p>
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Esta pesquisa é <b>anônima</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'estudantes, colegas ou outros profissionais da SEDUC'} não
-                terão acesso a informações nominais, somente às informações agregadas e/ou anonimizadas.
-                Os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de
-                Proteção de Dados (LGPD) e demais leis de proteção de dados aplicáveis. Confira, na
-                íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanima.org.br/privacidade/' target='_blank'>neste link</a>.              
-              </p>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    {/* Esta pesquisa é <b>anônima</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'estudantes, colegas ou outros profissionais da SEDUC'}  */}
+                    Esta pesquisa é <b>anônima</b> - estudantes, colegas ou outros profissionais da SEDUC
+                    não terão acesso a informações nominais, somente às informações agregadas e/ou anonimizadas.
+                    Os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de
+                    Proteção de Dados (LGPD) e demais leis de proteção de dados aplicáveis. Confira, na
+                    íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanima.org.br/privacidade/' target='_blank'>neste link</a>.              
+                  </p>
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
 
-                O tempo médio para finalizar o preenchimento deste questionário é de <b>{props.duracao}</b>. As
-                questões são de preenchimento obrigatório para o consequente avanço. Não há
-                respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.                
-              </p>
+                    O tempo médio para finalizar o preenchimento deste questionário é de <b>{props.duracao}</b>. As
+                    questões são de preenchimento obrigatório para o consequente avanço. Não há
+                    respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.                
+                  </p>
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Em caso de dúvidas, entre em contato com:<br/>pesquisaeducacao@institutoanima.org.br   
-              </p> 
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Em caso de dúvidas, entre em contato com:<br/>pesquisaeducacao@institutoanima.org.br   
+                  </p> 
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                  Agradecemos a sua colaboração!
-              </p>  
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                      Agradecemos a sua colaboração!
+                  </p>  
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                  Leia atentamente os termos de aceite para participar desta pesquisa <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>AQUI</a>.
-              </p>                                         
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                      Leia atentamente os termos de aceite para participar desta pesquisa <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>AQUI</a>.
+                  </p>                                         
 
-              {/* <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Olá, <b>{props.nome}</b>. Esse questionário faz parte de uma ampla pesquisa que a {estadoLogado?.secretaria} vem realizando para assegurar a continuidade de ações que poderão impactar positivamente a educação pública no estado. As perguntas serão sobre você, seus hábitos e suas perspectivas em relação à sua escola. Não há respostas certas ou erradas, mas é fundamental que você responda com seriedade e sinceridade.
-              </p>
-              
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Vale dizer que se trata de um <b>questionário anônimo</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'alunos, colegas, e gestores da escola ou da secretaria de educação'} não saberão de nada do que você responder aqui – e <b>suas respostas não terão nenhum efeito {props.tipo === "aluno" ? 'nas suas notas ou no seu desempenho escolar' : 'na sua carreira'}</b>.
-              </p>
+                  {/* <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Olá, <b>{props.nome}</b>. Esse questionário faz parte de uma ampla pesquisa que a {estadoLogado?.secretaria} vem realizando para assegurar a continuidade de ações que poderão impactar positivamente a educação pública no estado. As perguntas serão sobre você, seus hábitos e suas perspectivas em relação à sua escola. Não há respostas certas ou erradas, mas é fundamental que você responda com seriedade e sinceridade.
+                  </p>
+                  
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Vale dizer que se trata de um <b>questionário anônimo</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'alunos, colegas, e gestores da escola ou da secretaria de educação'} não saberão de nada do que você responder aqui – e <b>suas respostas não terão nenhum efeito {props.tipo === "aluno" ? 'nas suas notas ou no seu desempenho escolar' : 'na sua carreira'}</b>.
+                  </p>
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                A participação nesta avaliação é voluntária, porém sua contribuição é muito <b>importante</b> para que juntos possamos avançar rumo a um futuro melhor para você e outros jovens do nosso estado.
-              </p>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    A participação nesta avaliação é voluntária, porém sua contribuição é muito <b>importante</b> para que juntos possamos avançar rumo a um futuro melhor para você e outros jovens do nosso estado.
+                  </p>
 
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                O conteúdo desta pesquisa subsidiará ações internas da {estadoLogado?.secretariaAbrebiado} e os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de Proteção de Dados (LGPD) e demais Leis de proteção de dados aplicáveis;
-              </p>
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                O tempo médio para finalizar o preenchimento desse questionário é de <b>{props.duracao}</b>. As questões são de preenchimento obrigatório para o consequente avanço. <b>Não há respostas certas ou erradas</b>, o importante é que seja sincero(a) em todo momento.
-              </p>
-              <p className="text-base leading-relaxed text-gray-500 text-justify">
-                Obrigado!
-              </p> */}
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    O conteúdo desta pesquisa subsidiará ações internas da {estadoLogado?.secretariaAbrebiado} e os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de Proteção de Dados (LGPD) e demais Leis de proteção de dados aplicáveis;
+                  </p>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    O tempo médio para finalizar o preenchimento desse questionário é de <b>{props.duracao}</b>. As questões são de preenchimento obrigatório para o consequente avanço. <b>Não há respostas certas ou erradas</b>, o importante é que seja sincero(a) em todo momento.
+                  </p>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Obrigado!
+                  </p> */}
+                </>
+              }
+
+              {props.tipo === 'aluno' &&
+                <>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Oi, <b>{props.nome}</b>
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    A {estadoLogado?.secretaria} quer ouvir você!
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Estamos fazendo um levantamento de informações com estudantes do ensino médio para entender melhor como você toma suas decisões financeiras, faz uso do seu dinheiro (como o do Pé-de-Meia) e sobre suas expectativas em relação ao futuro profissional. Além disso, também queremos saber se você gostaria de receber vídeos do youtube sobre educação financeira que podem te ajudar a tomar decisões de como usar seu dinheiro.           
+                  </p>       
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Para isso, basta responder ao questionário, sem pressa e sem julgamento.<br />
+                    📝 Leva cerca de 20 minutinhos para responder.  <br />
+                    🔐 É anônimo - ninguém da sua escola, sua família ou seus amigos verá o que você respondeu.<br />
+                    ✅ Suas respostas não afetam suas notas e serão tratadas com segurança, de acordo com a Lei Geral de Proteção de Dados (LGPD).<br />
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Ah, e não existe resposta certa ou errada. A única coisa que pedimos é que você responda com sinceridade. Sua participação é super importante e nos ajudará a manter o cadastro de estudantes da Secretaria atualizado.                  
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Vamos juntos nessa?          
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Em caso de dúvidas, entre em contato com:<br/>pesquisaeducacao@institutoanima.org.br   
+                  </p> 
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                      Obrigada pela colaboração! 😊
+                  </p>  
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                      Leia atentamente os termos de aceite para participar desta pesquisa <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>AQUI</a>.
+                  </p>                  
+                </>
+              }              
             </div>
           }
           {passo === 2 && !extra &&

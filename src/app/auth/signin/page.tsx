@@ -51,7 +51,7 @@ function LoginPage() {
   const [alunos, setAlunos] = useState<Aluno[]>([]);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [authType, setAuthType] = useState<string>("");
-  const [userType, setUserType] = useState<string>("professor");
+  const [userType, setUserType] = useState<string>("");
   const [authMessage, setAuthMessage] = useState<string>();
   const [placeHolderText, setPlaceHolderText] = useState<string>();
   const [isAjudaOpen, setIsAjudaOpen] = useState<boolean>(false);
@@ -79,28 +79,28 @@ function LoginPage() {
 
     switch (authType) {
       case "data":
-        dataNascimento = password.current
+        dataNascimento = password.current.trim();
         break;
       case "mae":
-        nomeMae = password.current
+        nomeMae = password.current.trim();
         break;
       case "matricula":
-        matricula = password.current
+        matricula = password.current.trim();
         break;
       case "cpf":
-        cpf = password.current
+        cpf = password.current.trim();
         break;
       case "masp":
-        masp = password.current
+        masp = password.current.trim();
         break;
       case "matriculaprofessor":
-        matriculaProfessor = password.current
+        matriculaProfessor = password.current.trim();
         break;
       case "email":
-        email = password.current
+        email = password.current.trim();
         break;
       case "celular":
-        celular = password.current
+        celular = password.current.trim();
         break;
       default:
         id = ""
@@ -147,6 +147,8 @@ function LoginPage() {
 
   useEffect(() => {
 
+    searchParams.get("estado") === 'SP' ? setUserType('professor') : setUserType('aluno')
+    
     const fetchOptions = async () => {
       try {
 
@@ -237,7 +239,7 @@ function LoginPage() {
   // };
 
   const handleSelectMunicipio = (selectedOption: string) => {
-    console.log("handleSelectMunicipio")
+    //console.log("handleSelectMunicipio")
     setMunicipioId(selectedOption)
     setProfessorId("0")
     setEscolaId("0")
@@ -341,11 +343,11 @@ function LoginPage() {
           }
           {userType === "aluno" &&
             <>
-              <Combo labelText='Escola' idRota="escolas" onSelect={handleSelectEscola} idFiltro={municipioId} idSelecionado={escolaId} tipo={userType} />
+              <ComboFilter  labelText='Escola' idRota="escolas" onSelect={handleSelectEscola} idFiltro={municipioId} idSelecionado={escolaId} tipo={userType}/>
 
-              <Combo labelText='Turma' idRota="turmas" onSelect={handleSelectTurma} idFiltro={escolaId} idSelecionado={turmaId} />
+              <ComboFilter  labelText='Turma' idRota="turmas" onSelect={handleSelectTurma} idFiltro={escolaId} idSelecionado={turmaId} />
 
-              <Combo labelText='Alunos' idRota="alunos" onSelect={handleSelectAluno} idFiltro={turmaId} idSelecionado={alunoId} />
+              <ComboFilter  labelText='Alunos' idRota="alunos" onSelect={handleSelectAluno} idFiltro={turmaId} idSelecionado={alunoId} />
             </>
           }
 

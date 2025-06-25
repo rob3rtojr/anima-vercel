@@ -797,21 +797,28 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
 
                         <Card faltaResponder={true} >
                             
-                            <span className='font-bold text-xl text-justify transition-all duration-700, text-red-900 tracking-tighter'>Você ainda não respondeu as pergutas abaixo:</span>
-                            <span className='text-sm text-red-900 pb-2'>Clique no número da pergunta para responder.</span>
-                            <div className='grid grid-cols-5 md:grid-cols-10 text-red-900 items-center'>
-                                {
-                                    perguntas.map((p, index) => {
-                                        if (p.tipoPerguntaId !== TipoPerguntaEnum.TITULO && !p.isDisabled) {
-                                            if (respostas[p.id] === "" || respostas[p.id] === undefined || (p.tipoPerguntaId === TipoPerguntaEnum.SOMA && p?.somatorioResposta === 0)) {
-                                                return (
-                                                    <Link key={p.id} href={`#C-${p.id}`}>[ {p.numero} ] </Link>
-                                                )
-                                            }
+                            {params.formularioId !== "11" &&
+                                <>
+                                    <span className='font-bold text-xl text-justify transition-all duration-700, text-red-900 tracking-tighter'>Você ainda não respondeu as pergutas abaixo:</span>
+                                    <span className='text-sm text-red-900 pb-2'>Clique no número da pergunta para responder.</span>
+                                    <div className='grid grid-cols-5 md:grid-cols-10 text-red-900 items-center'>
+                                        {
+                                            perguntas.map((p, index) => {
+                                                if (p.tipoPerguntaId !== TipoPerguntaEnum.TITULO && !p.isDisabled) {
+                                                    if (respostas[p.id] === "" || respostas[p.id] === undefined || (p.tipoPerguntaId === TipoPerguntaEnum.SOMA && p?.somatorioResposta === 0)) {
+                                                        return (
+                                                            <Link key={p.id} href={`#C-${p.id}`}>[ {p.numero} ] </Link>
+                                                        )
+                                                    }
+                                                }
+                                            })
                                         }
-                                    })
-                                }
-                            </div>
+                                    </div>
+                                </>
+                            }
+                            {params.formularioId === "11" &&
+                                <span className='font-bold text-xl text-justify transition-all duration-700, text-red-900 tracking-tighter'>Você ainda não respondeu as perguntas sinalizadas em vermelho. Só possível enviar o formulário após responder todas as perguntas</span>
+                            }
                         </Card>
 
                     }

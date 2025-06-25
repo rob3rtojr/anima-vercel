@@ -73,8 +73,8 @@ const AppBar = () => {
                     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pr-4 pl-4 md:pr-8 md:pl-8 flex-row">
                         <a className="flex items-center">
                             {session.user.siglaEstado === "GO" && <Image src={logoGO} width={100} height={32} alt="Logo Estado de Goiás" />}
-                            {session.user.siglaEstado === "PA" && <Image src={logoPA} width={150} height={32} alt="Logo Estado de Minas Gerais" />}
-                            {session.user.siglaEstado === "MG" && <Image src={logoMG} width={187} height={32} alt="Logo Estado do Pará" />}
+                            {session.user.siglaEstado === "PA" && <Image src={logoPA} width={150} height={32} alt="Logo Estado do Pará" />}
+                            {session.user.siglaEstado === "MG" && <Image src={logoMG} width={208} height={32} alt="Logo Estado de e Minas Gerais" />}
                             {session.user.siglaEstado === "BA" && <Image src={logoBA} width={126} height={32} alt="Logo Estado da Bahia" />}
                         </a>
                         <div>

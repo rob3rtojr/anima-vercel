@@ -313,9 +313,9 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
         const faltaResponder: number = Object.keys(respostas).filter(key => respostas[key] !== "").length
         const totalPergunta: number = perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length
 
-        const faltaResponderTextRangeSoma: number = perguntas.filter(f => f.tipoPerguntaId === TipoPerguntaEnum.SOMA).filter(i => i.somatorioResposta !== 100)?.length
-
-        if (faltaResponder !== totalPergunta || faltaResponderTextRangeSoma > 0) {
+        const faltaResponderTextRangeSoma: number = perguntas.filter(f => f.tipoPerguntaId === TipoPerguntaEnum.SOMA).filter(i => i.somatorioResposta === 0)?.length
+console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
+        if (faltaResponder !== totalPergunta || faltaResponderTextRangeSoma === 0) {
             toast.error("Você ainda não finalizou o preenchimento do formulário. Verifique as perguntas em vermelho.")
             setIsLoadngButtonFinish(false)
             setIsValidForm(false)
@@ -497,7 +497,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                     marcaFaltaResponder = !pergunta.isDisabled && isFinishClick && respostas[pergunta.id] === '' ? true : false
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.SOMA) {
-                                        marcaFaltaResponder = !pergunta.isDisabled && isFinishClick && pergunta.somatorioResposta !== 100 ? true : false
+                                        marcaFaltaResponder = !pergunta.isDisabled && isFinishClick && (pergunta.somatorioResposta === 0 || pergunta.somatorioResposta === undefined) ? true : false
                                     }
 
                                     if (pergunta.escutar.length > 0) {
@@ -699,7 +699,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return(
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
                                                     {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                     <CardBody>
                                                         {(() => {
@@ -794,7 +794,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                     {!isValidForm && (
                         Object.keys(respostas).filter(key => respostas[key] !== "").length !== perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length 
                         || 
-                        perguntas.filter(f => f.tipoPerguntaId === TipoPerguntaEnum.SOMA && f.isDisabled === false && f?.somatorioResposta !== 100).length > 0
+                        perguntas.filter(f => f.tipoPerguntaId === TipoPerguntaEnum.SOMA && f.isDisabled === false && f?.somatorioResposta === 0).length > 0
                         ) &&
 
                         <Card faltaResponder={true} >
@@ -805,7 +805,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                 {
                                     perguntas.map((p, index) => {
                                         if (p.tipoPerguntaId !== TipoPerguntaEnum.TITULO && !p.isDisabled) {
-                                            if (respostas[p.id] === "" || respostas[p.id] === undefined || (p.tipoPerguntaId === TipoPerguntaEnum.SOMA && p?.somatorioResposta !== 100)) {
+                                            if (respostas[p.id] === "" || respostas[p.id] === undefined || (p.tipoPerguntaId === TipoPerguntaEnum.SOMA && p?.somatorioResposta === 0)) {
                                                 return (
                                                     <Link key={p.id} href={`#C-${p.id}`}>[ {p.numero} ] </Link>
                                                 )

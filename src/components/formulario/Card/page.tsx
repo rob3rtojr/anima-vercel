@@ -6,12 +6,22 @@ type PropsType = {
     children: React.ReactNode,
     faltaResponder?: boolean,
     className?: any,
-    id?: string
+    id?: string,
+    hide?: boolean
 }
 
-export function Card({children, faltaResponder, className, id}: PropsType) {
+export function Card({children, faltaResponder, className, id, hide}: PropsType) {
     return(
-        <div id={id} className="flex flex-col justify-center items-center w-full mx-auto max-w-7xl px-1 md:px-4 py-6 sm:px-6 lg:px-8">
+        // <div id={id} className={`flex flex-col justify-center items-center w-full mx-auto max-w-7xl px-1 md:px-4 py-6 sm:px-6 lg:px-8 ${hide ? 'invisible h-0':'visible'}`}>
+        <div
+        id={id}
+        className={`
+            flex flex-col justify-center items-center w-full mx-auto max-w-7xl 
+            px-1 md:px-4 py-6 sm:px-6 lg:px-8 
+            transition-all duration-700 ease-in-out 
+            ${hide ? 'opacity-0 pointer-events-none max-h-0 pb-0' : 'opacity-100 pointer-events-auto max-h-screen'}
+        `}
+        >
 
             <div className={
                 cn("flex flex-row w-full justify-between rounded-lg p-1 md:p-4 transition-all duration-700 bg-gray-200",

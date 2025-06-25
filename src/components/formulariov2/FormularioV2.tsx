@@ -535,7 +535,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.RADIO) {
                                         return (
                                             <React.Fragment key={pergunta.id}>
-                                                <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                                <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder} hide={pergunta.isDisabled}>
                                                     <div>
                                                         {/* <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} /> */}
                                                         <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} textoAuxiliar={pergunta.descricaoAuxiliar} />
@@ -569,7 +569,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.CHECKBOX) {
                                         return (
-                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder} hide={pergunta.isDisabled}>
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
                                                     {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
@@ -600,7 +600,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.TEXT) {
                                         return (
-                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder} hide={pergunta.isDisabled}>
                                                 <div>
                                                     {/* <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} /> */}
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} />
@@ -667,7 +667,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.RANGE) {
                                         return (
-                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder} hide={pergunta.isDisabled}>
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} />
                                                     {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
@@ -697,7 +697,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.SOMA) {
                                         return(
-                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
+                                            <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder} hide={pergunta.isDisabled}>
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
                                                     {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
@@ -784,8 +784,6 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
 
 
                                 })}
-
-
 
                         </div>
                     </div>

@@ -157,38 +157,35 @@ export default function DefaultModal(props: PropsType) {
               {props.tipo === 'aluno' &&
                 <>
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Oi, <b>{props.nome}</b>
+                    Olá, <b>{props.nome}</b>
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    A {estadoLogado?.secretaria} quer ouvir você!
+                    Você está sendo convidado(a) a informar sobre o seu interesse em receber vídeos com conteúdos de Educação Financeira no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Estamos fazendo um levantamento de informações com estudantes do ensino médio para entender melhor como você toma suas decisões financeiras, faz uso do seu dinheiro (como o do Pé-de-Meia) e sobre suas expectativas em relação ao futuro profissional. Além disso, também queremos saber se você gostaria de receber vídeos do youtube sobre educação financeira que podem te ajudar a tomar decisões de como usar seu dinheiro.           
+                    Este formulário tem como objetivo informar o seu interesse em receber vídeos de Educação Financeira por WhatsApp com conteúdos que podem te ajudar a tomar decisões mais conscientes sobre hábitos de consumo. As perguntas dizem respeito a você: seus hábitos, opiniões, experiências escolares e perspectivas sobre o uso do dinheiro. Por isso, é essencial que você responda com seriedade e sinceridade.  
                   </p>       
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Para isso, basta responder ao questionário, sem pressa e sem julgamento.<br />
-                    📝 Leva cerca de 20 minutinhos para responder.  <br />
-                    🔐 É anônimo - ninguém da sua escola, sua família ou seus amigos verá o que você respondeu.<br />
-                    ✅ Suas respostas não afetam suas notas e serão tratadas com segurança, de acordo com a Lei Geral de Proteção de Dados (LGPD).<br />
+                    Vale lembrar que este é um formulário anônimo – ninguém da sua escola, sua família ou seus colegas terá acesso às suas respostas. Além disso, suas respostas não influenciam suas notas nem seu desempenho escolar.
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Ah, e não existe resposta certa ou errada. A única coisa que pedimos é que você responda com sinceridade. Sua participação é super importante e nos ajudará a manter o cadastro de estudantes da Secretaria atualizado.                  
+                    Os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de Proteção de Dados (LGPD) e demais leis de proteção de dados aplicáveis. Confira, na íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanima.org.br/privacidade/' target='_blank'>neste link</a>.
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Vamos juntos nessa?          
+                    O tempo médio para finalizar o preenchimento deste questionário é de <b>15 a 20 minutos</b>. Não há respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.  
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Em caso de dúvidas, entre em contato com:<br/>pesquisaeducacao@institutoanima.org.br   
+                    Em caso de dúvidas, entre em contato com:<br/>edufin.estudantes@institutoanima.org.br   
                   </p> 
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                      Obrigada pela colaboração! 😊
+                    Agradecemos a sua colaboração!
                   </p>  
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">

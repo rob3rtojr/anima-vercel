@@ -17,7 +17,7 @@ import Link from "next/link";
 import SequenciaOriginal from '../formulario/SequenciaOriginal/page';
 import SubPergunta from '../formulario/SubPergunta/page';
 import PerguntaRangeSoma from './PerguntaTextRangeSoma/page';
-
+import InputMask from 'react-input-mask';
 
 export default function FormularioV2({ params }: { params: { formularioId: string } }) {
 
@@ -626,7 +626,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                                                 />
                                                             }
-                                                            {pergunta.mascaraResposta !== 'idade' &&
+                                                            {pergunta.mascaraResposta !== 'idade' && pergunta.mascaraResposta !== 'celular' &&
                                                                 <input
                                                                     className='rounded-md w-full'
                                                                     id={`txt-${pergunta.id}`}
@@ -636,9 +636,24 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                     onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
                                                                     onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
                                                                     disabled={pergunta.isDisabled}
-                                                                    placeholder='digite aqui sua resposta'
+                                                                    placeholder={pergunta.mascaraResposta} //'digite aqui sua resposta'
                                                                 />
                                                             }
+                                                            {pergunta.mascaraResposta === 'celular' &&
+                                                                <InputMask
+                                                                    mask='(99)99999-9999'
+                                                                    className='rounded-md w-full'
+                                                                    id={`txt-${pergunta.id}`}
+                                                                    type='text'
+                                                                    name={pergunta.id}
+                                                                    value={pergunta.resposta}
+                                                                    onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
+                                                                    onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
+                                                                    disabled={pergunta.isDisabled}
+                                                                    placeholder='(99)99999-9999'
+                                                                />
+                                                            }
+
                                                         </div>
 
                                                         {isDebugging && <DebubArea pergunta={pergunta} resposta={respostas[pergunta.id]} limpar={limparSelecao} />}

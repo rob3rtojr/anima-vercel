@@ -75,8 +75,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                         formularioAtualizado[perguntaIndex].resposta.push(value) :
                         formularioAtualizado[perguntaIndex].resposta[0] = value
                 }
-
-            } else {
+            }  else {
                 formularioAtualizado[perguntaIndex].resposta.length === 0 ?
                     formularioAtualizado[perguntaIndex].resposta.push(value) :
                     formularioAtualizado[perguntaIndex].resposta[0] = value
@@ -313,9 +312,19 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
         const faltaResponder: number = Object.keys(respostas).filter(key => respostas[key] !== "").length
         const totalPergunta: number = perguntas.filter(f => f.tipoPerguntaId !== TipoPerguntaEnum.TITULO && f.isDisabled === false)?.length
 
-        const faltaResponderTextRangeSoma: number = perguntas.filter(f => f.tipoPerguntaId === TipoPerguntaEnum.SOMA).filter(i => i.somatorioResposta === 0)?.length
-console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
-        if (faltaResponder !== totalPergunta || faltaResponderTextRangeSoma === 0) {
+        //const faltaResponderTextRangeSoma: number = perguntas.filter(f => f.tipoPerguntaId === TipoPerguntaEnum.SOMA).filter(i => i.somatorioResposta === 0)?.length
+        
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailInvalido: number = perguntas
+        .filter(p => p.mascaraResposta === 'email')
+        .filter(p => {
+            const resposta = respostas[p.id] ?? '';
+            return !regexEmail.test(resposta); // retorna true se inválido
+        }).length;
+
+        //console.log('emailInvalido', emailInvalido)
+
+        if (faltaResponder !== totalPergunta || emailInvalido !==0) {
             toast.error("Você ainda não finalizou o preenchimento do formulário. Verifique as perguntas em vermelho.")
             setIsLoadngButtonFinish(false)
             setIsValidForm(false)
@@ -499,6 +508,11 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.SOMA) {
                                         marcaFaltaResponder = !pergunta.isDisabled && isFinishClick && (pergunta.somatorioResposta === 0 || pergunta.somatorioResposta === undefined) ? true : false
                                     }
+                                    if (pergunta.mascaraResposta === 'email' && respostas[pergunta.id] !== '') {
+                                        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                        const valorEmail = respostas[pergunta.id] ?? ''; // garante string
+                                        marcaFaltaResponder = !regexEmail.test(valorEmail); 
+                                    }                                    
 
                                     if (pergunta.escutar.length > 0) {
                                         isDisabled = true;
@@ -626,7 +640,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
 
                                                                 />
                                                             }
-                                                            {pergunta.mascaraResposta !== 'idade' && pergunta.mascaraResposta !== 'celular' &&
+                                                            {pergunta.mascaraResposta === '' &&
                                                                 <input
                                                                     className='rounded-md w-full'
                                                                     id={`txt-${pergunta.id}`}
@@ -639,6 +653,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
                                                                     placeholder={pergunta.mascaraResposta} //'digite aqui sua resposta'
                                                                 />
                                                             }
+
                                                             {pergunta.mascaraResposta === 'celular' &&
                                                                 <InputMask
                                                                     mask='(99)99999-9999'
@@ -653,6 +668,25 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
                                                                     placeholder='(99)99999-9999'
                                                                 />
                                                             }
+
+                                                            {pergunta.mascaraResposta === 'email' &&
+                                                                <div className='w-full'>
+                                                                    <input
+                                                                        className={`rounded-md w-full`}
+                                                                        id={`txt-${pergunta.id}`}
+                                                                        type='email'
+                                                                        name={pergunta.id}
+                                                                        value={pergunta.resposta}
+                                                                        onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
+                                                                        onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
+                                                                        disabled={pergunta.isDisabled}
+                                                                        placeholder='digite o email'
+                                                                    />
+                                                                    {marcaFaltaResponder &&
+                                                                        <span className='text-red-900 font-semibold'>Formato de email inválido</span>
+                                                                    }
+                                                                </div>
+                                                            }                                                            
 
                                                         </div>
 

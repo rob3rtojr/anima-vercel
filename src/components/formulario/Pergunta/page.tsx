@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import DOMPurify from "dompurify";
 
 type PropsType = {
     texto: string,
@@ -8,6 +9,7 @@ type PropsType = {
 }
 
 export default function Pergunta(props: PropsType) {
+    const safeHtml = DOMPurify.sanitize(props.texto);
     return (
         <div
             className={
@@ -15,7 +17,7 @@ export default function Pergunta(props: PropsType) {
                     props.className,
                     { 'text-gray-400': props.isDisabled }
                 )}>
-            <span>{props.texto}</span>
+            <span dangerouslySetInnerHTML={{ __html: safeHtml }} />
             <span className="italic text-lg font-normal">{props.textoAuxiliar}</span>
         </div>
     )

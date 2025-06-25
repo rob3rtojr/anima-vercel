@@ -31,8 +31,13 @@ export function Card({children, faltaResponder, className, id}: PropsType) {
 
 export function CardPergunta({children, faltaResponder, className}: PropsType) {
     return(
-        <div className="flex flex-col justify-start w-full mx-auto max-w-7xl px-4 py-4 sm:px-6 md:py-6 lg:px-8">
-            {children}
+        <div className={cn("flex flex-col justify-start w-full mx-auto max-w-7xl px-4 py-4 sm:px-6 md:py-6 lg:px-8", className)}>
+            <div className={
+                cn("flex flex-row w-full justify-between rounded-lg p-1 md:p-4 transition-all duration-700 bg-violet-500")}>
+                <div className="flex flex-col p-4 w-full gap-4">
+                    {children}
+                </div>
+            </div>            
         </div>
     )
 }

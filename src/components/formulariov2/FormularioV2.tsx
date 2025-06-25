@@ -523,7 +523,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
                                             //      <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />
                                             //      }                                                
                                             // </Card>
-                                            <CardPergunta id={`C-${pergunta.id}`} className={"text-white bg-gray-800"} key={pergunta.id} faltaResponder={false} >
+                                            <CardPergunta id={`C-${pergunta.id}`} className={"bg-gray-800"} key={pergunta.id} faltaResponder={false} >
                                                 <Pergunta className={"text-white text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
                                                 {pergunta.descricaoAuxiliar &&
                                                 <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />

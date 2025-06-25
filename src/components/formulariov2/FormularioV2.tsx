@@ -477,7 +477,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
 
                         <header className="bg-slate-750 mt-20">
                             <div className="flex flex-col justify-center gap-1 items-center mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                                <h1 className="font-alt text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
+                                <h1 className="font-alt text-2xl md:text-4xl tracking-tight text-gray-200">{nomeFormulario}</h1>
                                 {/* <p className='text-gray-400 text-sm'>Questionário de {nomeFormulario} para {session?.user.role === 'professor' ? 'servidores' : 'alunos'}</p> */}
                                 {/* <h1 className="font-alt text-4xl tracking-tight text-gray-200">Questionário</h1>
                                 <p className='text-gray-400 text-sm'>Sua colaboração neste questionário é essencial para aprofundarmos nossa compreensão
@@ -523,7 +523,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
                                             //      <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />
                                             //      }                                                
                                             // </Card>
-                                            <CardPergunta id={`C-${pergunta.id}`} className={"bg-gray-800"} key={pergunta.id} faltaResponder={false} >
+                                            <CardPergunta id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={false} >
                                                 <Pergunta className={"text-white text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
                                                 {pergunta.descricaoAuxiliar &&
                                                 <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />

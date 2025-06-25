@@ -330,7 +330,7 @@ function LoginPage() {
       <div className="px-7 py-4 shadow bg-gray-100 rounded-md flex flex-col gap-2 justify-between w-[500px]">
         {/* <div className="flex flex-row justify-start"> */}
         <div>
-          <div className='flex flex-row items-center pr-4 gap-2'><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="aluno" ref={input => { if (input && userType === "aluno") input.checked = true; }} /> Sou Aluno</div>
+          <div className='flex flex-row items-center pr-4 gap-2'><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="aluno" ref={input => { if (input && userType === "aluno") input.checked = true; }} /> Sou estudante da rede</div>
           <div className='flex flex-row items-center gap-2'><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="professor" ref={input => { if (input && userType === "professor") input.checked = true; }} /> Sou profissional da educação</div>
         </div>
         <div className='flex flex-1 flex-col pr-2'>
@@ -355,7 +355,7 @@ function LoginPage() {
 
         <div className='flex flex-1 flex-col gap-2'>
           <label className='pb-2 pt-2'>
-            Escolha uma forma para confirmarmos sua identidade:
+            Escolha UMA forma para confirmarmos sua identidade:
           </label>
 
           <div className="flex md:flex-row flex-col md:gap-4 gap-2 ">
@@ -369,7 +369,7 @@ function LoginPage() {
                 <div>
                   <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "mae") input.checked = true; }} value="mae" /> Nome da mãe
                 </div>
-                <span className='text-sm text-gray-500 pl-2'>(primeiro nome)</span>
+                <span>(primeiro nome)</span>
               </div>
             }
             {userType === "professor" && estado.sigla === "SP" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "email") input.checked = true; }} value="email" /> Email</div>}

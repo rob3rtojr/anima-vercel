@@ -517,8 +517,14 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.TITULO) {
                                         return (
+                                            // <Card faltaResponder={false} key={pergunta.id} className={"bg-white"}>
+                                            //     <Pergunta texto={pergunta.descricao} />
+                                            //      {pergunta.descricaoAuxiliar &&
+                                            //      <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />
+                                            //      }                                                
+                                            // </Card>
                                             <CardPergunta id={`C-${pergunta.id}`} className={"text-white bg-gray-800"} key={pergunta.id} faltaResponder={false} >
-                                                <Pergunta className={"text-gray-400 text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
+                                                <Pergunta className={"text-white text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
                                                 {pergunta.descricaoAuxiliar &&
                                                 <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />
                                                 }
@@ -532,8 +538,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                 <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                     <div>
                                                         {/* <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} /> */}
-                                                        <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} textoAuxiliar={pergunta.descricaoAuxiliar} />
-                                                        <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
+                                                        <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} textoAuxiliar={pergunta.descricaoAuxiliar} />
+                                                        {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                         <CardBody>
                                                             <div className={`flex ${pergunta.mascaraResposta === 'escala0a10' ? 'flex-row justify-between' : 'flex-col'}`}>
                                                             {pergunta.alternativa.map(alternativa => (
@@ -565,8 +571,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
-                                                    <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
+                                                    {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                     <CardBody>
                                                         {pergunta.alternativa.map(alternativa => (
 
@@ -597,8 +603,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
                                                     {/* <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} /> */}
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
-                                                    <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} />
+                                                    {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                     <CardBody>
 
                                                         <div className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'}`}>
@@ -648,8 +654,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return (
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`} />
-                                                    <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} />
+                                                    {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                     <CardBody>
                                                         <PerguntaRangeV2
                                                             props={pergunta}
@@ -678,8 +684,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         return(
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder}>
                                                 <div>
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.numero} - ${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
-                                                    <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} />
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
+                                                    {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                     <CardBody>
                                                         {(() => {
                                                             // Converte a string de resposta em um dicionário { id: valor }

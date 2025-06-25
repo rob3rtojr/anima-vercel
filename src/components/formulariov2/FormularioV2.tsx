@@ -541,7 +541,7 @@ console.log('faltaResponderTextRangeSoma',faltaResponderTextRangeSoma)
                                                         <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} textoAuxiliar={pergunta.descricaoAuxiliar} />
                                                         {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                         <CardBody>
-                                                            <div className={`flex ${pergunta.mascaraResposta === 'escala0a10' ? 'flex-row justify-between' : 'flex-col'}`}>
+                                                            <div className={`flex ${pergunta.mascaraResposta === 'escala0a10' ? 'flex-col md:flex-row md:justify-between' : 'flex-col'}`}>
                                                             {pergunta.alternativa.map(alternativa => (
 
                                                                 <div key={alternativa.id} className={`flex flex-row p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'} `}>

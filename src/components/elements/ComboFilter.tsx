@@ -19,11 +19,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { api } from "@/lib/api"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
 const options = [
   {
@@ -161,16 +156,16 @@ export function ComboFilter(
             {labelText}
           </label>
           {labelTextAux &&
-            <Tooltip>
-              <TooltipTrigger asChild>
+            <Popover>
+              <PopoverTrigger asChild>
                 <span className="cursor-pointer">
                   <Info className="w-4 h-4 text-muted-foreground" />
                 </span>
-              </TooltipTrigger>
-              <TooltipContent className="bg-violet-700 text-white text-sm rounded-md shadow-md px-3 py-2">
+              </PopoverTrigger>
+              <PopoverContent className="bg-violet-900 text-white max-w-xs">
                 <p>{labelTextAux}</p>
-              </TooltipContent>
-            </Tooltip>
+              </PopoverContent>
+            </Popover>
           }       
         </div>
       )}

@@ -14,9 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="bg-slate-800">
       <body className={inter.className}>
         <NextAuthSessionProvider>
-            <TooltipProvider>
             {children}
-            </TooltipProvider>
         </NextAuthSessionProvider>
         <Analytics/>
       </body>

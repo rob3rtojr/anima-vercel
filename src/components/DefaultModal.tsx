@@ -14,6 +14,7 @@ type PropsType = {
   nome: string,
   tipo: string,
   duracao: string,
+  formularioId: number
 }
 
 type DadosEstado = {
@@ -78,7 +79,7 @@ export default function DefaultModal(props: PropsType) {
           {passo === 1 && !extra &&
             <div className="space-y-6">
 
-              {props.tipo === 'professor' &&
+              {props.tipo === 'professor' && props.formularioId === 10 &&
                 <>
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
                     Olá, <b>{props.nome}</b>
@@ -154,7 +155,57 @@ export default function DefaultModal(props: PropsType) {
                 </>
               }
 
-              {props.tipo === 'aluno' &&
+              {props.tipo === 'professor' && props.formularioId === 13 &&
+                <>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Olá, <b>{props.nome}</b>
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Você está sendo convidado(a) a participar de uma pesquisa sobre Educação Financeira no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    A pesquisa tem como objetivo mapear os conhecimentos, as competências, os desafios e as oportunidades relacionadas à implementação das práticas de Educação Financeira na rede de educação mineira. As perguntas incluem o mapeamento de informações sobre seu perfil, como dados pessoais, sua atuação docente e suas percepções relacionadas às práticas pedagógicas com foco em Educação Financeira.            
+                  </p>       
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Ao responder, considere exclusivamente seu vínculo na Rede Estadual,
+                    independentemente de você possuir vínculos ou experiências em outras redes.                
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    {/* Esta pesquisa é <b>anônima</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'estudantes, colegas ou outros profissionais da SEDUC'}  */}
+                    Esta pesquisa é <b>anônima</b> - estudantes, colegas ou outros profissionais da SEDUC
+                    não terão acesso a informações nominais, somente às informações agregadas e/ou anonimizadas.
+                    Os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de
+                    Proteção de Dados (LGPD) e demais leis de proteção de dados aplicáveis. Confira, na
+                    íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanima.org.br/privacidade/' target='_blank'>neste link</a>.              
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+
+                    O tempo médio para finalizar o preenchimento deste questionário é de <b>{props.duracao}</b>. As
+                    questões são de preenchimento obrigatório para o consequente avanço. Não há
+                    respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.                
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Em caso de dúvidas, entre em contato com:<br/>pesquisaeducacao@institutoanima.org.br   
+                  </p> 
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                      Agradecemos a sua colaboração!
+                  </p>  
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                      Leia atentamente os termos de aceite para participar desta pesquisa <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>AQUI</a>.
+                  </p>                                         
+
+                </>
+              }              
+
+              {props.tipo === 'aluno' && props.formularioId === 11 &&
                 <>
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
                     Olá, <b>{props.nome}</b>
@@ -192,7 +243,47 @@ export default function DefaultModal(props: PropsType) {
                       Leia atentamente os termos de aceite para participar desta pesquisa <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>AQUI</a>.
                   </p>                  
                 </>
-              }              
+              }    
+
+              {props.tipo === 'aluno' && props.formularioId === 12 &&
+                <>
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Olá, <b>{props.nome}</b>
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Você está sendo convidado(a) a participar de uma pesquisa sobre Educação Financeira no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).                     
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    A pesquisa tem como objetivo coletar insumos sobre a temática de Educação Financeira. As perguntas serão sobre você, seus hábitos e suas perspectivas em relação à sua escola. É fundamental que você responda com seriedade todo o questionário.                      
+                  </p>       
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Vale lembrar que este é um formulário anônimo – ninguém da sua escola, sua família ou seus colegas terá acesso às suas respostas. Além disso, suas respostas não influenciam suas notas nem seu desempenho escolar.
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de Proteção de Dados (LGPD) e demais leis de proteção de dados aplicáveis. Confira, na íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanima.org.br/privacidade/' target='_blank'>neste link</a>.
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    O tempo médio para finalizar o preenchimento deste questionário é de <b>15 a 20 minutos</b>. Não há respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.  
+                  </p>
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Em caso de dúvidas, entre em contato com:<br/>pesquisaeducacao@institutoanima.org.br   
+                  </p> 
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Agradecemos a sua colaboração!
+                  </p>  
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                      Leia atentamente os termos de aceite para participar desta pesquisa <a className='cursor-pointer underline hover:text-blue-800' onClick={handleExtra}>AQUI</a>.
+                  </p>                  
+                </>
+              }                        
             </div>
           }
           {passo === 2 && !extra &&

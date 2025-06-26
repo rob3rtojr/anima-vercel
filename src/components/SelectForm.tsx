@@ -58,7 +58,7 @@ export default function SelectForm() {
             if (response.status === 401) {
                 logout()
             }
-
+            console.log(response.data)
             setFormularios(response.data)
             setIsError(false)
             setIsLoading(false)
@@ -280,6 +280,7 @@ export default function SelectForm() {
                         nome={session.user.nome}
                         tipo={session.user.role}
                         duracao={duracao}
+                        formularioId={formularioAtivo ?? 0}
                     />
 
                 </div>

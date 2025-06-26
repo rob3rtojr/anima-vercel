@@ -14,7 +14,6 @@ import PerguntaRangeV2 from './PerguntaTextRangeV2/page';
 import LoadImage from '../elements/LoadImage';
 import DebubArea from './DebugArea';
 import Link from "next/link";
-import SequenciaOriginal from '../formulario/SequenciaOriginal/page';
 import SubPergunta from '../formulario/SubPergunta/page';
 import PerguntaRangeSoma from './PerguntaTextRangeSoma/page';
 import InputMask from 'react-input-mask';
@@ -600,7 +599,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
                                                     {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
-                                                    <SequenciaOriginal numeroOriginal={pergunta.id || ''} />
+                                                    {/*<SequenciaOriginal numeroOriginal={pergunta.id || ''} />*/}
                                                     <CardBody>
                                                         {pergunta.alternativa.map(alternativa => (
 
@@ -631,7 +630,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder} hide={pergunta.isDisabled}>
                                                 <div>
                                                     {/* <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} /> */}
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} />
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} textoAuxiliar={`${pergunta.descricaoAuxiliar}`} />
                                                     {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                     <CardBody>
 

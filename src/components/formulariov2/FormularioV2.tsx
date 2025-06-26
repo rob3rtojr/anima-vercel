@@ -500,7 +500,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                             {
                                 perguntas.map((pergunta, index) => {
 
-
+                                    let isDisabledItemCheckBox: boolean = false;
                                     let isDisabled: boolean | undefined = false;
                                     let marcaFaltaResponder: boolean = false
 
@@ -512,7 +512,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                                         const valorEmail = respostas[pergunta.id] ?? ''; // garante string
                                         marcaFaltaResponder = !regexEmail.test(valorEmail); 
-                                    }                                    
+                                    }
 
                                     if (pergunta.escutar.length > 0) {
                                         isDisabled = true;
@@ -528,6 +528,19 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                     }
 
                                     pergunta.isDisabled = isDisabled
+
+                                    //LIMITA A QUANTIDADE DE ITENS MARCADOS EM UM CHECKBOX, CASO O valorMaximo seja definido
+                                    if (pergunta.tipoPerguntaId === TipoPerguntaEnum.CHECKBOX) {
+                                        if (!isDisabled) {
+                                            if (pergunta.valorMaximo) {
+                                                const totalItensMarcados = respostas[pergunta.id]?.split(',').length ?? 0
+                                                if (totalItensMarcados >= pergunta.valorMaximo) {
+                                                    isDisabledItemCheckBox = true
+                                                }
+                                            }
+                                        }
+                                    }
+
 
                                     if (pergunta.tipoPerguntaId === TipoPerguntaEnum.TITULO) {
                                         return (
@@ -587,6 +600,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                 <div>
                                                     <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`}  textoAuxiliar={pergunta.descricaoAuxiliar}/>
                                                     {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
+                                                    <SequenciaOriginal numeroOriginal={pergunta.id || ''} />
                                                     <CardBody>
                                                         {pergunta.alternativa.map(alternativa => (
 
@@ -598,7 +612,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                     value={alternativa.id}
                                                                     checked={pergunta.alternativa.find(a => a.id === alternativa.id)?.isChecked}
                                                                     onChange={() => atualizarResposta(pergunta.id, alternativa.id, alternativa.id, pergunta.tipoPerguntaId)}
-                                                                    disabled={pergunta.isDisabled}
+                                                                    disabled={pergunta.isDisabled ? pergunta.isDisabled : (!pergunta.alternativa.find(a => a.id === alternativa.id)?.isChecked && isDisabledItemCheckBox ? true : false )}
                                                                 />
                                                                 <label className='pl-2' htmlFor={alternativa.id}>{alternativa.descricao}</label>
                                                             </div>

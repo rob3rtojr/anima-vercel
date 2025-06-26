@@ -145,6 +145,7 @@ export default function FormularioPage({ params }: { params: { estado: string, f
                         nome={'Anônimo'}
                         tipo={tipoFormulario}
                         duracao={duracao}
+                        formularioId={0}
                     />
                 }
                 {permitido && accept &&

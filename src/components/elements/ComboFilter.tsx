@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
+import { Check, ChevronsUpDown, Info } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { api } from "@/lib/api"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 const options = [
   {
@@ -55,6 +60,7 @@ type ComboFilterProps = {
   idSelecionado?: string;
   tipo?: string;
   labelText: string;
+  labelTextAux?: string;
 };
 
 export function ComboFilter(
@@ -65,6 +71,7 @@ export function ComboFilter(
     idSelecionado,
     tipo,
     labelText,
+    labelTextAux,
   }: ComboFilterProps
 ) {
   const [open, setOpen] = React.useState(false)
@@ -146,13 +153,28 @@ export function ComboFilter(
   return (
     <div>
       {labelText && (
-        <label
-          className="block text-gray-600 mt-2 mb-1 text-sm xl:text-base"
-          htmlFor="txt"
-        >
-          {labelText}
-        </label>
+        <div className="flex flex-row gap-4 items-center pt-1">
+          <label
+            className="block text-gray-600 mt-2 mb-1 text-sm xl:text-base"
+            htmlFor="txt"
+          >
+            {labelText}
+          </label>
+          {labelTextAux &&
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span className="cursor-pointer">
+                  <Info className="w-4 h-4 text-muted-foreground" />
+                </span>
+              </TooltipTrigger>
+              <TooltipContent className="bg-violet-700 text-white text-sm rounded-md shadow-md px-3 py-2">
+                <p>{labelTextAux}</p>
+              </TooltipContent>
+            </Tooltip>
+          }       
+        </div>
       )}
+    
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

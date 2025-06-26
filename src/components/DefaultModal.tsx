@@ -181,7 +181,7 @@ export default function DefaultModal(props: PropsType) {
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Em caso de dúvidas, entre em contato com:<br/>edufin.estudantes@institutoanima.org.br   
+                    Em caso de dúvidas, entre em contato com:<br/>pesquisaeducacao@institutoanima.org.br   
                   </p> 
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">

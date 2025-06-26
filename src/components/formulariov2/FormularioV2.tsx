@@ -630,7 +630,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                             <Card id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={marcaFaltaResponder} hide={pergunta.isDisabled}>
                                                 <div>
                                                     {/* <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.sequencia} - ${pergunta.descricao}`} /> */}
-                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} textoAuxiliar={`${pergunta.descricaoAuxiliar}`} />
+                                                    <Pergunta isDisabled={pergunta.isDisabled} texto={`${pergunta.descricao}`} textoAuxiliar={`${pergunta.descricaoAuxiliar ?? ''}`} />
                                                     {/* <SequenciaOriginal numeroOriginal={pergunta.identificador || ''} /> */}
                                                     <CardBody>
 

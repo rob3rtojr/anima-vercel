@@ -653,19 +653,6 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                                                                 />
                                                             }
-                                                            {pergunta.mascaraResposta === '' &&
-                                                                <input
-                                                                    className='rounded-md w-full'
-                                                                    id={`txt-${pergunta.id}`}
-                                                                    type='text'
-                                                                    name={pergunta.id}
-                                                                    value={pergunta.resposta}
-                                                                    onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
-                                                                    onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
-                                                                    disabled={pergunta.isDisabled}
-                                                                    placeholder={pergunta.mascaraResposta} //'digite aqui sua resposta'
-                                                                />
-                                                            }
 
                                                             {pergunta.mascaraResposta === 'celular' &&
                                                                 <InputMask
@@ -699,7 +686,21 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                         <span className='text-red-900 font-semibold'>Formato de email inválido</span>
                                                                     }
                                                                 </div>
-                                                            }                                                            
+                                                            }  
+
+                                                            {!pergunta.mascaraResposta &&
+                                                                <input
+                                                                    className='rounded-md w-full'
+                                                                    id={`txt-${pergunta.id}`}
+                                                                    type='text'
+                                                                    name={pergunta.id}
+                                                                    value={pergunta.resposta}
+                                                                    onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
+                                                                    onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
+                                                                    disabled={pergunta.isDisabled}
+                                                                    placeholder={pergunta.mascaraResposta} //'digite aqui sua resposta'
+                                                                />
+                                                            }                                                                                                                      
 
                                                         </div>
 
@@ -864,7 +865,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                 </>
                             }
                             {params.formularioId === "11" &&
-                                <span className='font-bold text-xl text-justify transition-all duration-700, text-red-900 tracking-tighter'>Você ainda não respondeu as perguntas sinalizadas em vermelho. Só possível enviar o formulário após responder todas as perguntas</span>
+                                <span className='font-bold text-xl text-justify transition-all duration-700, text-red-900 tracking-tighter'>Você ainda não respondeu as perguntas sinalizadas em vermelho. Só será possível enviar o formulário após responder todas as perguntas</span>
                             }
                         </Card>
 

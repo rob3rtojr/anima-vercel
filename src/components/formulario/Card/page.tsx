@@ -39,7 +39,7 @@ export function Card({children, faltaResponder, className, id, hide}: PropsType)
     )
 }
 
-export function CardPergunta({children, faltaResponder, className}: PropsType) {
+export function CardPergunta({children, faltaResponder, className, hide}: PropsType) {
     return(
         // <div className={cn("flex flex-col justify-start w-full mx-auto max-w-7xl px-4 py-4 sm:px-6 md:py-6 lg:px-8", className)}>
         //     <div className={
@@ -55,6 +55,7 @@ export function CardPergunta({children, faltaResponder, className}: PropsType) {
             flex flex-col justify-center items-center w-full mx-auto max-w-7xl 
             px-1 md:px-4 py-6 sm:px-6 lg:px-8 
             transition-all duration-700 ease-in-out 
+            ${hide ? 'opacity-0 pointer-events-none max-h-0 pb-0' : 'opacity-100 pointer-events-auto max-h-screen'}            
         `}
         >
 

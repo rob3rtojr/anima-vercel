@@ -533,6 +533,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                         if (!isDisabled) {
                                             if (pergunta.valorMaximo) {
                                                 const totalItensMarcados = respostas[pergunta.id]?.split(',').length ?? 0
+                                                //const totalItensMarcados = pergunta.resposta.length ?? 0
+
                                                 if (totalItensMarcados >= pergunta.valorMaximo) {
                                                     isDisabledItemCheckBox = true
                                                 }
@@ -549,7 +551,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                             //      <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />
                                             //      }                                                
                                             // </Card>
-                                            <CardPergunta id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={false} >
+                                            <CardPergunta id={`C-${pergunta.id}`} key={pergunta.id} faltaResponder={false} hide={pergunta.isDisabled}>
                                                 <Pergunta className={"text-white text-xl md:text-2xl"} key={index} texto={pergunta.descricao} />
                                                 {pergunta.descricaoAuxiliar &&
                                                 <SubPergunta className={"text-gray-400 text-lg md:text-xl italic"} key={pergunta.id} texto={pergunta.descricaoAuxiliar} />

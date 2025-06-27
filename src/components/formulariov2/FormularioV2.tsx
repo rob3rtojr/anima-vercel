@@ -275,6 +275,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
         const perguntaIndex = perguntasAux ? perguntasAux.findIndex((pergunta) => pergunta.id === perguntaId) : -1;
         perguntasAux[perguntaIndex].resposta = []
 
+        perguntasAux[perguntaIndex].alternativa.map(a => a.isChecked = false)
+
         setPerguntas(perguntasAux)
 
     };     

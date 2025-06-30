@@ -392,6 +392,7 @@ function LoginPage() {
             type={"text"}
             onChange={(e) => { password.current = e.target.value; setMessageError('') }}
             placeholder={placeHolderText}
+            mask={authType==='data' ? '99/99/9999' : ''}
             error={messageError === "CredentialsSignin" ? 'Ops! Não conseguimos identificar o seu cadastro. Confira o dado preenchido e tente novamente ou escolha outra forma para confirmarmos sua identidade.' : ''}
           />
           <Button onClick={onSubmit} disabled={isLoading} isLoading={isLoading}>Login</Button>

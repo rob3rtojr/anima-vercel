@@ -148,24 +148,25 @@ export function ComboFilter(
   return (
     <div>
       {labelText && (
-        <div className="flex flex-row gap-4 items-center pt-1">
+        <div className="flex flex-col pt-1">
           <label
-            className="block text-gray-600 mt-2 mb-1 text-sm xl:text-base"
+            className="block text-gray-600 mt-2 text-sm xl:text-base"
             htmlFor="txt"
           >
             {labelText}
           </label>
           {labelTextAux &&
-            <Popover>
-              <PopoverTrigger asChild>
-                <span className="cursor-pointer">
-                  <Info className="w-4 h-4 text-muted-foreground" />
-                </span>
-              </PopoverTrigger>
-              <PopoverContent className="bg-violet-900 text-white max-w-xs">
-                <p>{labelTextAux}</p>
-              </PopoverContent>
-            </Popover>
+            // <Popover>
+            //   <PopoverTrigger asChild>
+            //     <span className="cursor-pointer">
+            //       <Info className="w-4 h-4 text-muted-foreground" />
+            //     </span>
+            //   </PopoverTrigger>
+            //   <PopoverContent className="bg-violet-900 text-white max-w-xs">
+            //     <p>{labelTextAux}</p>
+            //   </PopoverContent>
+            // </Popover>
+            <span className="text-xs text-gray-500 pb-1">({labelTextAux})</span>
           }       
         </div>
       )}

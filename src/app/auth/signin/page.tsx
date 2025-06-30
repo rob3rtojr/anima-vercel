@@ -347,7 +347,7 @@ function LoginPage() {
 
               <ComboFilter  labelText='Turma' idRota="turmas" onSelect={handleSelectTurma} idFiltro={escolaId} idSelecionado={turmaId} />
 
-              <ComboFilter  labelText='Nome do estudante' labelTextAux='O seu nome vai aparecer abreviado, por exemplo João A.S. - João Aparecido Silva' idRota="alunos" onSelect={handleSelectAluno} idFiltro={turmaId} idSelecionado={alunoId} />
+              <ComboFilter  labelText='Nome do estudante' labelTextAux='por exemplo João A.S. - João Aparecido Silva' idRota="alunos" onSelect={handleSelectAluno} idFiltro={turmaId} idSelecionado={alunoId} />
             </>
           }
 

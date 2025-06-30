@@ -684,7 +684,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                         onChange={(e) => handleInputText(pergunta.id, e.target.value, pergunta.mascaraResposta)}
                                                                         onBlur={(e) => atualizarResposta(pergunta.id, "", e.target.value, pergunta.tipoPerguntaId)}
                                                                         disabled={pergunta.isDisabled}
-                                                                        placeholder='exemplo@gmail.com'
+                                                                        placeholder='exemplo@exemplo.com'
                                                                     />
                                                                     {marcaFaltaResponder &&
                                                                         <span className='text-red-900 font-semibold'>Formato de email inválido</span>

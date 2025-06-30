@@ -334,7 +334,7 @@ function LoginPage() {
           <div className='flex flex-row items-center gap-2'><input type="radio" name="optUser" onChange={(e) => handleUserType(e.target.value)} value="professor" ref={input => { if (input && userType === "professor") input.checked = true; }} /> Sou profissional da educação</div>
         </div>
         <div className='flex flex-1 flex-col pr-2'>
-          <ComboFilter  labelText='Município' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} tipo={userType}/>
+          <ComboFilter  labelText='Município da escola' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} tipo={userType}/>
           {/* <Combo labelText='Município' idRota="municipios-por-estado" onSelect={handleSelectMunicipio} idFiltro={estado.id.toString()} idSelecionado={municipioId} tipo={userType} /> */}
 
           {userType === "professor" &&

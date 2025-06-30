@@ -20,7 +20,7 @@ export default function AjudaModal(props: PropsType) {
               {props.tipoAjuda === 'geral' && 
               <div className='flex flex-col'>
                 <span className='font-bold mb-2'>Dúvidas / Dificuldades</span>
-                <span className='text-justify'>Em caso de dúvidas ou dificuldades no login, pedimos que entre em contato pelo e-mail <span className='pt-4 text-blue-800'>pesquisaeducacao@institutoanima.org.br</span> e nos informe a etapa que está acontecendo o erro, incluindo, se possível, um print da tela.</span>              
+                <span className='text-justify'>Em caso de dúvidas ou dificuldades no login, pedimos que entre em contato pelo e-mail <span className='pt-4 text-blue-800'>e-mailedufin.estudantes@institutoanima.org.br</span> e nos informe a etapa que está acontecendo o erro, incluindo, se possível, um print da tela.</span>              
               </div>
               }
             </div>          

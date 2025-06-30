@@ -238,7 +238,7 @@ export default function SelectForm() {
                                 return (<button key={index} disabled={formularios[index].isLoading} onClick={() => handleClickForm(f.formulario.id, f.situacao, f.formulario.duracao)}>
                                     <div className="flex flex-col rounded-md shadow-sm md:w-96 min-w-96  h-44 md:h-36 bg-violet-500 p-1 hover:bg-violet-700 text-white transition-all m-4 justify-center items-center">
                                         <div className="flex flex-row gap-4 items-center p-4">
-                                            <div className="text-md text-justify">
+                                            <div className="text-md">
                                                 {f.formulario.nome}.
                                             </div>
                                         </div>

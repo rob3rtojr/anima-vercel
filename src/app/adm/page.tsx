@@ -235,9 +235,9 @@ export default function Adm() {
                         // 6	Educação Financeira	aluno
                         // 7	Educação Financeira	professor                      
                         switch (estadoId) {
-                            case "1":
-                                if (formularioId === "2") {
-                                    setMeta(50)
+                            case "2":
+                                if (formularioId === "11") {
+                                    setMeta(30)
                                 } else {
                                     setMeta(30)
                                 }

@@ -38,7 +38,7 @@ export default function DefaultModal(props: PropsType) {
     {
       "sigla": "MG",
       "descricao": "Minas Gerais",
-      "secretaria": "Secretaria de Estado da Educação de Minas Gerais",
+      "secretaria": "Secretaria de Estado de Educação de Minas Gerais",
       "secretariaAbrebiado": "SEE-MG"
     },
     {
@@ -212,7 +212,7 @@ export default function DefaultModal(props: PropsType) {
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Você está sendo convidado(a) a informar sobre o seu interesse em receber vídeos com conteúdos de Educação Financeira no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).
+                    Você está sendo convidado(a) a informar sobre o seu interesse em receber vídeos com conteúdos de educação financeira no âmbito do Acordo de Cooperação entre a {estadoLogado?.secretaria} e o Instituto Ânima (CNPJ – 07.749.605/0003-90).
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">

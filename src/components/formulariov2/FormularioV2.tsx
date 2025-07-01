@@ -320,10 +320,8 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
         .filter(p => p.mascaraResposta === 'email')
         .filter(p => {
             const resposta = respostas[p.id] ?? '';
-            return !regexEmail.test(resposta); // retorna true se inválido
+            return resposta.trim() !== '' && !regexEmail.test(resposta); // retorna true se inválido
         }).length;
-
-        //console.log('emailInvalido', emailInvalido)
 
         if (faltaResponder !== totalPergunta || emailInvalido !==0) {
             toast.error("Você ainda não finalizou o preenchimento do formulário. Verifique as perguntas em vermelho.")

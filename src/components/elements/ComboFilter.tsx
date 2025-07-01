@@ -20,29 +20,6 @@ import {
 } from "@/components/ui/popover"
 import { api } from "@/lib/api"
 
-const options = [
-  {
-    id: "next.js",
-    nome: "Next.js",
-  },
-  {
-    id: "sveltekit",
-    nome: "SvelteKit",
-  },
-  {
-    id: "nuxt.js",
-    nome: "Nuxt.js",
-  },
-  {
-    id: "remix",
-    nome: "Remix",
-  },
-  {
-    id: "astro",
-    nome: "Astro",
-  },
-]
-
 type Option = {
   id: string;
   nome: string;
@@ -58,119 +35,83 @@ type ComboFilterProps = {
   labelTextAux?: string;
 };
 
-export function ComboFilter(
-  {
-    onSelect,
-    idRota,
-    idFiltro,
-    idSelecionado,
-    tipo,
-    labelText,
-    labelTextAux,
-  }: ComboFilterProps
-) {
+export function ComboFilter({
+  onSelect,
+  idRota,
+  idFiltro,
+  idSelecionado,
+  tipo,
+  labelText,
+  labelTextAux,
+}: ComboFilterProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
-  const [options, setOptions] = React.useState<Option[]>([]);
-  const [textFirtstOption, setTextFirtstOption] = React.useState<string>('Selecione...');
+  const [search, setSearch] = React.useState("")
+  const [options, setOptions] = React.useState<Option[]>([])
+  const [textFirtstOption, setTextFirtstOption] = React.useState('Selecione...')
+  const buttonRef = React.useRef<HTMLButtonElement>(null)
+  const [triggerWidth, setTriggerWidth] = React.useState(0)
 
-  const buttonRef = React.useRef<HTMLButtonElement>(null);
-  const [triggerWidth, setTriggerWidth] = React.useState<number>(0);
-
-  // Atualiza largura com ResizeObserver
   React.useEffect(() => {
-    if (!buttonRef.current) return;
-
+    if (!buttonRef.current) return
     const updateWidth = () => {
-      const width = buttonRef.current?.getBoundingClientRect().width || 0;
-      setTriggerWidth(width);
-    };
-
-    // Chamada inicial
-    updateWidth();
-
-    // Observa resize do botão
-    const resizeObserver = new ResizeObserver(() => {
-      updateWidth();
-    });
-
-    resizeObserver.observe(buttonRef.current);
-
-    // Cleanup
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [idSelecionado]);
+      const width = buttonRef.current?.getBoundingClientRect().width || 0
+      setTriggerWidth(width)
+    }
+    updateWidth()
+    const resizeObserver = new ResizeObserver(updateWidth)
+    resizeObserver.observe(buttonRef.current)
+    return () => resizeObserver.disconnect()
+  }, [idSelecionado])
 
   React.useEffect(() => {
-
     const fetchOptions = async () => {
       try {
         setTextFirtstOption('Carregando...')
-        
         let urlRota = `/${idRota}`
-        if (idFiltro !== "todos")
-          urlRota += `/${idFiltro}`
-
-        if (tipo) {
-          urlRota += '?tipo=' + tipo
-        }
-
+        if (idFiltro !== "todos") urlRota += `/${idFiltro}`
+        if (tipo) urlRota += '?tipo=' + tipo
         let response: any
-
         if (idFiltro !== "0") {
-          response = await api.get(urlRota);
-          setOptions(response.data);
+          response = await api.get(urlRota)
+          setOptions(response.data)
           setValue("")
-          //console.log("aqui")
+        } else {
+          setOptions([])
         }
-        else {
-          setOptions([]);
-        }
-
         setTextFirtstOption('Selecione...')
-
-        //setSelectedOption(idSelecionado)
-
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-
-    if (idFiltro) {
-      fetchOptions();
-    } else {
-      setOptions([]);
     }
+    if (idFiltro) {
+      fetchOptions()
+    } else {
+      setOptions([])
+    }
+  }, [idFiltro, tipo])
 
-  }, [idFiltro, tipo]);
+  function normalize(text: string) {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+  }
+
+  const filteredOptions = options.filter(option =>
+    normalize(option.nome).includes(normalize(search))
+  )
 
   return (
     <div>
       {labelText && (
         <div className="flex flex-col pt-1">
-          <label
-            className="block text-gray-600 mt-2 text-sm xl:text-base"
-            htmlFor="txt"
-          >
+          <label className="block text-gray-600 mt-2 text-sm xl:text-base">
             {labelText}
           </label>
-          {labelTextAux &&
-            // <Popover>
-            //   <PopoverTrigger asChild>
-            //     <span className="cursor-pointer">
-            //       <Info className="w-4 h-4 text-muted-foreground" />
-            //     </span>
-            //   </PopoverTrigger>
-            //   <PopoverContent className="bg-violet-900 text-white max-w-xs">
-            //     <p>{labelTextAux}</p>
-            //   </PopoverContent>
-            // </Popover>
+          {labelTextAux && (
             <span className="text-xs text-gray-500 pb-1">({labelTextAux})</span>
-          }       
+          )}
         </div>
       )}
-    
+
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -187,32 +128,32 @@ export function ComboFilter(
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" style={{ width: triggerWidth }}>
-          <Command className="w-full">
-            <CommandInput placeholder="Localizar..." className="w-full" />
+          <Command shouldFilter={false}>
+            <CommandInput
+              placeholder="Localizar..."
+              className="w-full"
+              value={search}
+              onValueChange={setSearch}
+            />
             <CommandList className="w-full max-h-[200px] overflow-auto">
               <CommandEmpty>Nenhum item encontrado.</CommandEmpty>
               <CommandGroup className="w-full">
-                {options.map((option) => (
+                {filteredOptions.map((option) => (
                   <CommandItem
                     className="w-full"
                     key={option.id}
                     value={option.nome}
-                    onSelect={(currentValue) => {
-                      // Procura o item pelo nome (que é o currentValue)
-                      const selected = options.find((o) => o.nome === currentValue);
-                      if (selected) {
-                        setValue(selected.nome); // continua exibindo o nome
-                        setOpen(false);
-                        onSelect?.(selected.id); // aqui você envia o ID correto
-                        //console.log("ID selecionado:", selected.id);
-                      }
+                    onSelect={() => {
+                      setValue(option.nome)
+                      setOpen(false)
+                      onSelect?.(option.id)
                     }}
                   >
                     {option.nome}
                     <Check
                       className={cn(
                         "ml-auto h-4 w-4",
-                        value === option.id ? "opacity-100" : "opacity-0"
+                        value === option.nome ? "opacity-100" : "opacity-0"
                       )}
                     />
                   </CommandItem>

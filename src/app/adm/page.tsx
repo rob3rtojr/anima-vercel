@@ -337,8 +337,8 @@ export default function Adm() {
                         {!hideCampos &&
                             <>
                                 <div className="w-full"><Combo labelText='Escola' idRota="escolas-por-regional" idFiltro={regionalId} onSelect={handleSelectEscola} idSelecionado={escolaId} /></div>
-                                <div className="w-full"><Combo labelText='Grupo' idRota="grupos" idFiltro={filtroInicialGrupo} onSelect={handleSelectGrupo} idSelecionado={grupoId} /></div>
-                                <div className="w-full"><Combo labelText='Estrato' idRota="estratos" idFiltro={filtroInicialEstrato} onSelect={handleSelectEstrato} idSelecionado={estratoId} /></div>
+                                <div className="w-full hidden"><Combo labelText='Grupo' idRota="grupos" idFiltro={filtroInicialGrupo} onSelect={handleSelectGrupo} idSelecionado={grupoId} /></div>
+                                <div className="w-full hidden"><Combo labelText='Estrato' idRota="estratos" idFiltro={filtroInicialEstrato} onSelect={handleSelectEstrato} idSelecionado={estratoId} /></div>
                             </>
                         }
                         

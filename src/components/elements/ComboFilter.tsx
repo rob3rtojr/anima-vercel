@@ -96,7 +96,7 @@ export function ComboFilter({
   }
 
   const filteredOptions = options.filter(option =>
-    normalize(option.nome).includes(normalize(search))
+    normalize(option.nome).includes(normalize(search.trimEnd()))
   )
 
   return (

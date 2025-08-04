@@ -101,13 +101,20 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
             if (tipoPerguntaId === TipoPerguntaEnum.CHECKBOX) {
 
                 var selecionados: string[] = []
-
                 perguntasAux[perguntaIndex].alternativa[alternativaIndex].isChecked = !perguntasAux[perguntaIndex].alternativa[alternativaIndex].isChecked;
-                perguntasAux[perguntaIndex].alternativa.map(a => {
-                    if (a.isChecked)
-                        selecionados.push(a.id)
-                })
-
+                if (perguntasAux[perguntaIndex].alternativa[alternativaIndex].checkRespostaUnica === 'S' && perguntasAux[perguntaIndex].alternativa[alternativaIndex].isChecked) {
+                    selecionados.push(alternativaId)
+                    perguntasAux[perguntaIndex].alternativa.map(a => {
+                        if (a.isChecked && a.id !== alternativaId)
+                            a.isChecked = false
+                    })                    
+                } else {
+                    
+                    perguntasAux[perguntaIndex].alternativa.map(a => {
+                        if (a.isChecked)
+                            selecionados.push(a.id)
+                    })
+                }
                 valor = selecionados.join(",")
             } else if (tipoPerguntaId === TipoPerguntaEnum.SOMA) {
                 var selecionados: string[] = []
@@ -400,7 +407,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
         return result;
     }
 
-
+    
     // Carregar dados da API e inicializar respostas
     useEffect(() => {
 
@@ -426,7 +433,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                 const response = await res.json();
                 //aleatoriza as perguntas dentro do bloco
                 //const responsOrdenado = ordenarPerguntas(response)
-                //setPerguntas(responsOrdenado)
+                //setPerguntas(responsOrdenado)               
                 setPerguntas(response)
 
                 const respostasIniciais: { [key: string]: string | null } = {};
@@ -539,6 +546,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                     isDisabledItemCheckBox = true
                                                 }
                                             }
+
+                                            if (pergunta.alternativa.find(a=>a.checkRespostaUnica === 'S' && a.isChecked)) {
+                                                isDisabledItemCheckBox = true
+                                            }
                                         }
                                     }
 
@@ -605,7 +616,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                     <CardBody>
                                                         {pergunta.alternativa.map(alternativa => (
 
-                                                            <div key={alternativa.id} className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'}`}>
+                                                            <div key={alternativa.id} className={`flex p-1 rounded-md justify-start items-center ${pergunta.isDisabled || (!pergunta.alternativa.find(a => a.id === alternativa.id)?.isChecked && isDisabledItemCheckBox) ? 'text-gray-400' : 'hover:bg-gray-100 transition-all'}`}>
                                                                 <input
                                                                     id={alternativa.id}
                                                                     type="checkbox"
@@ -613,8 +624,10 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                                                     value={alternativa.id}
                                                                     checked={pergunta.alternativa.find(a => a.id === alternativa.id)?.isChecked}
                                                                     onChange={() => atualizarResposta(pergunta.id, alternativa.id, alternativa.id, pergunta.tipoPerguntaId)}
+                                                                    //disabled={alternativa.isDisabled ? true : pergunta.isDisabled ? pergunta.isDisabled : (!pergunta.alternativa.find(a => a.id === alternativa.id)?.isChecked && isDisabledItemCheckBox ? true : false )}
                                                                     disabled={pergunta.isDisabled ? pergunta.isDisabled : (!pergunta.alternativa.find(a => a.id === alternativa.id)?.isChecked && isDisabledItemCheckBox ? true : false )}
                                                                 />
+                                                                
                                                                 <label className='pl-2' htmlFor={alternativa.id}>{alternativa.descricao}</label>
                                                             </div>
                                                         ))}

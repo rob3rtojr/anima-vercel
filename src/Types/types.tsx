@@ -2,7 +2,8 @@ type AlternativaType = {
     id: string,
     descricao: string,
     isChecked: boolean,
-    valor: string
+    valor: string,
+    checkRespostaUnica?: string
 }
 
 type EscutarType = {

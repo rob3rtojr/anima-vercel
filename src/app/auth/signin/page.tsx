@@ -360,7 +360,7 @@ function LoginPage() {
 
           <div className="flex md:flex-row flex-col md:gap-4 gap-2 ">
 
-            {userType === "aluno" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data de Nascimento</div>}
+            {userType === "aluno" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data de nascimento</div>}
 
             {userType === "aluno" && estado.sigla === "xx" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
             {userType === "aluno" && estado.sigla === "PA" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matricula") input.checked = true; }} value="matricula" /> Matrícula</div>}
@@ -384,7 +384,7 @@ function LoginPage() {
                 {/* <span className='text-sm text-gray-500 pl-1'>(número disponível no contracheque/holerite)</span> */}
               </div>
             }
-            {userType === "professor" && (estado.sigla === "GO" || estado.sigla === "PA" || estado.sigla === "MG") && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data Nascimento</div>}
+            {userType === "professor" && (estado.sigla === "GO" || estado.sigla === "PA" || estado.sigla === "MG") && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "data") input.checked = true; }} value="data" /> Data de Nascimento</div>}
           </div>
 
           <TextBox

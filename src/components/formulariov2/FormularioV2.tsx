@@ -366,6 +366,48 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
     }
 
+    function aleatorizarAlternativas(f: PerguntaType[]): PerguntaType[] {
+    return f.map(p => {
+        if (p.aleatorizarAlternativas !== 'S') {
+        return p;
+        }
+
+        const alternativasFixas = p.alternativa
+        .map((alt, index) => ({ ...alt, index }))
+        .filter(alt => alt.itemAleatorio === 'N');
+
+        const alternativasAleatorias = p.alternativa
+        .filter(alt => alt.itemAleatorio === 'S');
+
+        // Embaralha as alternativas aleatórias
+        for (let i = alternativasAleatorias.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [alternativasAleatorias[i], alternativasAleatorias[j]] = [
+            alternativasAleatorias[j],
+            alternativasAleatorias[i]
+        ];
+        }
+
+        // Cria nova lista de alternativas mantendo fixos na mesma posição
+        const novaLista = [];
+        let indexAleatorio = 0;
+        for (let i = 0; i < p.alternativa.length; i++) {
+        const fixa = alternativasFixas.find(alt => alt.index === i);
+        if (fixa) {
+            novaLista.push({ ...fixa });
+        } else {
+            novaLista.push({ ...alternativasAleatorias[indexAleatorio++] });
+        }
+        }
+
+        return {
+        ...p,
+        alternativa: novaLista
+        };
+    });
+    }
+
+
     function ordenarPerguntas(formulario: PerguntaType[]): PerguntaType[] {
         // Primeiro, separe o bloco 1 do restante
         const bloco1 = formulario.filter((f) => f.bloco === 1);
@@ -429,12 +471,11 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                     router.replace('/user/listaFormularios')
                 }
 
-
                 const response = await res.json();
                 //aleatoriza as perguntas dentro do bloco
                 //const responsOrdenado = ordenarPerguntas(response)
-                //setPerguntas(responsOrdenado)               
-                setPerguntas(response)
+                const responseOrdenado = aleatorizarAlternativas(response) 
+                setPerguntas(responseOrdenado)
 
                 const respostasIniciais: { [key: string]: string | null } = {};
 

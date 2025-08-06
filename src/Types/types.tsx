@@ -3,7 +3,8 @@ type AlternativaType = {
     descricao: string,
     isChecked: boolean,
     valor: string,
-    checkRespostaUnica?: string
+    checkRespostaUnica?: string,
+    itemAleatorio?: string
 }
 
 type EscutarType = {
@@ -37,7 +38,8 @@ type PerguntaType = {
     bloco?: number,
     sequencia?:number,
     identificador?:string,
-    somatorioResposta?: number
+    somatorioResposta?: number,
+    aleatorizarAlternativas?:string
 }
 
 export type { AlternativaType, EscutarType, PerguntaType };

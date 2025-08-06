@@ -860,7 +860,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
 
                         <Card faltaResponder={true} >
                             
-                            {params.formularioId !== "11" &&
+                            {params.formularioId < "11" &&
                                 <>
                                     <span className='font-bold text-xl text-justify transition-all duration-700, text-red-900 tracking-tighter'>Você ainda não respondeu as pergutas abaixo:</span>
                                     <span className='text-sm text-red-900 pb-2'>Clique no número da pergunta para responder.</span>
@@ -879,7 +879,7 @@ export default function FormularioV2({ params }: { params: { formularioId: strin
                                     </div>
                                 </>
                             }
-                            {params.formularioId === "11" &&
+                            {params.formularioId >= "11" &&
                                 <span className='font-bold text-xl text-justify transition-all duration-700, text-red-900 tracking-tighter'>Você ainda não respondeu as perguntas sinalizadas em vermelho. Só será possível enviar o formulário após responder todas as perguntas</span>
                             }
                         </Card>

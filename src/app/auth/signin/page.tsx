@@ -339,7 +339,7 @@ function LoginPage() {
 
           {userType === "professor" &&
             // <Combo labelText='Servidores' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} tipo={userType}/>
-            <ComboFilter  labelText='Servidores' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} tipo={userType}/>
+            <ComboFilter  labelText='Nome do servidor' labelTextAux='por exemplo João A. S. - João Aparecido Silva' idRota="professores" onSelect={handleSelectProfessor} idFiltro={municipioId} idSelecionado={professorId} tipo={userType}/>
           }
           {userType === "aluno" &&
             <>
@@ -347,7 +347,7 @@ function LoginPage() {
 
               <ComboFilter  labelText='Série/Ano' idRota="turmas" onSelect={handleSelectTurma} idFiltro={escolaId} idSelecionado={turmaId} />
 
-              <ComboFilter  labelText='Nome do estudante' labelTextAux='por exemplo João A.S. - João Aparecido Silva' idRota="alunos" onSelect={handleSelectAluno} idFiltro={turmaId} idSelecionado={alunoId} />
+              <ComboFilter  labelText='Nome do estudante' labelTextAux='por exemplo João A. S. - João Aparecido Silva' idRota="alunos" onSelect={handleSelectAluno} idFiltro={turmaId} idSelecionado={alunoId} />
             </>
           }
 

@@ -170,23 +170,21 @@ export default function DefaultModal(props: PropsType) {
                   </p>       
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Ao responder, considere exclusivamente seu vínculo na Rede Estadual,
-                    independentemente de você possuir vínculos ou experiências em outras redes.                
+                    Ao responder, considere exclusivamente seu vínculo na Rede Estadual, independentemente de você possuir vínculos ou experiências em outras redes.                
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    {/* Esta pesquisa é <b>anônima</b> - {props.tipo === "aluno" ? 'sua família, seus amigos, colegas e professores da escola' : 'estudantes, colegas ou outros profissionais da SEDUC'}  */}
-                    Esta pesquisa é <b>anônima</b> - estudantes, colegas ou outros profissionais da SEDUC
-                    não terão acesso a informações nominais, somente às informações agregadas e/ou anonimizadas.
-                    Os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de
-                    Proteção de Dados (LGPD) e demais leis de proteção de dados aplicáveis. Confira, na
-                    íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanima.org.br/privacidade/' target='_blank'>neste link</a>.              
-                  </p>
+                    As respostas desse formulário não serão divulgadas nominalmente, ou seja, estudantes, outros funcionários da escola e profissionais da Secretaria não terão acesso às informações nominais, somente às informações agregadas e/ou anonimizadas. 
+                  </p>  
+
+                  <p className="text-base leading-relaxed text-gray-500 text-justify">
+                    Os dados pessoais fornecidos serão tratados com segurança, conforme a Lei Geral de Proteção de Dados (LGPD) e demais leis de proteção de dados aplicáveis. Confira, na íntegra, o nosso aviso externo de privacidade <a className='cursor-pointer underline hover:text-blue-800' href='https://www.institutoanima.org.br/privacidade/' target='_blank'>neste link</a>.
+                  </p>                                     
+
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
 
-                    O tempo médio para finalizar o preenchimento deste questionário é de <b>{props.duracao}</b>. As
-                    questões são de preenchimento obrigatório para o consequente avanço. Não há
+                    O tempo médio para finalizar o preenchimento deste questionário é de 20 a 30 minutos. Não há
                     respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.                
                   </p>
 
@@ -256,11 +254,11 @@ export default function DefaultModal(props: PropsType) {
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    A pesquisa tem como objetivo coletar insumos sobre a temática de Educação Financeira. As perguntas serão sobre você, seus hábitos e suas perspectivas em relação à sua escola. É fundamental que você responda com seriedade todo o questionário.                      
+                    A pesquisa tem como objetivo coletar insumos sobre a temática de Educação Financeira. As perguntas serão sobre você, seus hábitos e suas perspectivas em relação à escola. É fundamental que você responda com seriedade todo o questionário.                      
                   </p>       
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    Vale lembrar que este é um formulário anônimo – ninguém da sua escola, sua família ou seus colegas terá acesso às suas respostas. Além disso, suas respostas não influenciam suas notas nem seu desempenho escolar.
+                    As respostas desse formulário não serão divulgadas nominalmente, ou seja, ninguém da sua escola, sua família ou seus colegas terá acesso às informações concedidas por você. Além disso, suas respostas não influenciam suas notas nem seu desempenho escolar.
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
@@ -268,7 +266,7 @@ export default function DefaultModal(props: PropsType) {
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
-                    O tempo médio para finalizar o preenchimento deste questionário é de <b>15 a 20 minutos</b>. Não há respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.  
+                    O tempo médio para finalizar o preenchimento deste questionário é de <b>20 a 30 minutos</b>. Não há respostas certas ou erradas, o importante é que você seja sincero(a) em todo momento.  
                   </p>
 
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
@@ -302,6 +300,7 @@ export default function DefaultModal(props: PropsType) {
             <div className="space-y-6">
               <p className="text-base leading-relaxed text-gray-500 text-justify">Ao aceitar participar desta pesquisa você declara estar ciente que:</p>
               <ul>
+                <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	Você pode interromper sua participação na pesquisa a qualquer momento, sem que isso gere qualquer prejuízo para você. </p></li>
                 <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	Os dados e as informações coletadas serão gerenciados pelo INSTITUTO ÂNIMA (CNPJ – 07.749.605/0003-90) no âmbito do Acordo de Cooperação assinado com a {estadoLogado?.secretaria};</p></li>
                 <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	As informações obtidas através da sua participação não permitirão a identificação da sua pessoa, exceto para a equipe de pesquisa, e a divulgação das mencionadas informações agregadas e/ou anonimizadas só será feita entre as instituições, profissionais e parceiros do estudo;</p></li>
                 <li><p className="text-base leading-relaxed text-gray-500 text-justify pl-8 pb-2">•	Você tem direito de solicitar acesso, retificação ou eliminação dos seus Dados Pessoais, ou revogar o seu consentimento, sem que isso lhe traga qualquer penalidade ou prejuízo.</p></li>

@@ -376,7 +376,7 @@ function LoginPage() {
             {userType === "professor" && estado.sigla === "SP" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "celular") input.checked = true; }} value="celular" /> Celular</div>}
             {userType === "professor" && estado.sigla !== "SP" && estado.sigla !== "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "cpf") input.checked = true; }} value="cpf" /> CPF</div>}
             {userType === "professor" && estado.sigla === "MG" && <div><input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "masp") input.checked = true; }} value="masp" /> MASP</div>}
-            {userType === "professor" && estado.sigla !== "SP" && estado.sigla !== "GO" && estado.sigla !== "BA" && estado.sigla !== "MG" &&
+            {userType === "professor" && estado.sigla !== "SP" && estado.sigla !== "GO" && estado.sigla !== "BA" && estado.sigla !== "MG" && estado.sigla !== "PA" &&
               <div >
                 <div>
                   <input type="radio" name="optAuth" onChange={(e) => handleAuthType(e.target.value)} ref={input => { if (input && authType === "matriculaprofessor") input.checked = true; }} value="matriculaprofessor" /> Nº de matrícula

@@ -243,7 +243,7 @@ export default function DefaultModal(props: PropsType) {
                 </>
               }    
 
-              {props.tipo === 'aluno' && props.formularioId === 12 &&
+              {props.tipo === 'aluno' && (props.formularioId === 12 || props.formularioId === 14) &&
                 <>
                   <p className="text-base leading-relaxed text-gray-500 text-justify">
                     Olá, <b>{props.nome}</b>
